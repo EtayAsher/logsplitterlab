@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LogSplitterLab — Honest Log Splitter Reviews & Comparisons</title>
+<meta name="description" content="Unbiased log splitter reviews and head-to-head comparisons. Find the right gas, electric, or manual log splitter for your property.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f0e8;
+    --dark:#1a3a2a;
+    --dark-2:#123023;
+    --accent:#8B4513;
+    --cta:#c17f24;
+    --cta-hover:#a86a1b;
+    --text:#2a2a26;
+    --muted:#5c5c54;
+    --card:#ffffff;
+    --border:#e0d8c8;
+    --star:#e0a419;
+  }
+  *,*::before,*::after{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Merriweather',serif;
+    color:var(--dark);
+    line-height:1.25;
+    margin:0 0 .6em;
+  }
+  p{margin:0 0 1em;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ul{margin:0;padding:0;}
+  .container{
+    max-width:1160px;
+    margin:0 auto;
+    padding:0 20px;
+  }
+  .visually-hidden{
+    position:absolute;width:1px;height:1px;overflow:hidden;
+    clip:rect(0 0 0 0);white-space:nowrap;
+  }
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-block;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:.95rem;
+    padding:13px 26px;
+    border-radius:6px;
+    border:2px solid transparent;
+    cursor:pointer;
+    text-align:center;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-cta{
+    background:var(--cta);
+    color:#fff;
+    box-shadow:0 4px 0 var(--cta-hover);
+  }
+  .btn-cta:hover{background:var(--cta-hover);}
+  .btn-cta:active{transform:translateY(1px);box-shadow:0 2px 0 var(--cta-hover);}
+  .btn-outline{
+    background:transparent;
+    border-color:#fff;
+    color:#fff;
+  }
+  .btn-outline:hover{background:rgba(255,255,255,.12);}
+  .btn-dark-outline{
+    background:transparent;
+    border-color:var(--dark);
+    color:var(--dark);
+  }
+  .btn-dark-outline:hover{background:var(--dark);color:#fff;}
+  .btn-sm{padding:9px 16px;font-size:.85rem;}
+  .btn-block{display:block;width:100%;}
+
+  /* ---------- NAV ---------- */
+  .site-header{
+    background:var(--dark);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+  }
+  .nav-wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px 20px;
+    max-width:1160px;
+    margin:0 auto;
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Merriweather',serif;
+    font-weight:900;
+    color:#fff;
+    font-size:1.15rem;
+    letter-spacing:.3px;
+    white-space:nowrap;
+  }
+  .logo-badge{
+    background:var(--cta);
+    color:var(--dark);
+    font-weight:900;
+    font-size:.85rem;
+    width:34px;
+    height:34px;
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap:28px;
+    list-style:none;
+  }
+  .nav-links a{
+    color:#d8ded9;
+    font-weight:500;
+    font-size:.95rem;
+    padding:6px 2px;
+    border-bottom:2px solid transparent;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .nav-links a:hover{color:#fff;}
+  .nav-links a.active{
+    color:#fff;
+    border-bottom-color:var(--cta);
+  }
+  .nav-right{display:flex;align-items:center;gap:18px;}
+  .hamburger{
+    display:none;
+    flex-direction:column;
+    justify-content:center;
+    gap:5px;
+    width:34px;
+    height:34px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    padding:0;
+  }
+  .hamburger span{
+    display:block;
+    height:2px;
+    width:100%;
+    background:#fff;
+    border-radius:2px;
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+  @media (max-width:860px){
+    .nav-links{
+      position:absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background:var(--dark-2);
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+      max-height:0;
+      overflow:hidden;
+      transition:max-height .25s ease;
+    }
+    .nav-links.open{max-height:400px;}
+    .nav-links li{width:100%;}
+    .nav-links a{
+      display:block;
+      padding:16px 24px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      width:100%;
+    }
+    .nav-links a.active{border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);}
+    .nav-right .btn-cta{display:none;}
+    .nav-links .mobile-cta{display:block;padding:16px 24px;}
+    .nav-links .mobile-cta .btn{width:100%;}
+    .hamburger{display:flex;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.025) 0 2px, transparent 2px 40px),
+      repeating-linear-gradient(25deg, rgba(0,0,0,.08) 0 1px, transparent 1px 60px),
+      linear-gradient(160deg, var(--dark) 0%, var(--dark-2) 100%);
+    color:#fff;
+    padding:76px 20px 84px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background-image:radial-gradient(circle at 20% 30%, rgba(193,127,36,.08), transparent 45%),
+                      radial-gradient(circle at 85% 75%, rgba(193,127,36,.06), transparent 40%);
+    pointer-events:none;
+  }
+  .hero-inner{max-width:760px;margin:0 auto;position:relative;}
+  .hero-kicker{
+    display:inline-block;
+    background:rgba(193,127,36,.18);
+    border:1px solid rgba(193,127,36,.4);
+    color:#f0c27f;
+    font-weight:600;
+    font-size:.78rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:30px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:clamp(2rem, 5vw, 3.1rem);
+    margin-bottom:.45em;
+  }
+  .hero p.sub{
+    color:#c9d3cb;
+    font-size:1.15rem;
+    max-width:600px;
+    margin:0 auto 34px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:16px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .trust-row{
+    margin-top:44px;
+    display:flex;
+    gap:36px;
+    justify-content:center;
+    flex-wrap:wrap;
+    color:#a9b6ac;
+    font-size:.85rem;
+    font-weight:500;
+  }
+  .trust-row span{display:flex;align-items:center;gap:8px;}
+  .trust-row strong{color:#fff;font-family:'Merriweather',serif;font-size:1.3rem;display:block;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section.block{padding:70px 20px;}
+  .section-head{text-align:center;max-width:640px;margin:0 auto 46px;}
+  .section-head h2{font-size:clamp(1.6rem,3.4vw,2.2rem);}
+  .section-head p{color:var(--muted);font-size:1.05rem;margin:0;}
+  .eyebrow{
+    display:block;
+    color:var(--accent);
+    font-weight:700;
+    font-size:.78rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    margin-bottom:10px;
+  }
+
+  /* ---------- CHOOSE CARDS ---------- */
+  .choose-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+    max-width:1160px;
+    margin:0 auto;
+  }
+  .choose-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:32px 28px;
+    box-shadow:0 4px 14px rgba(26,58,42,.05);
+  }
+  .choose-icon{
+    width:52px;height:52px;
+    border-radius:10px;
+    background:var(--dark);
+    color:var(--cta);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;
+    margin-bottom:18px;
+  }
+  .choose-card h3{font-size:1.2rem;margin-bottom:.5em;}
+  .choose-card p{color:var(--muted);font-size:.96rem;margin-bottom:0;}
+  .wood-list{list-style:none;margin-top:14px;font-size:.9rem;color:var(--text);}
+  .wood-list li{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px dashed var(--border);
+  }
+  .wood-list li:last-child{border-bottom:none;}
+  .wood-list b{color:var(--accent);}
+
+  @media (max-width:900px){
+    .choose-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- COMPARISON TABLE ---------- */
+  .table-wrap{
+    max-width:1160px;
+    margin:0 auto;
+    overflow-x:auto;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(26,58,42,.07);
+  }
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    min-width:720px;
+  }
+  table.compare thead th{
+    background:var(--dark);
+    color:#fff;
+    font-family:'Merriweather',serif;
+    font-weight:700;
+    font-size:.92rem;
+    text-align:left;
+    padding:16px 18px;
+  }
+  table.compare tbody td{
+    padding:16px 18px;
+    border-bottom:1px solid var(--border);
+    font-size:.94rem;
+    vertical-align:middle;
+  }
+  table.compare tbody tr:last-child td{border-bottom:none;}
+  table.compare tbody tr.top-pick{background:#e9f2ea;}
+  table.compare tbody tr:hover{background:#faf7f0;}
+  .top-pick-tag{
+    display:inline-block;
+    background:var(--dark);
+    color:#f0c27f;
+    font-size:.68rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    padding:3px 9px;
+    border-radius:20px;
+    margin-left:8px;
+    vertical-align:middle;
+  }
+  .prod-name{font-weight:700;color:var(--dark);font-family:'Merriweather',serif;font-size:.98rem;}
+  .stars{color:var(--star);white-space:nowrap;letter-spacing:1px;}
+  .rating-num{color:var(--muted);font-size:.85rem;margin-left:4px;}
+  .type-pill{
+    display:inline-block;
+    font-size:.78rem;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:20px;
+    background:#efe8da;
+    color:var(--accent);
+  }
+
+  /* ---------- QUIZ BANNER ---------- */
+  .quiz-banner{
+    background:linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+    color:#fff;
+    text-align:center;
+    padding:64px 20px;
+  }
+  .quiz-banner h2{color:#fff;font-size:clamp(1.5rem,3.6vw,2rem);}
+  .quiz-banner p{color:#c9d3cb;max-width:520px;margin:0 auto 30px;font-size:1.05rem;}
+
+  /* ---------- PAGE HEADER (inner pages) ---------- */
+  .page-hero{
+    background:var(--dark);
+    color:#fff;
+    padding:56px 20px;
+    text-align:center;
+  }
+  .page-hero h1{color:#fff;margin-bottom:.3em;font-size:clamp(1.8rem,4vw,2.6rem);}
+  .page-hero p{color:#c9d3cb;max-width:560px;margin:0 auto;}
+
+  /* ---------- FILTER BAR ---------- */
+  .filter-bar{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:34px 20px 6px;
+  }
+  .filter-btn{
+    background:#fff;
+    border:1px solid var(--border);
+    color:var(--text);
+    font-weight:600;
+    font-size:.88rem;
+    padding:9px 20px;
+    border-radius:30px;
+    cursor:pointer;
+    transition:background .15s, color .15s, border-color .15s;
+  }
+  .filter-btn:hover{border-color:var(--accent);}
+  .filter-btn.active{
+    background:var(--dark);
+    color:#fff;
+    border-color:var(--dark);
+  }
+
+  /* ---------- REVIEW CARDS ---------- */
+  .review-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+    padding:38px 20px 70px;
+    max-width:1160px;
+    margin:0 auto;
+  }
+  @media (max-width:960px){.review-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:640px){.review-grid{grid-template-columns:1fr;}}
+
+  .review-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 4px 14px rgba(26,58,42,.05);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .review-card:hover{transform:translateY(-4px);box-shadow:0 10px 26px rgba(26,58,42,.12);}
+  .review-thumb{
+    height:170px;
+    background:
+      repeating-linear-gradient(45deg, #e3dac8 0 12px, #ddd3bd 12px 24px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--accent);
+    font-family:'Merriweather',serif;
+    font-weight:700;
+    font-size:.95rem;
+    position:relative;
+  }
+  .review-thumb .type-pill{position:absolute;top:12px;left:12px;background:#fff;}
+  .review-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1;}
+  .review-body h3{font-size:1.08rem;margin-bottom:.3em;}
+  .review-summary{color:var(--muted);font-size:.92rem;margin-bottom:14px;flex:1;}
+  .review-actions{display:flex;flex-direction:column;gap:10px;margin-top:auto;}
+
+  /* ---------- COMPARISON ARTICLE CARDS ---------- */
+  .comp-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:24px;
+    padding:38px 20px 70px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+  @media (max-width:760px){.comp-grid{grid-template-columns:1fr;}}
+  .comp-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:5px solid var(--accent);
+    border-radius:10px;
+    padding:26px 26px 24px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 4px 14px rgba(26,58,42,.05);
+  }
+  .comp-card .eyebrow{margin-bottom:8px;}
+  .comp-card h3{font-size:1.12rem;margin-bottom:.5em;}
+  .comp-card p{color:var(--muted);font-size:.92rem;margin-bottom:18px;}
+  .comp-card .btn{align-self:flex-start;margin-top:auto;}
+
+  /* ---------- BUYING GUIDE ---------- */
+  .guide-wrap{
+    max-width:820px;
+    margin:0 auto;
+    padding:56px 20px 80px;
+  }
+  .guide-toc{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:22px 26px;
+    margin-bottom:40px;
+  }
+  .guide-toc h4{margin-bottom:.6em;font-size:1rem;}
+  .guide-toc ul{list-style:none;}
+  .guide-toc li{margin-bottom:6px;}
+  .guide-toc a{color:var(--accent);font-weight:600;font-size:.92rem;}
+  .guide-toc a:hover{text-decoration:underline;}
+  .guide-section{margin-bottom:46px;scroll-margin-top:90px;}
+  .guide-section h2{font-size:1.5rem;border-bottom:3px solid var(--cta);display:inline-block;padding-bottom:6px;}
+  .guide-section p{color:var(--text);font-size:1rem;}
+  .guide-section ul{margin:0 0 1em 1.2em;padding-left:1em;}
+  .guide-section li{margin-bottom:8px;}
+  .type-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:20px 0;}
+  @media (max-width:760px){.type-cards{grid-template-columns:1fr;}}
+  .type-card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px;
+  }
+  .type-card h4{font-family:'Merriweather',serif;color:var(--dark);font-size:1rem;margin-bottom:.4em;}
+  .type-card p{font-size:.88rem;color:var(--muted);margin:0;}
+  .safety-box{
+    background:#fbf1e6;
+    border:1px solid #ecd8b8;
+    border-left:5px solid var(--cta);
+    border-radius:8px;
+    padding:22px 24px;
+  }
+  .safety-box h2{margin-top:0;}
+  .faq-item{
+    border-bottom:1px solid var(--border);
+    padding:18px 0;
+  }
+  .faq-item h3{font-size:1.02rem;margin-bottom:.4em;color:var(--dark);}
+  .faq-item p{color:var(--muted);margin:0;font-size:.95rem;}
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{
+    background:var(--dark-2);
+    color:#c9d3cb;
+    padding:50px 20px 24px;
+  }
+  .footer-inner{
+    max-width:1160px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:30px;
+    padding-bottom:28px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .footer-brand .logo{margin-bottom:12px;}
+  .footer-brand p{max-width:280px;font-size:.9rem;color:#a9b6ac;}
+  .footer-links{
+    display:flex;
+    gap:14px;
+    list-style:none;
+    flex-wrap:wrap;
+  }
+  .footer-links a{
+    font-size:.9rem;
+    color:#c9d3cb;
+    padding:4px 0;
+  }
+  .footer-links a:hover{color:#fff;text-decoration:underline;}
+  .footer-bottom{
+    max-width:1160px;
+    margin:20px auto 0;
+    font-size:.8rem;
+    color:#8b988f;
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .disclaimer{
+    max-width:1160px;
+    margin:0 auto;
+    font-size:.78rem;
+    color:#7c897f;
+    margin-top:10px;
+  }
+
+  /* fade-in on route change */
+  .page-enter{animation:fadeIn .35s ease;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav-wrap">
+    <a href="#home" class="logo">
+      <span class="logo-badge">LS</span>
+      <span>LogSplitterLab</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#reviews" data-route="reviews">Reviews</a></li>
+      <li><a href="#comparisons" data-route="comparisons">Comparisons</a></li>
+      <li><a href="#buying-guide" data-route="buying-guide">Buying Guides</a></li>
+      <li><a href="#maintenance" data-route="maintenance">Maintenance</a></li>
+      <li class="mobile-cta"><a href="#reviews" class="btn btn-cta btn-block">Find Your Splitter</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#reviews" class="btn btn-cta btn-sm">Find Your Splitter</a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="app"></main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="#home" class="logo">
+        <span class="logo-badge">LS</span>
+        <span>LogSplitterLab</span>
+      </a>
+      <p>Reviews you can build a woodpile on.</p>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how-we-test">How We Test</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#affiliate-disclosure">Affiliate Disclosure</a></li>
+    </ul>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 LogSplitterLab</span>
+    <span>Reviews you can build a woodpile on.</span>
+  </div>
+  <p class="disclaimer">As an Amazon Associate we earn from qualifying purchases.</p>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- DATA ---------------- */
+  var PRODUCTS = [
+    {name:"Champion 27-Ton", tons:"27T", type:"Gas", price:"$1,299", rating:4.8, top:true,
+      summary:"The strongest gas splitter in our lineup — built for heavy hardwood and daily use."},
+    {name:"WEN 56207", tons:"7T", type:"Electric", price:"$299", rating:4.6, top:false,
+      summary:"Quiet, garage-friendly electric splitter that's perfect for weekend firewood runs."},
+    {name:"Husqvarna S461", tons:"4T", type:"Manual", price:"$189", rating:4.4, top:false,
+      summary:"No engine, no fumes — a rugged manual splitter for light, occasional splitting."},
+    {name:"YARDMAX YU2566", tons:"25T", type:"Gas", price:"$999", rating:4.7, top:false,
+      summary:"Nearly Champion-level power at a lower price, with a faster cycle time."},
+    {name:"Boss Industrial ES7T20", tons:"7T", type:"Electric", price:"$349", rating:4.5, top:false,
+      summary:"A dependable electric option with a longer beam for bigger rounds."}
+  ];
+
+  var REVIEWS = [
+    {name:"Champion 27-Ton", type:"Gas", rating:4.8, summary:"Our top pick for serious firewood processing — brute force with reliable cycle times."},
+    {name:"WEN 56207", type:"Electric", rating:4.6, summary:"The best balance of price, quiet operation, and power for suburban lots."},
+    {name:"Husqvarna S461", type:"Manual", rating:4.4, summary:"Old-school hydraulics that never need gas, oil changes, or an outlet."},
+    {name:"YARDMAX YU2566", type:"Gas", rating:4.7, summary:"25 tons of force with a genuinely fast cycle time — great value against the Champion."},
+    {name:"Boss Industrial ES7T20", type:"Electric", rating:4.5, summary:"A longer log cradle makes this electric splitter feel bigger than its 7 tons."},
+    {name:"Iron & Oak TR22", type:"Gas", rating:4.5, summary:"A dark-horse gas splitter with a surprisingly smooth two-stage pump."}
+  ];
+
+  var COMPARISONS = [
+    {title:"Champion vs YARDMAX — Which Gas Splitter Wins?", desc:"Two of the most popular gas splitters go head-to-head on power, speed, and price."},
+    {title:"Gas vs Electric Log Splitter — The Real Difference", desc:"What you actually gain and give up when you trade a gas engine for an electric motor."},
+    {title:"Best Log Splitter Under $500", desc:"Our picks for homeowners who don't need commercial-grade tonnage."},
+    {title:"7-Ton vs 25-Ton — What Tonnage Do You Actually Need?", desc:"A practical breakdown of tonnage versus wood diameter and species."},
+    {title:"Horizontal vs Vertical Log Splitters", desc:"Why orientation matters more than most buyers realize, especially for big rounds."},
+    {title:"Best Electric Log Splitter for Home Use", desc:"Quiet, low-maintenance splitters that are perfect for garages and small properties."}
+  ];
+
+  /* ---------------- HELPERS ---------------- */
+  function stars(rating){
+    var full = Math.floor(rating);
+    var half = rating - full >= 0.5;
+    var s = "";
+    for(var i=0;i<full;i++) s += "★";
+    if(half) s += "½";
+    for(var i=0;i<(5-full-(half?1:0));i++) s += "☆";
+    return s;
+  }
+
+  function amazonBtn(cls){
+    return '<a href="#" class="btn btn-cta ' + (cls||'') + '" onclick="return false;">Check Price on Amazon</a>';
+  }
+
+  function esc(str){
+    return String(str).replace(/[&<>"']/g, function(c){
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+    });
+  }
+
+  /* ---------------- PAGE RENDERERS ---------------- */
+  function renderHome(){
+    var rows = PRODUCTS.map(function(p){
+      return '<tr class="' + (p.top ? 'top-pick' : '') + '">' +
+        '<td><span class="prod-name">' + esc(p.name) + '</span>' + (p.top ? '<span class="top-pick-tag">Top Pick</span>' : '') + '</td>' +
+        '<td>' + esc(p.tons) + '</td>' +
+        '<td><span class="type-pill">' + esc(p.type) + '</span></td>' +
+        '<td>' + esc(p.price) + '</td>' +
+        '<td><span class="stars">' + stars(p.rating) + '</span><span class="rating-num">' + p.rating.toFixed(1) + '</span></td>' +
+        '<td>' + amazonBtn('btn-sm') + '</td>' +
+      '</tr>';
+    }).join('');
+
+    return '' +
+    '<section class="hero">' +
+      '<div class="hero-inner">' +
+        '<span class="hero-kicker">Trusted by 40,000+ readers a month</span>' +
+        '<h1>Find the Log Splitter That Actually Earns Its Keep</h1>' +
+        '<p class="sub">Unbiased reviews and head-to-head comparisons to help you split smarter, not harder.</p>' +
+        '<div class="hero-actions">' +
+          '<a href="#reviews" class="btn btn-cta">See Top Picks</a>' +
+          '<a href="#buying-guide" class="btn btn-outline">Take the Quiz</a>' +
+        '</div>' +
+        '<div class="trust-row">' +
+          '<span><strong>40+</strong>hours of research per review</span>' +
+          '<span><strong>25</strong>splitters tested since 2023</span>' +
+          '<span><strong>100%</strong>independent, reader-supported</span>' +
+        '</div>' +
+      '</div>' +
+    '</section>' +
+
+    '<section class="block">' +
+      '<div class="section-head">' +
+        '<span class="eyebrow">Start Here</span>' +
+        '<h2>How To Choose the Right Log Splitter</h2>' +
+        '<p>Three questions to answer before you spend a dollar.</p>' +
+      '</div>' +
+      '<div class="choose-grid">' +
+        '<div class="choose-card">' +
+          '<div class="choose-icon">🪵</div>' +
+          '<h3>How hard is your wood?</h3>' +
+          '<p>Denser hardwoods need more tonnage to split cleanly. Here\'s roughly what to look for:</p>' +
+          '<ul class="wood-list">' +
+            '<li>Pine, Cedar, Poplar <b>4–7 tons</b></li>' +
+            '<li>Oak, Maple, Ash <b>10–20 tons</b></li>' +
+            '<li>Elm, Sycamore, knotty rounds <b>22–30 tons</b></li>' +
+          '</ul>' +
+        '</div>' +
+        '<div class="choose-card">' +
+          '<div class="choose-icon">⚙️</div>' +
+          '<h3>Gas, Electric or Manual?</h3>' +
+          '<p><b>Gas</b> splitters go anywhere and handle the biggest rounds. <b>Electric</b> is quieter and low-maintenance for smaller lots. <b>Manual</b> hydraulic splitters need no fuel or power at all, but demand more of your own effort.</p>' +
+        '</div>' +
+        '<div class="choose-card">' +
+          '<div class="choose-icon">⏱️</div>' +
+          '<h3>How fast do you need to work?</h3>' +
+          '<p>Cycle time — how long it takes the ram to extend and retract — determines how many logs you split per hour. If you\'re processing a full cord, a 12-second cycle beats a 20-second cycle by hours.</p>' +
+        '</div>' +
+      '</div>' +
+    '</section>' +
+
+    '<section class="block" style="padding-top:0;">' +
+      '<div class="section-head">' +
+        '<span class="eyebrow">Featured Comparison</span>' +
+        '<h2>2026 Top Log Splitters — Quick Comparison</h2>' +
+        '<p>Our current top-rated picks, ranked and compared at a glance.</p>' +
+      '</div>' +
+      '<div class="table-wrap">' +
+        '<table class="compare">' +
+          '<thead><tr><th>Product Name</th><th>Tons</th><th>Type</th><th>Price</th><th>Rating</th><th>Action</th></tr></thead>' +
+          '<tbody>' + rows + '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</section>' +
+
+    '<section class="quiz-banner">' +
+      '<h2>Still not sure? Take the 60-second match quiz.</h2>' +
+      '<p>Answer 5 questions about your wood and workload — we\'ll narrow it to 2 machines.</p>' +
+      '<a href="#buying-guide" class="btn btn-cta">Start the Quiz</a>' +
+    '</section>';
+  }
+
+  function reviewCard(r){
+    return '' +
+    '<div class="review-card" data-type="' + esc(r.type) + '">' +
+      '<div class="review-thumb"><span class="type-pill">' + esc(r.type) + '</span>' + esc(r.name) + '</div>' +
+      '<div class="review-body">' +
+        '<h3>' + esc(r.name) + '</h3>' +
+        '<span class="stars">' + stars(r.rating) + '</span><span class="rating-num">' + r.rating.toFixed(1) + '</span>' +
+        '<p class="review-summary">' + esc(r.summary) + '</p>' +
+        '<div class="review-actions">' +
+          '<a href="#" class="btn btn-dark-outline btn-sm" onclick="return false;">Read Full Review</a>' +
+          amazonBtn('btn-sm') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderReviews(){
+    var cards = REVIEWS.map(reviewCard).join('');
+    return '' +
+    '<section class="page-hero">' +
+      '<h1>Log Splitter Reviews</h1>' +
+      '<p>Hands-on impressions and ratings from real wood-splitting sessions.</p>' +
+    '</section>' +
+    '<div class="filter-bar" id="filterBar">' +
+      '<button class="filter-btn active" data-filter="All">All</button>' +
+      '<button class="filter-btn" data-filter="Gas">Gas</button>' +
+      '<button class="filter-btn" data-filter="Electric">Electric</button>' +
+      '<button class="filter-btn" data-filter="Manual">Manual</button>' +
+    '</div>' +
+    '<div class="review-grid" id="reviewGrid">' + cards + '</div>';
+  }
+
+  function renderComparisons(){
+    var cards = COMPARISONS.map(function(c){
+      return '' +
+      '<div class="comp-card">' +
+        '<span class="eyebrow">Comparison</span>' +
+        '<h3>' + esc(c.title) + '</h3>' +
+        '<p>' + esc(c.desc) + '</p>' +
+        '<a href="#" class="btn btn-dark-outline btn-sm" onclick="return false;">Read Comparison</a>' +
+      '</div>';
+    }).join('');
+
+    return '' +
+    '<section class="page-hero">' +
+      '<h1>Log Splitter Comparisons</h1>' +
+      '<p>Head-to-head breakdowns to help you choose between two close contenders.</p>' +
+    '</section>' +
+    '<div class="comp-grid">' + cards + '</div>';
+  }
+
+  function renderBuyingGuide(){
+    return '' +
+    '<section class="page-hero">' +
+      '<h1>The Complete Log Splitter Buying Guide</h1>' +
+      '<p>Everything a first-time buyer needs to know before choosing a machine.</p>' +
+    '</section>' +
+    '<div class="guide-wrap">' +
+      '<div class="guide-toc">' +
+        '<h4>In this guide</h4>' +
+        '<ul>' +
+          '<li><a href="#g-what">What is a log splitter?</a></li>' +
+          '<li><a href="#g-types">Types of log splitters</a></li>' +
+          '<li><a href="#g-tonnage">How to choose the right tonnage</a></li>' +
+          '<li><a href="#g-gev">Gas vs Electric vs Manual</a></li>' +
+          '<li><a href="#g-safety">Safety tips</a></li>' +
+          '<li><a href="#g-faq">FAQ</a></li>' +
+        '</ul>' +
+      '</div>' +
+
+      '<div class="guide-section" id="g-what">' +
+        '<h2>What is a log splitter?</h2>' +
+        '<p>A log splitter is a machine that uses hydraulic force to push a log through a wedge, splitting it into pieces sized for a wood stove, fireplace, or fire pit. Instead of swinging an axe or maul, an operator loads a round onto a beam and the machine does the work — making it dramatically faster and safer for processing large volumes of firewood.</p>' +
+      '</div>' +
+
+      '<div class="guide-section" id="g-types">' +
+        '<h2>Types of log splitters</h2>' +
+        '<p>Log splitters are generally categorized by power source and by orientation.</p>' +
+        '<div class="type-cards">' +
+          '<div class="type-card"><h4>Horizontal</h4><p>The log sits flat and is pushed lengthwise into the wedge. Easiest to load for small-to-medium rounds.</p></div>' +
+          '<div class="type-card"><h4>Vertical</h4><p>The log stands upright, so you never have to lift heavy rounds onto a beam. Ideal for large, awkward pieces.</p></div>' +
+          '<div class="type-card"><h4>Horizontal/Vertical</h4><p>Convertible models that switch between orientations, giving you flexibility for mixed wood sizes.</p></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="guide-section" id="g-tonnage">' +
+        '<h2>How to choose the right tonnage</h2>' +
+        '<p>Tonnage measures how much splitting force the ram can generate. As a rule of thumb:</p>' +
+        '<ul>' +
+          '<li><b>4–7 tons</b> — softwoods and occasional splitting (pine, cedar, poplar).</li>' +
+          '<li><b>10–20 tons</b> — most seasoned hardwoods for regular home heating (oak, maple, ash).</li>' +
+          '<li><b>22+ tons</b> — large diameter rounds, knotty or green hardwood, or commercial-scale processing.</li>' +
+        '</ul>' +
+        '<p>When in doubt, size up — a splitter with more tonnage than you strictly need will simply work faster and stall less often.</p>' +
+      '</div>' +
+
+      '<div class="guide-section" id="g-gev">' +
+        '<h2>Gas vs Electric vs Manual</h2>' +
+        '<div class="type-cards">' +
+          '<div class="type-card"><h4>Gas</h4><p>Most powerful and fully portable, but louder and requires fuel and basic engine maintenance.</p></div>' +
+          '<div class="type-card"><h4>Electric</h4><p>Quiet, low-maintenance, and ideal near the house — but tied to an outlet and typically capped around 7–10 tons.</p></div>' +
+          '<div class="type-card"><h4>Manual</h4><p>No engine or motor at all — inexpensive and always ready, but relies on your own hydraulic pump effort.</p></div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="guide-section" id="g-safety">' +
+        '<div class="safety-box">' +
+          '<h2>Safety tips</h2>' +
+          '<ul>' +
+            '<li>Always wear safety glasses and steel-toe boots when operating a splitter.</li>' +
+            '<li>Keep hands clear of the wedge and ram path — never try to guide a splitting log by hand.</li>' +
+            '<li>Only split one log at a time unless the machine is explicitly rated for it.</li>' +
+            '<li>Inspect hydraulic hoses and fittings for leaks before every use.</li>' +
+            '<li>Keep children and pets well outside the machine\'s working radius.</li>' +
+          '</ul>' +
+        '</div>' +
+      '</div>' +
+
+      '<div class="guide-section" id="g-faq">' +
+        '<h2>FAQ</h2>' +
+        '<div class="faq-item"><h3>How much tonnage do I actually need for firewood?</h3><p>For most home heating with seasoned hardwood, 10–20 tons handles the job comfortably. Only go higher if you regularly split large, knotty, or green rounds.</p></div>' +
+        '<div class="faq-item"><h3>Is a gas or electric log splitter better?</h3><p>Gas splitters offer more power and full portability; electric splitters are quieter and lower-maintenance but need to stay near an outlet. Choose based on where and how much you\'ll be splitting.</p></div>' +
+        '<div class="faq-item"><h3>What does "cycle time" mean?</h3><p>Cycle time is how long the ram takes to fully extend and retract. A shorter cycle time means you split more wood per hour.</p></div>' +
+        '<div class="faq-item"><h3>Can I use a log splitter on green wood?</h3><p>Yes, though green wood is generally harder to split than seasoned wood and may benefit from a higher-tonnage machine.</p></div>' +
+        '<div class="faq-item"><h3>How do I maintain a log splitter?</h3><p>Check hydraulic fluid levels, inspect hoses for wear, keep the wedge sharp, and for gas models, change the engine oil per the manufacturer\'s schedule.</p></div>' +
+      '</div>' +
+    '</div>';
+  }
+
+  function renderMaintenance(){
+    return '' +
+    '<section class="page-hero">' +
+      '<h1>Log Splitter Maintenance</h1>' +
+      '<p>Keep your machine running strong for seasons to come.</p>' +
+    '</section>' +
+    '<div class="guide-wrap">' +
+      '<div class="guide-section">' +
+        '<h2>Coming soon</h2>' +
+        '<p>Our full maintenance guides — hydraulic fluid schedules, engine winterizing, wedge sharpening, and more — are in progress. Check back soon, or start with our <a href="#buying-guide" style="color:var(--accent);font-weight:600;">Buying Guide</a> in the meantime.</p>' +
+      '</div>' +
+    '</div>';
+  }
+
+  var ROUTES = {
+    "home": renderHome,
+    "reviews": renderReviews,
+    "comparisons": renderComparisons,
+    "buying-guide": renderBuyingGuide,
+    "maintenance": renderMaintenance
+  };
+
+  /* ---------------- ROUTER ---------------- */
+  var app = document.getElementById('app');
+  var navLinks = document.getElementById('navLinks');
+  var hamburger = document.getElementById('hamburger');
+
+  function currentRoute(){
+    var hash = window.location.hash.replace('#','').split('?')[0];
+    return ROUTES[hash] ? hash : 'home';
+  }
+
+  function render(){
+    var route = currentRoute();
+    app.innerHTML = ROUTES[route]();
+    app.classList.remove('page-enter');
+    void app.offsetWidth; // restart animation
+    app.classList.add('page-enter');
+
+    // active nav state
+    var links = navLinks.querySelectorAll('a[data-route]');
+    links.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('data-route') === route);
+    });
+
+    // close mobile menu on navigation
+    closeMenu();
+
+    // wire up filter bar if present
+    var filterBar = document.getElementById('filterBar');
+    if(filterBar){
+      filterBar.addEventListener('click', function(e){
+        var btn = e.target.closest('.filter-btn');
+        if(!btn) return;
+        filterBar.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        var filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('#reviewGrid .review-card').forEach(function(card){
+          var show = filter === 'All' || card.getAttribute('data-type') === filter;
+          card.style.display = show ? '' : 'none';
+        });
+      });
+    }
+
+    window.scrollTo({top:0, behavior:'instant' in window.HTMLElement.prototype ? 'instant' : 'auto'});
+  }
+
+  window.addEventListener('hashchange', render);
+  document.addEventListener('DOMContentLoaded', render);
+
+  /* ---------------- MOBILE MENU ---------------- */
+  function closeMenu(){
+    navLinks.classList.remove('open');
+    hamburger.classList.remove('open');
+    hamburger.setAttribute('aria-expanded','false');
+  }
+  hamburger.addEventListener('click', function(){
+    var isOpen = navLinks.classList.toggle('open');
+    hamburger.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  // initial render (in case DOMContentLoaded already fired)
+  if(document.readyState !== 'loading') render();
+})();
+</script>
+</body>
+</html>
