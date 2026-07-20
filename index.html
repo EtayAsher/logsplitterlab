@@ -389,6 +389,98 @@
   .quiz-banner h2{color:#fff;font-size:clamp(1.5rem,3.6vw,2rem);}
   .quiz-banner p{color:#c9d3cb;max-width:520px;margin:0 auto 30px;font-size:1.05rem;}
 
+  /* ---------- QUIZ MODAL ---------- */
+  .quiz-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(8,18,13,.75);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:2000;
+    padding:20px;
+  }
+  .quiz-overlay.open{display:flex;}
+  .quiz-modal{
+    position:relative;
+    background:var(--bg);
+    border-radius:14px;
+    width:100%;
+    max-width:560px;
+    max-height:90vh;
+    overflow-y:auto;
+    padding:38px 32px 32px;
+    box-shadow:0 24px 60px rgba(0,0,0,.4);
+  }
+  .quiz-close{
+    position:absolute;
+    top:16px;
+    right:16px;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    border:none;
+    background:var(--dark);
+    color:#fff;
+    font-size:1.3rem;
+    line-height:1;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:background .15s ease;
+  }
+  .quiz-close:hover{background:var(--cta-hover);}
+  .quiz-progress-wrap{margin-bottom:28px;padding-right:44px;}
+  .quiz-progress-label{
+    font-size:.78rem;
+    font-weight:700;
+    color:var(--accent);
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:10px;
+  }
+  .quiz-progress-bar{
+    height:8px;
+    border-radius:6px;
+    background:var(--border);
+    overflow:hidden;
+  }
+  .quiz-progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--cta);
+    border-radius:6px;
+    transition:width .3s ease;
+  }
+  .quiz-question h3{font-size:1.3rem;margin-bottom:22px;}
+  .quiz-options{display:flex;flex-direction:column;gap:12px;}
+  .quiz-option{
+    display:block;
+    width:100%;
+    text-align:left;
+    background:#fff;
+    border:2px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    font-family:'Inter',sans-serif;
+    font-size:.98rem;
+    font-weight:600;
+    color:var(--text);
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .quiz-option:hover{border-color:var(--cta);background:#fdf8ef;}
+  .quiz-result{text-align:center;}
+  .quiz-result h3{font-size:1.5rem;margin-bottom:.5em;}
+  .quiz-result p{color:var(--muted);font-size:1rem;margin-bottom:28px;}
+  .btn-green{
+    background:#2e7d4f;
+    color:#fff;
+    box-shadow:0 4px 0 #235f3c;
+  }
+  .btn-green:hover{background:#256a41;}
+
   /* ---------- PAGE HEADER (inner pages) ---------- */
   .page-hero{
     background:var(--dark);
@@ -609,7 +701,6 @@
       <li class="mobile-cta"><a href="#reviews" class="btn btn-cta btn-block">Find Your Splitter</a></li>
     </ul>
     <div class="nav-right">
-      <a href="#reviews" class="btn btn-cta btn-sm">Find Your Splitter</a>
       <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -618,6 +709,17 @@
 </header>
 
 <main id="app"></main>
+
+<div class="quiz-overlay" id="quizOverlay">
+  <div class="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quizProgressLabel">
+    <button class="quiz-close" id="quizClose" aria-label="Close quiz">&times;</button>
+    <div class="quiz-progress-wrap">
+      <div class="quiz-progress-label" id="quizProgressLabel">Question 1 of 5</div>
+      <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quizProgressFill"></div></div>
+    </div>
+    <div id="quizBody"></div>
+  </div>
+</div>
 
 <footer class="site-footer">
   <div class="footer-inner">
@@ -668,6 +770,67 @@
     {name:"Boss Industrial ES7T20", type:"Electric", rating:4.5, summary:"A longer log cradle makes this electric splitter feel bigger than its 7 tons."},
     {name:"Iron & Oak TR22", type:"Gas", rating:4.5, summary:"A dark-horse gas splitter with a surprisingly smooth two-stage pump."}
   ];
+
+  var QUIZ_QUESTIONS = [
+    {
+      q:"How much wood do you split per year?",
+      options:[
+        {label:"A little (1-2 cords)", scores:{manual:2, electric:1, gas:0}},
+        {label:"A moderate amount (3-5 cords)", scores:{electric:2, gas:1, manual:0}},
+        {label:"A lot (6+ cords)", scores:{gas:3, electric:0, manual:0}}
+      ]
+    },
+    {
+      q:"What type of wood do you split mostly?",
+      options:[
+        {label:"Softwood (pine, cedar)", scores:{manual:2, electric:2, gas:0}},
+        {label:"Mixed hardwood (oak, maple)", scores:{electric:1, gas:2, manual:0}},
+        {label:"Very dense hardwood (elm, hickory)", scores:{gas:3, electric:0, manual:0}}
+      ]
+    },
+    {
+      q:"Where will you use it?",
+      options:[
+        {label:"Near a power outlet", scores:{electric:3, gas:0, manual:0}},
+        {label:"In the field or remote area", scores:{gas:3, manual:1, electric:0}},
+        {label:"I'm not sure", scores:{electric:1, gas:1, manual:1}}
+      ]
+    },
+    {
+      q:"What's your budget?",
+      options:[
+        {label:"Under $300", scores:{manual:2, electric:2, gas:0}},
+        {label:"$300–$800", scores:{electric:2, gas:1, manual:0}},
+        {label:"Over $800", scores:{gas:3, electric:0, manual:0}}
+      ]
+    },
+    {
+      q:"How important is low maintenance?",
+      options:[
+        {label:"Very important", scores:{electric:2, manual:2, gas:0}},
+        {label:"Somewhat important", scores:{electric:1, gas:1, manual:0}},
+        {label:"Not important", scores:{gas:2, electric:0, manual:0}}
+      ]
+    }
+  ];
+
+  var QUIZ_RESULTS = {
+    electric:{
+      title:"Electric is your best match.",
+      desc:"Based on your answers, an electric splitter gives you plenty of power with minimal noise, fumes, and maintenance — perfect for splitting near your home or garage. It's the easiest option to keep running season after season.",
+      cta:"See Top Electric Picks"
+    },
+    gas:{
+      title:"Gas is your best match.",
+      desc:"Based on your answers, you need more raw power and portability than an electric or manual unit can offer — ideal for large volumes, dense hardwood, or remote work sites. A gas splitter will handle the heaviest rounds without slowing down.",
+      cta:"See Top Gas Picks"
+    },
+    manual:{
+      title:"Manual is your best match.",
+      desc:"Based on your answers, a manual hydraulic splitter gives you plenty of power for lighter, occasional splitting without any fuel, cords, or engine maintenance. It's the simplest, most affordable way to get the job done.",
+      cta:"See Top Manual Picks"
+    }
+  };
 
   var COMPARISONS = [
     {title:"Champion vs YARDMAX — Which Gas Splitter Wins?", desc:"Two of the most popular gas splitters go head-to-head on power, speed, and price."},
@@ -738,7 +901,6 @@
       '</div>' +
       '<div class="choose-grid">' +
         '<div class="choose-card">' +
-          '<div class="choose-icon">🪵</div>' +
           '<h3>How hard is your wood?</h3>' +
           '<p>Denser hardwoods need more tonnage to split cleanly. Here\'s roughly what to look for:</p>' +
           '<ul class="wood-list">' +
@@ -748,12 +910,10 @@
           '</ul>' +
         '</div>' +
         '<div class="choose-card">' +
-          '<div class="choose-icon">⚙️</div>' +
           '<h3>Gas, Electric or Manual?</h3>' +
           '<p><b>Gas</b> splitters go anywhere and handle the biggest rounds. <b>Electric</b> is quieter and low-maintenance for smaller lots. <b>Manual</b> hydraulic splitters need no fuel or power at all, but demand more of your own effort.</p>' +
         '</div>' +
         '<div class="choose-card">' +
-          '<div class="choose-icon">⏱️</div>' +
           '<h3>How fast do you need to work?</h3>' +
           '<p>Cycle time — how long it takes the ram to extend and retract — determines how many logs you split per hour. If you\'re processing a full cord, a 12-second cycle beats a 20-second cycle by hours.</p>' +
         '</div>' +
@@ -777,7 +937,7 @@
     '<section class="quiz-banner">' +
       '<h2>Still not sure? Take the 60-second match quiz.</h2>' +
       '<p>Answer 5 questions about your wood and workload — we\'ll narrow it to 2 machines.</p>' +
-      '<a href="#buying-guide" class="btn btn-cta">Start the Quiz</a>' +
+      '<button type="button" class="btn btn-cta" data-open-quiz>Start the Quiz</button>' +
     '</section>';
   }
 
@@ -990,6 +1150,98 @@
     var isOpen = navLinks.classList.toggle('open');
     hamburger.classList.toggle('open', isOpen);
     hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  /* ---------------- QUIZ ---------------- */
+  var quizOverlay = document.getElementById('quizOverlay');
+  var quizClose = document.getElementById('quizClose');
+  var quizBody = document.getElementById('quizBody');
+  var quizProgressLabel = document.getElementById('quizProgressLabel');
+  var quizProgressFill = document.getElementById('quizProgressFill');
+  var quizState = {step:0, scores:{electric:0, gas:0, manual:0}};
+
+  function openQuiz(){
+    quizState = {step:0, scores:{electric:0, gas:0, manual:0}};
+    quizOverlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    renderQuizStep();
+  }
+
+  function closeQuiz(){
+    quizOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function renderQuizStep(){
+    var total = QUIZ_QUESTIONS.length;
+    var i = quizState.step;
+    var question = QUIZ_QUESTIONS[i];
+
+    quizProgressLabel.textContent = 'Question ' + (i + 1) + ' of ' + total;
+    quizProgressFill.style.width = ((i / total) * 100) + '%';
+
+    var optionsHtml = question.options.map(function(opt, idx){
+      return '<button type="button" class="quiz-option" data-idx="' + idx + '">' + esc(opt.label) + '</button>';
+    }).join('');
+
+    quizBody.innerHTML =
+      '<div class="quiz-question">' +
+        '<h3>' + esc(question.q) + '</h3>' +
+        '<div class="quiz-options">' + optionsHtml + '</div>' +
+      '</div>';
+
+    quizBody.querySelectorAll('.quiz-option').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var idx = parseInt(btn.getAttribute('data-idx'), 10);
+        var scores = question.options[idx].scores;
+        Object.keys(scores).forEach(function(k){ quizState.scores[k] += scores[k]; });
+        quizState.step++;
+        if(quizState.step >= total){
+          renderQuizResult();
+        } else {
+          renderQuizStep();
+        }
+      });
+    });
+  }
+
+  function renderQuizResult(){
+    quizProgressLabel.textContent = 'Your Result';
+    quizProgressFill.style.width = '100%';
+
+    var scores = quizState.scores;
+    var winner = 'electric';
+    ['electric','gas','manual'].forEach(function(k){
+      if(scores[k] > scores[winner]) winner = k;
+    });
+    var result = QUIZ_RESULTS[winner];
+
+    quizBody.innerHTML =
+      '<div class="quiz-result">' +
+        '<h3>' + esc(result.title) + '</h3>' +
+        '<p>' + esc(result.desc) + '</p>' +
+        '<button type="button" class="btn btn-green" id="quizCtaBtn">' + esc(result.cta) + '</button>' +
+      '</div>';
+
+    document.getElementById('quizCtaBtn').addEventListener('click', function(){
+      closeQuiz();
+      window.location.hash = '#reviews';
+    });
+  }
+
+  document.body.addEventListener('click', function(e){
+    if(e.target.closest('[data-open-quiz]')){
+      e.preventDefault();
+      openQuiz();
+    }
+  });
+
+  quizClose.addEventListener('click', closeQuiz);
+  quizOverlay.addEventListener('click', function(e){
+    if(e.target === quizOverlay) closeQuiz();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && quizOverlay.classList.contains('open')) closeQuiz();
   });
 
   // initial render (in case DOMContentLoaded already fired)
