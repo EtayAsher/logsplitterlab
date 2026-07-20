@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="LogSplitterLab">
+  <rect width="1200" height="630" fill="#1a3a2a"/>
+  <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#c17f24" stroke-width="0"/>
+  <circle cx="150" cy="150" r="4" fill="#ffffff" opacity=".08"/>
+  <g transform="translate(120,240)">
+    <rect x="0" y="0" width="90" height="90" rx="12" fill="#c17f24"/>
+    <text x="45" y="60" font-family="Georgia, serif" font-size="42" font-weight="700" fill="#1a3a2a" text-anchor="middle">LS</text>
+  </g>
+  <text x="240" y="300" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#ffffff">LogSplitterLab</text>
+  <text x="240" y="350" font-family="Arial, sans-serif" font-size="28" fill="#c9d3cb">Research-based log splitter guides &amp; comparisons</text>
+  <!-- Replace this generated placeholder with a real 1200x630 social image (see README). -->
+</svg>
