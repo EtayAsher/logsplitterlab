@@ -1,16 +1,28 @@
-// Central affiliate link configuration.
+// Central affiliate link configuration — the ONLY place a commercial link
+// gets wired into the site. See OWNER_SETUP.md for the step-by-step guide
+// to getting these values from Amazon Associates.
 //
-// Keyed by product id (see tools/data/products.js). Until a real Amazon
-// Associates URL is supplied for a product, its value stays null and the
-// site renders a disabled "Amazon link coming soon" control instead of a
-// working link — never a fake href="#".
+// Keyed by product id (see tools/data/products.js). Each entry is either
+// `null` (nothing configured yet) or an object:
 //
-// To add a real link once the owner has an Amazon Associates account:
-//   1. Set amazonAssociatesTag in tools/data/site-config.js
-//   2. Fill in the url below, e.g.
-//        'champion-100424': 'https://www.amazon.com/dp/XXXXXXXXXX',
-//      (the build script appends the ?tag= automatically from site-config)
-//   3. Re-run `node tools/build.js`
+//   {
+//     directUrl:    'https://www.amazon.com/dp/XXXXXXXXXX',  // plain product URL, no tracking
+//     taggedUrl:    null,                                     // a full SiteStripe "Special Link" — if
+//                                                              // present, this is used AS-IS and directUrl
+//                                                              // is ignored, since it already carries
+//                                                              // Amazon's own tracking parameters.
+//     ctaLabel:     'Check Price on Amazon',                  // button text; override per product if needed
+//     enabled:      false,                                    // must be explicitly set to true to go live
+//     lastVerified: null,                                     // 'YYYY-MM-DD' — when this link was last clicked/checked
+//   }
+//
+// Until an entry has `enabled: true` and a working URL, the site renders a
+// disabled "Amazon link not yet added" control — never a fake href="#" and
+// never a live-looking button pointing nowhere real.
+//
+// tools/lib/components.js builds the final href as:
+//   taggedUrl, if present — used verbatim
+//   otherwise directUrl + "?tag=<amazonAssociatesTag>" (from site-config.js), if both are set
 'use strict';
 
 module.exports = {

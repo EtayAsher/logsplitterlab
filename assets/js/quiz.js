@@ -72,19 +72,21 @@
     electric: {
       title: 'An electric splitter fits your answers best.',
       desc: 'Electric splitters run quiet, need very little maintenance, and are a good match for splitting near a house or garage. They typically top out around 7–10 tons, which covers most home firewood needs but not the densest, largest rounds.',
-      cta: 'See Top Electric Picks',
+      cta: 'See Best Electric Log Splitters',
       type: 'electric',
+      href: '/best-electric-log-splitters/',
     },
     gas: {
       title: 'A gas splitter fits your answers best.',
       desc: 'Gas splitters deliver the most power and go anywhere, which suits large volumes, dense hardwood, or remote sites without power. The tradeoff is more noise, fuel, and routine engine maintenance.',
-      cta: 'See Top Gas Picks',
+      cta: 'See Best Gas Log Splitters',
       type: 'gas',
+      href: '/best-gas-log-splitters/',
     },
     manual: {
-      title: 'A manual splitter fits your answers best.',
-      desc: 'Manual hydraulic splitters need no fuel or outlet and cost the least, which suits light, occasional splitting of softer wood. They ask more of your own effort and take longer per log than a powered machine. We don\'t have a verified manual model reviewed yet, so here\'s what to look for instead.',
-      cta: 'See Manual Splitter Guidance',
+      title: 'A manual splitter may suit your workload.',
+      desc: 'A manual hydraulic splitter needs no fuel or outlet and costs the least, which suits light, occasional splitting of softer wood. It asks more of your own effort and takes longer per log than a powered machine. Our manual product reviews are still being researched.',
+      cta: 'See the Buying Guide',
       type: 'manual',
       href: '/buying-guide/#g-power',
     },
@@ -185,6 +187,7 @@
     progressFill.style.width = '100%';
 
     var result = RESULTS[winner(state.scores)];
+    if (window.lslTrack) window.lslTrack('quiz_completed', { result_category: result.type });
     var summaryHtml = state.answers.map(function (a) {
       return '<li><b>' + escapeHtml(a.q) + '</b> — ' + escapeHtml(a.a) + '</li>';
     }).join('');
@@ -235,6 +238,7 @@
   }
 
   function open(trigger) {
+    if (window.lslTrack) window.lslTrack('quiz_opened', {});
     triggerEl = trigger || null;
     overlay.hidden = false;
     // Force reflow so the CSS transition/visibility applies consistently.

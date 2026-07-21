@@ -1,19 +1,21 @@
 'use strict';
 
 module.exports = function home(ctx) {
-  const { products, components, layout } = ctx;
+  const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
-  const { comparisonTable } = components;
+  const { comparisonTable, productCard } = components;
+
+  const productCards = products.map((p) => productCard(p, { url })).join('');
 
   const bodyHtml = `
 <section class="hero">
   <div class="hero-inner">
-    <span class="hero-kicker">Research-based guides for homeowners</span>
+    <span class="hero-kicker">Research-based log splitter comparisons for homeowners</span>
     <h1>Find the Log Splitter That Actually Earns Its Keep</h1>
-    <p class="sub">We compare specifications from manufacturers and retailers so you can pick a gas, electric, or manual log splitter that matches how much wood you actually split.</p>
+    <p class="sub">Google search &rarr; a research-based guide &rarr; a verified product comparison &rarr; the retailer of your choice. We compare specifications from manufacturers and retailers so you can pick a gas, electric, or manual log splitter that matches how much wood you actually split.</p>
     <div class="hero-actions">
-      <a href="${url('/buying-guide/')}" class="btn btn-cta">Read the Buying Guide</a>
-      <button type="button" class="btn btn-outline" data-open-quiz>Take the 60-Second Quiz</button>
+      <a href="${url('/reviews/')}" class="btn btn-cta">Find the Right Splitter</a>
+      <button type="button" class="btn btn-outline" data-open-quiz>Take the Match Quiz</button>
     </div>
   </div>
 </section>
@@ -33,25 +35,37 @@ module.exports = function home(ctx) {
         <li>Oak, maple, ash <b>10–20 tons</b></li>
         <li>Elm, sycamore, knotty rounds <b>20+ tons</b></li>
       </ul>
+      <p style="margin-top:12px;font-size:.88rem;"><a href="${url('/what-size-log-splitter-do-i-need/')}">Why tonnage alone isn't enough &rarr;</a></p>
     </div>
     <div class="choose-card">
       <h3>Gas, electric, or manual?</h3>
       <p><b>Gas</b> splitters go anywhere and handle the largest rounds, at the cost of noise and engine upkeep. <b>Electric</b> splitters are quieter and lower-maintenance but need an outlet and top out around 7–10 tons. <b>Manual</b> hydraulic splitters need no fuel or power at all, but rely on your own effort.</p>
+      <p style="margin-top:12px;font-size:.88rem;"><a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">Full gas vs. electric comparison &rarr;</a></p>
     </div>
     <div class="choose-card">
       <h3>How fast do you need to work?</h3>
       <p>Cycle time is how long the ram takes to extend and retract. A shorter cycle time means more logs split per hour — worth comparing directly if you're processing a full cord in a weekend.</p>
+      <p style="margin-top:12px;font-size:.88rem;"><a href="${url('/buying-guide/')}#g-cycle">More on cycle time &rarr;</a></p>
     </div>
   </div>
 </section>
 
 <section class="block" style="padding-top:0;">
   <div class="section-head">
-    <span class="eyebrow">Verified Specifications</span>
-    <h2>Log Splitters We've Checked</h2>
+    <span class="eyebrow">Verified Models</span>
+    <h2>Compare Verified Models</h2>
     <p>Specs below are confirmed against manufacturer pages and major retailer listings — not estimated or copied from marketing copy.</p>
   </div>
   ${comparisonTable(products, { caption: 'Verified log splitter specifications' })}
+</section>
+
+<section class="block" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">Product Overview</span>
+    <h2>Verified Splitters at a Glance</h2>
+    <p>The same models above, with images, main use case, and key limitation.</p>
+  </div>
+  <div class="review-grid">${productCards}</div>
 </section>
 
 <section class="block" style="padding-top:0;">
@@ -81,24 +95,43 @@ module.exports = function home(ctx) {
 
 <section class="block">
   <div class="section-head">
-    <span class="eyebrow">Latest Guides</span>
+    <span class="eyebrow">Top Research Guides</span>
     <h2>Start Researching</h2>
+    <p>Our core guides and latest articles, all sourced and dated.</p>
   </div>
   <div class="comp-grid latest-guides-grid">
     <div class="comp-card">
-      <span class="eyebrow">Comparison</span>
+      <span class="eyebrow">Comparison &middot; Updated 2026-07-21</span>
       <h3>Gas vs. Electric Log Splitter</h3>
       <p>A category-by-category breakdown of power, portability, noise, and maintenance.</p>
       <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}" class="btn btn-dark-outline btn-sm">Read Comparison</a>
     </div>
     <div class="comp-card">
-      <span class="eyebrow">Buying Guide</span>
+      <span class="eyebrow">Best Of &middot; Updated 2026-07-20</span>
+      <h3>Best Electric Log Splitters</h3>
+      <p>WEN vs. Boss Industrial, compared by controls, cycle time, and electrical requirements.</p>
+      <a href="${url('/best-electric-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
+    </div>
+    <div class="comp-card">
+      <span class="eyebrow">Best Of &middot; Updated 2026-07-20</span>
+      <h3>Best Gas Log Splitters</h3>
+      <p>Champion vs. YARDMAX, compared by engine, cycle time, and towing.</p>
+      <a href="${url('/best-gas-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
+    </div>
+    <div class="comp-card">
+      <span class="eyebrow">Guide &middot; Updated 2026-07-20</span>
+      <h3>What Size Log Splitter Do I Need?</h3>
+      <p>Why tonnage alone doesn't determine the right machine for your wood.</p>
+      <a href="${url('/what-size-log-splitter-do-i-need/')}" class="btn btn-dark-outline btn-sm">Read Guide</a>
+    </div>
+    <div class="comp-card">
+      <span class="eyebrow">Buying Guide &middot; Updated 2026-07-20</span>
       <h3>The Complete Log Splitter Buying Guide</h3>
       <p>Tonnage, log diameter, cycle time, safety, and a buying checklist in one place.</p>
       <a href="${url('/buying-guide/')}" class="btn btn-dark-outline btn-sm">Read the Guide</a>
     </div>
     <div class="comp-card">
-      <span class="eyebrow">Maintenance</span>
+      <span class="eyebrow">Maintenance &middot; Updated 2026-07-20</span>
       <h3>Log Splitter Maintenance Basics</h3>
       <p>Pre-use inspection, hydraulic checks, and seasonal storage guidance.</p>
       <a href="${url('/maintenance/')}" class="btn btn-dark-outline btn-sm">Read the Guide</a>
@@ -111,6 +144,7 @@ module.exports = function home(ctx) {
     <span class="eyebrow">Transparency</span>
     <h2>How We Review</h2>
     <p>We check manufacturer manuals and specification sheets, compare models on the factors above, and note where information couldn't be confirmed. We do not publish star ratings or "top pick" badges without a documented methodology, and we do not claim hands-on testing unless it happened. <a href="${url('/how-we-review/')}">Read our full methodology</a>.</p>
+    <p class="article-meta" style="margin-top:10px;">${esc(config.amazonDisclosureFull)}</p>
   </div>
 </section>
 
@@ -121,7 +155,7 @@ module.exports = function home(ctx) {
   <div class="article-wrap" style="padding-top:0;">
     <div class="faq-item">
       <h3>What tonnage log splitter do I need?</h3>
-      <p>It depends on wood species, diameter, moisture content, and grain — not species alone. Our <a href="${url('/buying-guide/')}#g-tonnage">tonnage guidance</a> covers this in detail.</p>
+      <p>It depends on wood species, diameter, moisture content, and grain — not species alone. Our <a href="${url('/what-size-log-splitter-do-i-need/')}">tonnage guide</a> covers this in detail.</p>
     </div>
     <div class="faq-item">
       <h3>Is a gas or electric log splitter better?</h3>
@@ -167,7 +201,7 @@ module.exports = function home(ctx) {
   return {
     path: '/',
     title: 'LogSplitterLab — Log Splitter Reviews, Comparisons & Buying Guides',
-    description: 'Research-based log splitter guides and comparisons for homeowners and rural property owners. Compare gas, electric, and manual splitters by verified specifications.',
+    description: 'Research-based log splitter comparisons for homeowners. Compare gas, electric, and manual splitters by verified specifications, then find the right retailer link.',
     activeNav: null,
     bodyHtml,
     jsonLd: [websiteJsonLd, faqJsonLd],

@@ -1,17 +1,22 @@
 'use strict';
 
 module.exports = function gasVsElectric(ctx) {
-  const { layout } = ctx;
+  const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
+  const { affiliateButton } = components;
   const publishedDate = '2026-07-20';
-  const updatedDate = '2026-07-20';
+  const updatedDate = '2026-07-21';
+
+  const gasExample = products.find((p) => p.id === 'champion-100424');
+  const electricExample = products.find((p) => p.id === 'wen-56207');
 
   const bodyHtml = `
 <article class="article-wrap">
   <h1>Gas vs. Electric Log Splitter: The Real Difference</h1>
   <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; Published by LogSplitterLab</p>
+  <p class="article-meta">${esc(config.amazonDisclosureShort)} See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
 
-  <p>Gas and electric log splitters solve the same problem with different tradeoffs. This compares the two categories generally — it does not claim that any specific machines were tested side by side. For specific verified models, see our <a href="${url('/reviews/')}">reviews</a>.</p>
+  <p>Gas and electric log splitters solve the same problem with different tradeoffs. This compares the two categories generally — it does not claim that any specific machines were tested side by side. For specific verified models, see our <a href="${url('/reviews/')}">reviews</a>, or jump straight to our <a href="${url('/best-gas-log-splitters/')}">best gas</a> and <a href="${url('/best-electric-log-splitters/')}">best electric</a> roundups.</p>
 
   <h2>Typical power ranges</h2>
   <p>Gas splitters commonly range from roughly 20 to 35+ tons of splitting force, with towable commercial units going higher. Electric splitters are typically limited to around 5–10 tons because standard household circuits cap the motor size that's practical to run. If you regularly split large-diameter or very dense hardwood, that ceiling matters more than any other spec.</p>
@@ -30,6 +35,15 @@ module.exports = function gasVsElectric(ctx) {
 
   <h2>Cold-weather considerations</h2>
   <p>Small gas engines can be harder to start in cold weather without fuel stabilizer and fresh fuel. Electric motors start reliably regardless of temperature, but hydraulic fluid thickens in the cold on any splitter, gas or electric, which can slow the cycle until the machine warms up — check your manufacturer's cold-weather guidance.</p>
+
+  <h2>Storage</h2>
+  <p>Gas splitters need fuel stabilized or drained before extended storage, in addition to retracting the ram and covering the machine. Electric splitters skip the fuel step entirely — just retract the ram and store indoors or under cover. Both still benefit from a periodic hydraulic fluid check even in storage.</p>
+
+  <h2>Safety</h2>
+  <p>Two-handed controls are standard on most gas splitters we've seen, keeping both hands away from the wedge during operation. Some compact electric splitters use single-handed lever operation instead — check the exact safety interlock described in the manufacturer's manual either way. See our <a href="${url('/buying-guide/')}#g-safety">general safety guidance</a>.</p>
+
+  <h2>Homeowner examples</h2>
+  <p>A suburban homeowner splitting a couple of cords of pine near the garage, within reach of an outlet, is a good fit for an electric splitter — quiet, low-maintenance, and sized for that volume. A rural property owner processing several cords of mixed hardwood across multiple areas of land, without reliable outlet access everywhere, is a better fit for a gas splitter that can be towed to where the wood is.</p>
 
   <h2>Expected use cases</h2>
   <ul>
@@ -58,8 +72,18 @@ module.exports = function gasVsElectric(ctx) {
 
   <div class="note-box">Not sure which fits your situation? <button type="button" class="btn btn-cta btn-sm" data-open-quiz style="margin-left:6px;">Take the 60-second quiz</button> or read the full <a href="${url('/buying-guide/')}">buying guide</a>.</div>
 
+  <h2>Recommended verified models</h2>
+  <div class="best-for-grid">
+    ${gasExample ? `<div class="best-for-card good"><h3>Gas: ${esc(gasExample.name)}</h3><p style="margin:0 0 10px;">${esc(gasExample.suitableUseSummary)}</p>${affiliateButton(gasExample, { small: true, position: 'gas-vs-electric-recommendation' })} <a href="${url(`/reviews/${gasExample.id}/`)}" style="margin-left:10px;">Read review</a></div>` : ''}
+    ${electricExample ? `<div class="best-for-card good"><h3>Electric: ${esc(electricExample.name)}</h3><p style="margin:0 0 10px;">${esc(electricExample.suitableUseSummary)}</p>${affiliateButton(electricExample, { small: true, position: 'gas-vs-electric-recommendation' })} <a href="${url(`/reviews/${electricExample.id}/`)}" style="margin-left:10px;">Read review</a></div>` : ''}
+  </div>
+  <p>See the full <a href="${url('/best-gas-log-splitters/')}">best gas</a> and <a href="${url('/best-electric-log-splitters/')}">best electric</a> roundups for more verified options in each category.</p>
+
   <h2>Related guides</h2>
   <ul>
+    <li><a href="${url('/best-gas-log-splitters/')}">Best Gas Log Splitters</a></li>
+    <li><a href="${url('/best-electric-log-splitters/')}">Best Electric Log Splitters</a></li>
+    <li><a href="${url('/what-size-log-splitter-do-i-need/')}">What Size Log Splitter Do I Need?</a></li>
     <li><a href="${url('/buying-guide/')}">Log Splitter Buying Guide</a></li>
     <li><a href="${url('/reviews/')}">All Reviews</a></li>
     <li><a href="${url('/maintenance/')}">Maintenance Basics</a></li>

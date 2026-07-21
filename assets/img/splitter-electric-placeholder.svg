@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" width="320" height="220" role="img" aria-hidden="true">
+  <defs>
+    <style>
+      .bg{fill:#f5f0e8;}
+      .frame{fill:none;stroke:#1a3a2a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;}
+      .accent{fill:#c17f24;}
+      .accent-line{fill:none;stroke:#c17f24;stroke-width:5;stroke-linecap:round;}
+      .wood{fill:#efe8da;stroke:#8B4513;stroke-width:3;}
+      .wheel{fill:#1a3a2a;}
+      .wheel-hub{fill:#f5f0e8;}
+    </style>
+  </defs>
+  <rect class="bg" width="320" height="220" rx="12"/>
+
+  <!-- ground line -->
+  <line x1="24" y1="176" x2="296" y2="176" stroke="#e0d8c8" stroke-width="3"/>
+
+  <!-- beam -->
+  <rect class="frame" x="70" y="118" width="180" height="22" rx="4"/>
+
+  <!-- motor housing (electric) -->
+  <rect class="frame" x="56" y="94" width="42" height="38" rx="8"/>
+  <!-- plug + cord -->
+  <path class="accent-line" d="M56 113 q-18 6 -18 26" fill="none"/>
+  <rect class="accent" x="26" y="137" width="16" height="10" rx="2"/>
+
+  <!-- wedge -->
+  <path class="frame" d="M228 108 L258 129 L228 150 Z"/>
+
+  <!-- log -->
+  <circle class="wood" cx="176" cy="129" r="24"/>
+  <circle class="wood" cx="176" cy="129" r="10" fill="none" stroke="#8B4513" stroke-width="2"/>
+
+  <!-- stand legs with small casters -->
+  <line class="frame" x1="90" y1="140" x2="90" y2="164" stroke-width="4"/>
+  <line class="frame" x1="230" y1="140" x2="230" y2="164" stroke-width="4"/>
+  <circle class="wheel" cx="90" cy="170" r="9"/>
+  <circle class="wheel-hub" cx="90" cy="170" r="3"/>
+  <circle class="wheel" cx="230" cy="170" r="9"/>
+  <circle class="wheel-hub" cx="230" cy="170" r="3"/>
+</svg>

@@ -79,7 +79,7 @@ function renderFooter() {
     <span>&copy; 2026 LogSplitterLab</span>
     <span>Research-based log splitter guides and comparisons.</span>
   </div>
-  <p class="disclaimer">LogSplitterLab is reader-supported. As an Amazon Associate we may earn from qualifying purchases at no additional cost to you. See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
+  <p class="disclaimer">${esc(config.amazonDisclosureFull)} See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
 </footer>`;
 }
 
@@ -164,12 +164,14 @@ function renderPage(opts) {
     extraScripts = [],
   } = opts;
 
+  const pageType = activeNav || (path === '/' ? 'home' : path.split('/').filter(Boolean)[0] || 'page');
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 ${renderHead({ path, title, description, ogType, jsonLd, publishedDate, updatedDate, noindex })}
 </head>
-<body class="${bodyClass}">
+<body class="${bodyClass}" data-page-type="${pageType}">
 ${renderHeader(activeNav)}
 <main id="main">
 ${renderBreadcrumbs(breadcrumbs)}
@@ -177,6 +179,7 @@ ${bodyHtml}
 </main>
 ${renderFooter()}
 ${quizModalHtml()}
+<script src="${url('/assets/js/analytics.js')}" defer></script>
 <script src="${url('/assets/js/site.js')}" defer></script>
 <script src="${url('/assets/js/quiz.js')}" defer></script>
 ${extraScripts.map((s) => `<script src="${url(s)}" defer></script>`).join('\n')}

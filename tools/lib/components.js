@@ -5,28 +5,67 @@ const { esc } = require('./layout');
 const affiliateLinks = require('../data/affiliate-links');
 const config = require('../data/site-config');
 
-// Renders the commercial CTA for a product. Until a real Amazon Associates
-// URL is configured in tools/data/affiliate-links.js, this always renders a
-// disabled control — never a fake href="#".
+// Renders the commercial CTA for a product. Until a real, enabled Amazon
+// Associates link is configured in tools/data/affiliate-links.js, this
+// always renders a disabled control — never a fake href="#" and never a
+// live-looking button pointing nowhere real.
 function affiliateButton(product, opts) {
   opts = opts || {};
   const cls = 'btn btn-cta' + (opts.small ? ' btn-sm' : '');
-  const rawUrl = affiliateLinks[product.id];
+  const entry = affiliateLinks[product.id];
 
-  if (!rawUrl) {
-    return `<button type="button" class="${cls} is-disabled" disabled aria-disabled="true" title="Affiliate link not yet configured for this product">Amazon link coming soon</button>`;
+  if (!entry || !entry.enabled || (!entry.taggedUrl && !entry.directUrl)) {
+    return `<button type="button" class="${cls} is-disabled" disabled aria-disabled="true" title="Affiliate link not yet configured for this product">Amazon link not yet added</button>`;
   }
 
-  let href = rawUrl;
-  if (config.amazonAssociatesTag && href.indexOf('tag=') === -1) {
-    href += (href.indexOf('?') === -1 ? '?' : '&') + 'tag=' + encodeURIComponent(config.amazonAssociatesTag);
+  let href = entry.taggedUrl;
+  if (!href) {
+    href = entry.directUrl;
+    if (config.amazonAssociatesTag && href.indexOf('tag=') === -1) {
+      href += (href.indexOf('?') === -1 ? '?' : '&') + 'tag=' + encodeURIComponent(config.amazonAssociatesTag);
+    }
   }
 
-  return `<a class="${cls}" href="${esc(href)}" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="${esc(product.id)}">Check price on Amazon<span class="visually-hidden"> for ${esc(product.name)} (opens in a new tab)</span></a>`;
+  const label = entry.ctaLabel || 'Check Price on Amazon';
+  return `<a class="${cls}" href="${esc(href)}" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="${esc(product.id)}" data-cta-position="${esc(opts.position || 'unspecified')}">${esc(label)}<span class="visually-hidden"> for ${esc(product.name)} (opens in a new tab)</span></a>`;
 }
 
 function typePill(typeLabel) {
   return `<span class="type-pill">${esc(typeLabel)}</span>`;
+}
+
+// Renders a product's configured image. Every product currently ships with
+// imageMode: 'generic-placeholder' — see tools/data/products.js field
+// reference and README.md "Product images" for how an owner swaps this for
+// an authorized-amazon, licensed-manufacturer, or owner-uploaded image.
+function productImage(p, layoutUrl) {
+  return `<img src="${layoutUrl(p.imageSrc)}" alt="${esc(p.imageAlt)}" width="${p.imageWidth}" height="${p.imageHeight}" loading="lazy">`;
+}
+
+// Shared product card used on both the homepage "Compare Verified Models"
+// section and the reviews index, so the two stay visually and structurally
+// consistent as products are added.
+function productCard(p, opts) {
+  opts = opts || {};
+  const layoutUrl = opts.url;
+  const reviewHref = layoutUrl(`/reviews/${p.id}/`);
+  return `
+    <div class="review-card" data-type="${esc(p.type)}">
+      <div class="review-thumb">
+        ${typePill(p.typeLabel)}
+        ${productImage(p, layoutUrl)}
+      </div>
+      <div class="review-body">
+        <h3>${esc(p.name)}</h3>
+        <p class="review-model">Model ${esc(p.model)} &middot; ${p.tonnage}T &middot; ${esc(p.typeLabel)}</p>
+        <p class="review-summary">${esc(p.suitableUseSummary)}</p>
+        <p class="review-limitation"><b>Key limitation:</b> ${esc(p.limitationsSummary)}</p>
+        <div class="review-actions">
+          <a href="${reviewHref}" class="btn btn-dark-outline btn-sm">Read Review</a>
+          ${affiliateButton(p, { small: true, position: opts.position || 'product-card' })}
+        </div>
+      </div>
+    </div>`;
 }
 
 // Homepage / comparisons editorial table — verified specs only, no ratings,
@@ -39,10 +78,11 @@ function comparisonTable(products, opts) {
       <td>${esc(p.tonnage)}T</td>
       <td>${typePill(p.typeLabel)}</td>
       <td>${p.cycleTimeSeconds}s</td>
-      <td>${affiliateButton(p, { small: true })}</td>
+      <td>${affiliateButton(p, { small: true, position: 'comparison-table' })}</td>
     </tr>`).join('');
 
   return `
+<p class="article-meta">${esc(config.amazonDisclosureShort)}</p>
 <div class="table-scroll-wrap">
   <p class="scroll-hint">Scroll sideways to see all columns &rarr;</p>
   <div class="table-wrap">
@@ -53,7 +93,7 @@ function comparisonTable(products, opts) {
     </table>
   </div>
 </div>
-<p class="article-meta">Specifications checked against manufacturer and retailer listings; see each review for sources. Affiliate links may earn us a commission at no additional cost to you.</p>`;
+<p class="article-meta">Specifications checked against manufacturer and retailer listings; see each review for sources.</p>`;
 }
 
 function specTable(p) {
@@ -85,4 +125,4 @@ function sourceNotes(p) {
 </div>`;
 }
 
-module.exports = { affiliateButton, typePill, comparisonTable, specTable, sourceNotes };
+module.exports = { affiliateButton, typePill, comparisonTable, specTable, sourceNotes, productImage, productCard };

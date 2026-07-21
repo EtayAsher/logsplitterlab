@@ -25,7 +25,9 @@
   filterBar.addEventListener('click', function (e) {
     var btn = e.target.closest('.filter-btn');
     if (!btn) return;
-    applyFilter(btn.getAttribute('data-filter'));
+    var type = btn.getAttribute('data-filter');
+    applyFilter(type);
+    if (window.lslTrack) window.lslTrack('review_filter_used', { filter: type });
   });
 
   // Respect a ?type= query param so the quiz result CTA can deep-link into

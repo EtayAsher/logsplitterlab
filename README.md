@@ -10,35 +10,46 @@ GitHub Pages.
 tools/                 Build-time source. Not served — the generator reads
                         this and writes plain HTML into the repo root.
   build.js              The generator. Run with `node tools/build.js`.
+  check-links.js         Post-build validator. Run with `node tools/check-links.js`.
   data/
     site-config.js       Canonical URL, base path, contact email, Amazon
-                          Associates tag, GA4 ID, Search Console token —
-                          the single place to change any of these.
-    products.js           Verified product specifications + source URLs.
-                          See "Verification rules" below before editing.
-    affiliate-links.js    Per-product Amazon Associates URL (or null).
+                          Associates tag/marketplace/disclosure wording,
+                          GA4 ID, Search Console token — the single place
+                          to change any of these.
+    products.js           Verified product specifications, ASINs, status,
+                          image config, and source URLs. See "Verification
+                          rules" below before editing.
+    affiliate-links.js    Per-product Amazon link config (direct/tagged URL,
+                          CTA label, enabled flag, last-verified date).
   lib/
     layout.js             Shared <head>/header/footer/page shell.
     components.js         Reusable fragments: comparison table, spec
-                           table, affiliate button, source notes.
+                           table, product card, product image, affiliate
+                           button, source notes.
   pages/                  One file per page (or one template used for all
                            product reviews — see pages/review.js).
 
 assets/
   css/styles.css         One shared stylesheet for every page.
   js/
+    analytics.js           Event tracking scaffolding — inert unless GA4 is enabled.
     site.js               Mobile nav (progressive enhancement).
     quiz.js                Match quiz modal (progressive enhancement).
-    reviews-filter.js       Reviews page gas/electric/manual filter.
-  img/                    Local placeholder images. See "Images" below.
+    reviews-filter.js       Reviews page gas/electric filter.
+  img/                    Local placeholder images. See "Product images" below.
 
-index.html, reviews/, comparisons/, buying-guide/, maintenance/, about/,
-how-we-review/, contact/, affiliate-disclosure/, privacy-policy/, 404.html,
-sitemap.xml, robots.txt, .nojekyll
+index.html, reviews/, comparisons/, best-electric-log-splitters/,
+best-gas-log-splitters/, what-size-log-splitter-do-i-need/, buying-guide/,
+maintenance/, about/, how-we-review/, contact/, affiliate-disclosure/,
+privacy-policy/, 404.html, sitemap.xml, robots.txt, .nojekyll
                         GENERATED OUTPUT. Do not hand-edit these — edit the
                         corresponding file under tools/ and re-run the
                         build. Hand edits will be silently overwritten by
                         the next build.
+
+OWNER_SETUP.md          Step-by-step checklist for the site owner: Amazon
+                        Associates, Search Console, analytics, images, logo.
+CONTENT_PLAN.md         12-week content roadmap and the article checklist.
 ```
 
 ## Local preview
@@ -84,15 +95,24 @@ commit both the source change and the regenerated output files together.
 ## How to add a new review
 
 1. Verify the product's specs first — see "Verification rules" below.
-2. Add an entry to `tools/data/products.js` with a `sourceUrls` array.
+   Only add an `asin` if you've directly opened the Amazon listing and
+   confirmed it matches the exact model number, not a search snippet guess.
+2. Add an entry to `tools/data/products.js` with a `sourceUrls` array,
+   `suitableUseSummary`/`limitationsSummary` one-liners, and an
+   `imageMode`/`imageSrc` (start with one of the existing generic
+   placeholders — see "Product images" below).
 3. Add an entry to the `ANALYSIS` object in `tools/pages/review.js` (verdict,
-   bestFor, notIdealFor, strengths, limitations, usability, maintenance,
+   bestFor, notIdealFor, strengths, limitations, workload, cycleTimeNote,
+   logSizeNote, portabilityNote, setupStorageNote, noiseElectricalNote,
+   usability, maintenance, whoShouldBuy, whoShouldChooseOther, faq,
    alternativeId).
 4. Add the product's id to `tools/data/affiliate-links.js` (as `null` until
-   a real link exists).
+   a real link exists — see OWNER_SETUP.md §1).
 5. Run `node tools/build.js`. The product will automatically appear in the
-   homepage comparison table, the reviews index, and get its own review
-   page at `/reviews/<id>/`.
+   homepage comparison table and product cards, the reviews index, the
+   relevant best-of roundup (by `type`), and get its own review page at
+   `/reviews/<id>/`.
+6. Run `node tools/check-links.js` before committing.
 
 ## How to add a comparison
 
@@ -110,17 +130,14 @@ stale data live — see the "Verification rules" section below.
 
 ## How to add an affiliate link
 
-1. Get the site owner's Amazon Associates tag and set
-   `amazonAssociatesTag` in `tools/data/site-config.js`.
-2. Set the product's URL in `tools/data/affiliate-links.js`.
-3. Re-run `node tools/build.js`. The button on that product's cards and
-   review page will automatically switch from "Amazon link coming soon"
-   (disabled) to a live `rel="sponsored nofollow noopener noreferrer"` link
-   with the Associates tag appended.
-4. If GA4 is enabled (see below), affiliate clicks matching
-   `[data-affiliate-click]` are ready for click tracking — wire the actual
-   `gtag('event', ...)` call in `assets/js/site.js` when analytics goes
-   live, and update the Privacy Policy in the same change.
+See **OWNER_SETUP.md §1** for the full walkthrough (Associates signup,
+SiteStripe, ASINs). In short: fill in the product's entry in
+`tools/data/affiliate-links.js` with `directUrl` and/or `taggedUrl`, set
+`enabled: true`, and rebuild. The button on that product's cards and review
+page automatically switches from "Amazon link not yet added" (disabled) to
+a live `rel="sponsored nofollow noopener noreferrer"` link. Affiliate clicks
+are tracked automatically once GA4 is enabled (see `assets/js/analytics.js`)
+— no extra wiring needed.
 
 ## How to regenerate the sitemap
 
@@ -180,14 +197,36 @@ labeled editorial analysis/opinion clearly distinguished from a factual
 claim (see the "Editorial note" section of any review page for the pattern
 to follow).
 
-## Images
+## Product images
 
-`assets/img/product-placeholder.svg` and `assets/img/social-preview.svg`
-are generic, locally-hosted placeholders — not photos or renders of any
-specific product, and not hotlinked from Amazon or any manufacturer.
-Replace them with licensed product photography when available; keep
-filenames descriptive and set `width`/`height` on any `<img>` tag to avoid
-layout shift, and use `loading="lazy"` for anything below the fold.
+Every product in `tools/data/products.js` ships with `imageMode:
+'generic-placeholder'`, pointing at `assets/img/splitter-gas-placeholder.svg`
+or `assets/img/splitter-electric-placeholder.svg` — original illustrations
+in the site's own brand colors, not photos or renders of any specific
+product, and not hotlinked from Amazon or any manufacturer.
+`assets/img/social-preview.svg` is a similar placeholder for the Open Graph
+image.
+
+To replace a placeholder with a real photo, see **OWNER_SETUP.md §3** — it
+walks through the three compliant image modes (`owner-uploaded`,
+`licensed-manufacturer`, `authorized-amazon`) and exactly which fields to
+edit. Keep filenames descriptive, set `imageWidth`/`imageHeight` to match
+the real file (avoids layout shift), and images render with
+`loading="lazy"` automatically via `productImage()` in
+`tools/lib/components.js`.
+
+## How to validate a build before deploying
+
+```
+node tools/build.js
+node tools/check-links.js
+```
+
+`check-links.js` crawls every generated HTML file and reports: broken
+internal links, missing images/assets, `href="#"` placeholders, hash links
+that don't match a real element id on the page (leftover hash-routing),
+missing titles/canonicals/H1s, invalid JSON-LD, and sitemap entries with no
+matching file. It exits non-zero if it finds any error-level issue.
 
 ## Analytics and Search Console
 

@@ -18,8 +18,20 @@ module.exports = {
   contactEmail: null, // e.g. 'hello@logsplitterlab.com'
 
   // Amazon Associates tracking ID (the "?tag=" value). Leave null until the
-  // owner has an approved Associates account for this site.
+  // owner has an approved Associates account for this site. See OWNER_SETUP.md.
   amazonAssociatesTag: null, // e.g. 'logsplitterlab-20'
+
+  // Destination marketplace for affiliate links. Change if the owner's
+  // Associates account is registered on a different Amazon marketplace.
+  amazonMarketplaceDomain: 'amazon.com',
+
+  // Exact, required wording for the sitewide Amazon Associates disclosure.
+  // Do not paraphrase this one — it's shown verbatim in the footer.
+  amazonDisclosureFull: 'As an Amazon Associate I earn from qualifying purchases.',
+
+  // Shorter, link-level disclosure shown just above product recommendation
+  // blocks (comparison tables, "best of" lists, review CTAs).
+  amazonDisclosureShort: 'Disclosure: This page contains affiliate links. We may earn a commission if you buy through them, at no additional cost to you.',
 
   // Google Analytics 4 measurement ID. Leave null to keep analytics disabled.
   ga4MeasurementId: null, // e.g. 'G-XXXXXXXXXX'
