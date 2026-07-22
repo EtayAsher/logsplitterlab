@@ -22,6 +22,18 @@ module.exports = function home(ctx) {
   </div>
 </section>
 
+<section class="block founder-intro-section">
+  <div class="founder-intro">
+    <img src="${url(author.avatarSrc)}" alt="${esc(author.avatarAlt)}" width="96" height="96" loading="eager" class="founder-intro-avatar">
+    <div class="founder-intro-body">
+      <span class="eyebrow">Who's behind this site</span>
+      <h2>Meet ${esc(author.name)}, Founder of LogSplitterLab</h2>
+      <p>${esc(author.shortBio)}</p>
+      <a href="${url('/author/etay-asher/')}" class="btn btn-dark-outline btn-sm">Read the full story</a>
+    </div>
+  </div>
+</section>
+
 <section class="block">
   <div class="section-head">
     <span class="eyebrow">Start Here</span>
