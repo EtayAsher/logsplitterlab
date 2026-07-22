@@ -28,7 +28,7 @@
 - [About LogSplitterLab](https://etayasher.github.io/logsplitterlab/about/): LogSplitterLab is an independent, reader-supported research and comparison site about log splitters, founded by Etay Asher for homeowners and rural property owners.
 - [Etay Asher — Founder, LogSplitterLab](https://etayasher.github.io/logsplitterlab/author/etay-asher/): Etay Asher founded LogSplitterLab to help homeowners research log splitters through verified manufacturer specifications and comparison analysis.
 - [How We Review](https://etayasher.github.io/logsplitterlab/how-we-review/): An honest description of LogSplitterLab's current review methodology, including what we do and do not do, and how we handle corrections.
-- [Contact](https://etayasher.github.io/logsplitterlab/contact/): How to reach LogSplitterLab with corrections or questions about our log splitter reviews and guides.
+- [Contact LogSplitterLab](https://etayasher.github.io/logsplitterlab/contact/): How to reach LogSplitterLab with corrections, questions, or suggestions about our log splitter reviews and guides.
 - [Affiliate Disclosure](https://etayasher.github.io/logsplitterlab/affiliate-disclosure/): How LogSplitterLab uses Amazon Associates affiliate links, and how that relationship does and does not affect our content.
 - [Privacy Policy](https://etayasher.github.io/logsplitterlab/privacy-policy/): What data LogSplitterLab and its hosting, analytics, and affiliate partners collect, and how.
 

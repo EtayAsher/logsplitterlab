@@ -13,9 +13,8 @@ module.exports = {
   canonicalBaseUrl: 'https://etayasher.github.io',
   basePath: '/logsplitterlab',
 
-  // Shown in the footer and About/Contact pages. Replace with a real inbox
-  // before launch. Leave as-is to keep the Contact page in placeholder mode.
-  contactEmail: null, // e.g. 'hello@logsplitterlab.com'
+  // Shown in the footer, Contact page, and Affiliate Disclosure page.
+  contactEmail: 'contact@logsplitterlab.com',
 
   // Amazon Associates tracking ID (the "?tag=" value). Leave null until the
   // owner has an approved Associates account for this site. See OWNER_SETUP.md.

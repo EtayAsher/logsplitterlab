@@ -54,7 +54,6 @@ function renderHeader(activeNav) {
 }
 
 function renderFooter() {
-  const contactHref = config.contactEmail ? `mailto:${config.contactEmail}` : url('/contact/');
   return `
 <footer class="site-footer">
   <div class="footer-inner">
@@ -70,7 +69,7 @@ function renderFooter() {
         <li><a href="${url('/about/')}">About</a></li>
         <li><a href="${url('/author/etay-asher/')}">Author</a></li>
         <li><a href="${url('/how-we-review/')}">How We Review</a></li>
-        <li><a href="${contactHref}">Contact</a></li>
+        <li><a href="${url('/contact/')}">Contact</a></li>
         <li><a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a></li>
         <li><a href="${url('/privacy-policy/')}">Privacy Policy</a></li>
       </ul>
