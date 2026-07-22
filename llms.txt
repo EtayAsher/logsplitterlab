@@ -1,0 +1,34 @@
+# LogSplitterLab
+
+> Research-based log splitter comparisons for homeowners and rural property owners. Specifications are sourced from manufacturer and retailer documentation and cited on every product page; the site does not currently conduct hands-on product testing and labels its reviews accordingly.
+
+## Product Reviews
+
+- [Log Splitter Reviews — Verified Specifications](https://etayasher.github.io/logsplitterlab/reviews/): Specification-based log splitter research summaries for gas and electric models, sourced from manufacturer and retailer listings.
+- [Champion 27-Ton Log Splitter (100424) Review](https://etayasher.github.io/logsplitterlab/reviews/champion-100424/): Champion Power Equipment 100424: verified 27-ton gas log splitter specifications, strengths, limitations, and who it fits — sourced from manufacturer and retailer listings.
+- [WEN 6.5-Ton Electric Log Splitter (56207) Review](https://etayasher.github.io/logsplitterlab/reviews/wen-56207/): WEN 56207: verified 6.5-ton electric log splitter specifications, strengths, limitations, and who it fits — sourced from manufacturer and retailer listings.
+- [YARDMAX 25-Ton Full Beam Gas Log Splitter (YU2566) Review](https://etayasher.github.io/logsplitterlab/reviews/yardmax-yu2566/): YARDMAX YU2566: verified 25-ton gas log splitter specifications, strengths, limitations, and who it fits — sourced from manufacturer and retailer listings.
+- [Boss Industrial 7-Ton Electric Log Splitter (ES7T20) Review](https://etayasher.github.io/logsplitterlab/reviews/boss-es7t20/): Boss Industrial ES7T20: verified 7-ton electric log splitter specifications, strengths, limitations, and who it fits — sourced from manufacturer and retailer listings.
+
+## Comparisons & Buying Advice
+
+- [Log Splitter Comparisons](https://etayasher.github.io/logsplitterlab/comparisons/): Log splitter comparisons and best-of roundups — gas vs. electric, best electric models, best gas models, and how to size a splitter — to help you choose before you shop by model.
+- [Gas vs. Electric Log Splitter: The Real Difference](https://etayasher.github.io/logsplitterlab/comparisons/gas-vs-electric-log-splitter/): A category-by-category comparison of gas and electric log splitters: power, portability, noise, maintenance, cold-weather behavior, and who should choose each.
+- [Best Electric Log Splitters for Homeowners](https://etayasher.github.io/logsplitterlab/best-electric-log-splitters/): Verified electric log splitters compared by tonnage, cycle time, log capacity, and electrical requirements — specification-based research, not physical testing.
+- [Best Gas Log Splitters for Homeowners and Rural Properties](https://etayasher.github.io/logsplitterlab/best-gas-log-splitters/): Verified gas log splitters compared by tonnage, cycle time, log length, and towing — specification-based research, not physical testing.
+- [What Size Log Splitter Do I Need?](https://etayasher.github.io/logsplitterlab/what-size-log-splitter-do-i-need/): Why tonnage alone doesn't determine the right log splitter size — wood species, moisture, diameter, knots, grain, and volume all matter. Includes example buyer profiles.
+
+## Guides
+
+- [Log Splitter Buying Guide](https://etayasher.github.io/logsplitterlab/buying-guide/): A complete log splitter buying guide covering power sources, tonnage, log diameter, cycle time, safety, and a buying checklist for homeowners.
+- [Log Splitter Maintenance Guide](https://etayasher.github.io/logsplitterlab/maintenance/): General log splitter maintenance concepts: pre-use inspection, hydraulic fluid, engine and cord checks, storage, and warning signs that need professional service.
+
+## About & Policies
+
+- [About LogSplitterLab](https://etayasher.github.io/logsplitterlab/about/): LogSplitterLab is an independent, reader-supported research and comparison site about log splitters, founded by Etay Asher for homeowners and rural property owners.
+- [Etay Asher — Founder, LogSplitterLab](https://etayasher.github.io/logsplitterlab/author/etay-asher/): Etay Asher founded LogSplitterLab to help homeowners research log splitters through verified manufacturer specifications and comparison analysis.
+- [How We Review](https://etayasher.github.io/logsplitterlab/how-we-review/): An honest description of LogSplitterLab's current review methodology, including what we do and do not do, and how we handle corrections.
+- [Contact](https://etayasher.github.io/logsplitterlab/contact/): How to reach LogSplitterLab with corrections or questions about our log splitter reviews and guides.
+- [Affiliate Disclosure](https://etayasher.github.io/logsplitterlab/affiliate-disclosure/): How LogSplitterLab uses Amazon Associates affiliate links, and how that relationship does and does not affect our content.
+- [Privacy Policy](https://etayasher.github.io/logsplitterlab/privacy-policy/): What data LogSplitterLab and its hosting, analytics, and affiliate partners collect, and how.
+

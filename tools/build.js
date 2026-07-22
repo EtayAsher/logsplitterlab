@@ -35,6 +35,7 @@ const pageBuilders = [
   require('./pages/buying-guide'),
   require('./pages/maintenance'),
   require('./pages/about'),
+  require('./pages/author'),
   require('./pages/how-we-review'),
   require('./pages/contact'),
   require('./pages/affiliate-disclosure'),
@@ -86,8 +87,62 @@ const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http:
 writeFile(path.join(REPO_ROOT, 'sitemap.xml'), sitemapXml);
 
 // --- robots.txt --------------------------------------------------------
-const robotsTxt = `User-agent: *\nAllow: /\n\nSitemap: ${layout.canonical('/')}sitemap.xml\n`.replace('//sitemap.xml', '/sitemap.xml');
+// "User-agent: * / Allow: /" already permits every crawler, including AI
+// bots (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.) — they're
+// listed explicitly below only as a readable, auditable confirmation that
+// nothing here is quietly blocking them, not because the wildcard needs help.
+const robotsTxt = `User-agent: *
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+Sitemap: ${layout.canonical('/')}sitemap.xml
+`.replace('//sitemap.xml', '/sitemap.xml');
 writeFile(path.join(REPO_ROOT, 'robots.txt'), robotsTxt);
+
+// --- llms.txt ------------------------------------------------------------
+// A plain-Markdown index for LLM-based crawlers/assistants, per the emerging
+// (not yet standardized) llms.txt convention. Low cost, plausibly useful,
+// explicitly not a substitute for sitemap.xml/robots.txt/schema — see
+// AUDIT.md "AI Search readiness" for the reasoning behind including it.
+function pageGroup(p) {
+  if (p.path === '/') return null;
+  if (p.path.startsWith('/reviews/')) return 'Product Reviews';
+  if (p.path.startsWith('/best-') || p.path.startsWith('/comparisons') || p.path.startsWith('/what-size')) return 'Comparisons & Buying Advice';
+  if (p.path === '/buying-guide/' || p.path === '/maintenance/') return 'Guides';
+  return 'About & Policies';
+}
+
+const llmsGroups = new Map();
+pages.filter((p) => !p.noindex).forEach((p) => {
+  const group = pageGroup(p);
+  if (!group) return;
+  if (!llmsGroups.has(group)) llmsGroups.set(group, []);
+  llmsGroups.get(group).push(p);
+});
+
+let llmsTxt = `# LogSplitterLab\n\n> Research-based log splitter comparisons for homeowners and rural property owners. Specifications are sourced from manufacturer and retailer documentation and cited on every product page; the site does not currently conduct hands-on product testing and labels its reviews accordingly.\n\n`;
+for (const [group, groupPages] of llmsGroups) {
+  llmsTxt += `## ${group}\n\n`;
+  groupPages.forEach((p) => {
+    llmsTxt += `- [${p.title.replace(' | LogSplitterLab', '')}](${layout.canonical(p.path)}): ${p.description}\n`;
+  });
+  llmsTxt += '\n';
+}
+writeFile(path.join(REPO_ROOT, 'llms.txt'), llmsTxt);
 
 // --- .nojekyll -----------------------------------------------------------
 // Tells GitHub Pages not to run this through Jekyll, since it's already

@@ -21,11 +21,14 @@ tools/                 Build-time source. Not served — the generator reads
                           rules" below before editing.
     affiliate-links.js    Per-product Amazon link config (direct/tagged URL,
                           CTA label, enabled flag, last-verified date).
+    author.js              Site author/founder data — bio, avatar, links.
+                          See "Verification rules": no fabricated credentials.
   lib/
     layout.js             Shared <head>/header/footer/page shell.
     components.js         Reusable fragments: comparison table, spec
                            table, product card, product image, affiliate
-                           button, source notes.
+                           button, source notes, author byline/box, Person
+                           schema, article table-of-contents.
   pages/                  One file per page (or one template used for all
                            product reviews — see pages/review.js).
 
@@ -40,8 +43,9 @@ assets/
 
 index.html, reviews/, comparisons/, best-electric-log-splitters/,
 best-gas-log-splitters/, what-size-log-splitter-do-i-need/, buying-guide/,
-maintenance/, about/, how-we-review/, contact/, affiliate-disclosure/,
-privacy-policy/, 404.html, sitemap.xml, robots.txt, .nojekyll
+maintenance/, about/, author/, how-we-review/, contact/,
+affiliate-disclosure/, privacy-policy/, 404.html, sitemap.xml, robots.txt,
+llms.txt, .nojekyll
                         GENERATED OUTPUT. Do not hand-edit these — edit the
                         corresponding file under tools/ and re-run the
                         build. Hand edits will be silently overwritten by
@@ -50,6 +54,10 @@ privacy-policy/, 404.html, sitemap.xml, robots.txt, .nojekyll
 OWNER_SETUP.md          Step-by-step checklist for the site owner: Amazon
                         Associates, Search Console, analytics, images, logo.
 CONTENT_PLAN.md         12-week content roadmap and the article checklist.
+CONTENT-STRATEGY.md     Longer-term content clusters, future interactive
+                        tools, and future resources — planning only.
+AUDIT.md                Scored strategic audit (design/UX/trust/SEO/AI
+                        search/E-E-A-T/etc.) with a phased roadmap.
 ```
 
 ## Local preview
@@ -113,6 +121,15 @@ commit both the source change and the regenerated output files together.
    relevant best-of roundup (by `type`), and get its own review page at
    `/reviews/<id>/`.
 6. Run `node tools/check-links.js` before committing.
+
+## How to update the author
+
+Edit `tools/data/author.js` — name, role, bio, avatar, and optional links
+(LinkedIn/Twitter/email). Every byline, author box, the `/author/` page,
+and Person schema across the site are generated from this one file.
+**Never add a credential, years of experience, or a claim of hands-on
+testing that hasn't actually been confirmed** — leave a field `null`
+rather than guess. See "Verification rules" below.
 
 ## How to add a comparison
 
@@ -185,6 +202,9 @@ genuine, cited source for it:
 - Readership numbers, traffic figures, "X hours of research," or similar
   social-proof statistics.
 - A named author, editor, reviewer, or team member who does not exist.
+- A fabricated credential, job title, years of experience, or physical
+  testing claim attached to the real author in `tools/data/author.js` —
+  leave a field unset rather than embellish it.
 - A fake testimonial, review date, or third-party quotation.
 - A live-looking price. Prices change too often to keep accurate here —
   route to the retailer via the affiliate button instead.

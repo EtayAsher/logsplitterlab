@@ -51,6 +51,11 @@
     <priority>0.4</priority>
   </url>
   <url>
+    <loc>https://etayasher.github.io/logsplitterlab/author/etay-asher/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://etayasher.github.io/logsplitterlab/how-we-review/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>

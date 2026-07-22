@@ -1,8 +1,11 @@
 'use strict';
 
+const author = require('../data/author');
+
 module.exports = function howWeReview(ctx) {
-  const { layout } = ctx;
-  const { url } = layout;
+  const { layout, components } = ctx;
+  const { url, esc } = layout;
+  const { authorBox, personJsonLd } = components;
 
   const bodyHtml = `
 <section class="page-hero">
@@ -10,7 +13,7 @@ module.exports = function howWeReview(ctx) {
   <p>An honest description of our current methodology — including its limits.</p>
 </section>
 <div class="article-wrap">
-  <p>This page explains exactly what we do and don't do before publishing a review or comparison. We'll update it the day our process changes, so it never overstates what happened.</p>
+  <p>This page explains exactly what ${esc(author.name)}, LogSplitterLab's founder, does and doesn't do before publishing a review or comparison. It's updated the day the process changes, so it never overstates what happened.</p>
 
   <h2>What we currently do</h2>
   <ul>
@@ -39,6 +42,8 @@ module.exports = function howWeReview(ctx) {
 
   <h2>Questions or corrections</h2>
   <p>See our <a href="${url('/contact/')}">Contact page</a> to flag anything that looks wrong.</p>
+
+  ${authorBox(url)}
 </div>`;
 
   const breadcrumbJsonLd = {
@@ -56,7 +61,7 @@ module.exports = function howWeReview(ctx) {
     description: 'An honest description of LogSplitterLab\'s current review methodology, including what we do and do not do, and how we handle corrections.',
     activeNav: null,
     breadcrumbs: [{ label: 'Home', path: '/' }, { label: 'How We Review', path: '/how-we-review/' }],
-    jsonLd: [breadcrumbJsonLd],
+    jsonLd: [breadcrumbJsonLd, personJsonLd(layout.canonical)],
     bodyHtml,
     sitemap: { priority: '0.4', changefreq: 'yearly' },
   };

@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = function buyingGuide(ctx) {
-  const { layout } = ctx;
+  const { layout, components } = ctx;
   const { url, esc } = layout;
+  const { byline, authorBox, personJsonLd } = components;
   const publishedDate = '2026-07-20';
   const updatedDate = '2026-07-20';
 
@@ -12,7 +13,7 @@ module.exports = function buyingGuide(ctx) {
   <p>Everything a first-time buyer needs to know before choosing a machine.</p>
 </section>
 <div class="guide-wrap">
-  <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; Published by LogSplitterLab</p>
+  <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; ${byline(url)}</p>
 
   <nav class="guide-toc" aria-label="Table of contents">
     <h2>In this guide</h2>
@@ -159,6 +160,8 @@ module.exports = function buyingGuide(ctx) {
     <li><a href="${url('/reviews/')}">All Reviews</a></li>
     <li><a href="${url('/maintenance/')}">Maintenance Basics</a></li>
   </ul>
+
+  ${authorBox(url)}
 </div>`;
 
   const faqJsonLd = {
@@ -179,6 +182,7 @@ module.exports = function buyingGuide(ctx) {
     headline: 'The Complete Log Splitter Buying Guide',
     datePublished: publishedDate,
     dateModified: updatedDate,
+    author: { '@type': 'Person', name: 'Etay Asher', url: layout.canonical('/author/etay-asher/') },
     publisher: { '@type': 'Organization', name: 'LogSplitterLab' },
     mainEntityOfPage: layout.canonical('/buying-guide/'),
   };
@@ -199,7 +203,7 @@ module.exports = function buyingGuide(ctx) {
     activeNav: 'buying-guide',
     breadcrumbs: [{ label: 'Home', path: '/' }, { label: 'Buying Guide', path: '/buying-guide/' }],
     ogType: 'article',
-    jsonLd: [articleJsonLd, breadcrumbJsonLd, faqJsonLd],
+    jsonLd: [articleJsonLd, breadcrumbJsonLd, faqJsonLd, personJsonLd(layout.canonical)],
     publishedDate, updatedDate,
     bodyHtml,
     sitemap: { priority: '0.9', changefreq: 'monthly' },

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160" role="img" aria-labelledby="avatarTitle">
+  <title id="avatarTitle">Illustrated avatar of Etay Asher</title>
+  <defs>
+    <clipPath id="circleClip">
+      <circle cx="80" cy="80" r="76"/>
+    </clipPath>
+  </defs>
+
+  <circle cx="80" cy="80" r="78" fill="#c17f24"/>
+  <circle cx="80" cy="80" r="76" fill="#1a3a2a"/>
+
+  <g clip-path="url(#circleClip)">
+    <!-- subtle horizon / outdoor motif -->
+    <rect x="0" y="118" width="160" height="42" fill="#123023"/>
+    <path d="M0 122 L28 104 L54 122 L82 98 L112 122 L136 108 L160 122 L160 160 L0 160 Z" fill="#16402d"/>
+
+    <!-- shoulders -->
+    <path d="M20 168 Q80 118 140 168 L140 190 L20 190 Z" fill="#f0c27f"/>
+    <!-- neck -->
+    <rect x="68" y="96" width="24" height="20" rx="6" fill="#e0a866"/>
+    <!-- head -->
+    <ellipse cx="80" cy="70" rx="30" ry="33" fill="#f0c27f"/>
+    <!-- simple hair shape -->
+    <path d="M50 62 Q52 30 80 30 Q108 30 110 62 Q108 46 80 46 Q52 46 50 62 Z" fill="#123023"/>
+  </g>
+
+  <circle cx="80" cy="80" r="76" fill="none" stroke="#f0c27f" stroke-width="2" opacity=".4"/>
+</svg>

@@ -1,9 +1,11 @@
 'use strict';
 
+const author = require('../data/author');
+
 module.exports = function home(ctx) {
   const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
-  const { comparisonTable, productCard } = components;
+  const { comparisonTable, productCard, personJsonLd } = components;
 
   const productCards = products.map((p) => productCard(p, { url })).join('');
 
@@ -196,6 +198,15 @@ module.exports = function home(ctx) {
     '@type': 'WebSite',
     name: 'LogSplitterLab',
     url: layout.canonical('/'),
+    publisher: { '@type': 'Organization', name: 'LogSplitterLab', founder: { '@type': 'Person', name: author.name, url: layout.canonical('/author/etay-asher/') } },
+  };
+
+  const orgJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'LogSplitterLab',
+    url: layout.canonical('/'),
+    founder: { '@type': 'Person', name: author.name, url: layout.canonical('/author/etay-asher/') },
   };
 
   return {
@@ -204,7 +215,7 @@ module.exports = function home(ctx) {
     description: 'Research-based log splitter comparisons for homeowners. Compare gas, electric, and manual splitters by verified specifications, then find the right retailer link.',
     activeNav: null,
     bodyHtml,
-    jsonLd: [websiteJsonLd, faqJsonLd],
+    jsonLd: [websiteJsonLd, orgJsonLd, faqJsonLd, personJsonLd(layout.canonical)],
     sitemap: { priority: '1.0', changefreq: 'weekly' },
   };
 };

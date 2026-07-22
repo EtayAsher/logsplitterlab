@@ -133,7 +133,7 @@ const ANALYSIS = {
 function buildReviewPage(product, ctx) {
   const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
-  const { specTable, sourceNotes, affiliateButton, productImage } = components;
+  const { specTable, sourceNotes, affiliateButton, productImage, byline, authorBox, personJsonLd } = components;
   const a = ANALYSIS[product.id];
   const alt = products.find((p) => p.id === a.alternativeId);
   const slug = `/reviews/${product.id}/`;
@@ -161,7 +161,7 @@ function buildReviewPage(product, ctx) {
 <article class="article-wrap">
   <p class="status-badge">Research Review — specification-based, not hands-on tested</p>
   <h1>${esc(product.name)} Review</h1>
-  <p class="article-meta">Model ${esc(product.model)} &middot; Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; Published by LogSplitterLab</p>
+  <p class="article-meta">Model ${esc(product.model)} &middot; Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; ${byline(url)}</p>
   <p class="article-meta">${esc(config.amazonDisclosureShort)} See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
 
   <div class="review-hero-img">${productImage(product, url)}</div>
@@ -238,6 +238,8 @@ function buildReviewPage(product, ctx) {
     <li><a href="${url(bestOfHref)}">${esc(bestOfLabel)}</a></li>
     <li><a href="${url('/reviews/')}">All Reviews</a></li>
   </ul>
+
+  ${authorBox(url)}
 </article>`;
 
   const articleJsonLd = {
@@ -246,6 +248,7 @@ function buildReviewPage(product, ctx) {
     headline: `${product.name} Review`,
     datePublished: publishedDate,
     dateModified: updatedDate,
+    author: { '@type': 'Person', name: 'Etay Asher', url: layout.canonical('/author/etay-asher/') },
     publisher: { '@type': 'Organization', name: 'LogSplitterLab' },
     mainEntityOfPage: layout.canonical(slug),
   };
@@ -271,7 +274,7 @@ function buildReviewPage(product, ctx) {
       { label: product.name, path: slug },
     ],
     ogType: 'article',
-    jsonLd: [articleJsonLd, breadcrumbJsonLd, faqJsonLd],
+    jsonLd: [articleJsonLd, breadcrumbJsonLd, faqJsonLd, personJsonLd(layout.canonical)],
     publishedDate, updatedDate,
     bodyHtml,
     sitemap: { priority: '0.8', changefreq: 'monthly' },

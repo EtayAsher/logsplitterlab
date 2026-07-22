@@ -4,6 +4,7 @@
 const { esc } = require('./layout');
 const affiliateLinks = require('../data/affiliate-links');
 const config = require('../data/site-config');
+const author = require('../data/author');
 
 // Renders the commercial CTA for a product. Until a real, enabled Amazon
 // Associates link is configured in tools/data/affiliate-links.js, this
@@ -125,4 +126,52 @@ function sourceNotes(p) {
 </div>`;
 }
 
-module.exports = { affiliateButton, typePill, comparisonTable, specTable, sourceNotes, productImage, productCard };
+// Table of contents for long-form articles (10+ h2 sections). Sections is
+// an array of {id, label} matching the article's actual <h2 id="..."> tags
+// — keep them in sync if headings change. Reuses the same .guide-toc CSS
+// already used on the Buying Guide, so this isn't a new visual pattern.
+function articleToc(sections) {
+  const items = sections.map((s) => `<li><a href="#${esc(s.id)}">${esc(s.label)}</a></li>`).join('');
+  return `<nav class="guide-toc" aria-label="Table of contents"><h2>In this article</h2><ul>${items}</ul></nav>`;
+}
+
+// Article byline: "By Etay Asher", linking to the author page. Used in
+// place of the generic "Published by LogSplitterLab" line.
+function byline(layoutUrl) {
+  return `By <a href="${layoutUrl('/author/etay-asher/')}">${esc(author.name)}</a>`;
+}
+
+// Author box shown at the end of every article-type page.
+function authorBox(layoutUrl) {
+  return `
+<div class="author-box">
+  <img src="${layoutUrl(author.avatarSrc)}" alt="${esc(author.avatarAlt)}" width="${author.avatarWidth / 2}" height="${author.avatarHeight / 2}" loading="lazy" class="author-box-avatar">
+  <div class="author-box-body">
+    <p class="author-box-name"><a href="${layoutUrl('/author/etay-asher/')}">${esc(author.name)}</a></p>
+    <p class="author-box-role">${esc(author.role)}</p>
+    <p class="author-box-bio">${esc(author.shortBio)}</p>
+  </div>
+</div>`;
+}
+
+// Person schema — reused on the author page and appended to every
+// article's JSON-LD stack so AI/search engines can link content back to a
+// verifiable author entity.
+function personJsonLd(layoutCanonical) {
+  const sameAs = Object.values(author.links).filter((v) => typeof v === 'string' && v.startsWith('http'));
+  const obj = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: author.name,
+    url: layoutCanonical('/author/etay-asher/'),
+    jobTitle: author.role,
+    worksFor: { '@type': 'Organization', name: 'LogSplitterLab' },
+  };
+  if (sameAs.length) obj.sameAs = sameAs;
+  return obj;
+}
+
+module.exports = {
+  affiliateButton, typePill, comparisonTable, specTable, sourceNotes, productImage, productCard,
+  byline, authorBox, personJsonLd, articleToc,
+};

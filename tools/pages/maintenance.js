@@ -1,8 +1,9 @@
 'use strict';
 
 module.exports = function maintenance(ctx) {
-  const { layout } = ctx;
+  const { layout, components } = ctx;
   const { url, esc } = layout;
+  const { byline, authorBox, personJsonLd } = components;
   const publishedDate = '2026-07-20';
   const updatedDate = '2026-07-20';
 
@@ -12,7 +13,7 @@ module.exports = function maintenance(ctx) {
   <p>General upkeep concepts that apply across most hydraulic log splitters.</p>
 </section>
 <div class="guide-wrap">
-  <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; Published by LogSplitterLab</p>
+  <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; ${byline(url)}</p>
 
   <div class="note-box">Maintenance schedules and fluid specifications vary by model. This page explains the concepts you should be checking — your manufacturer's manual is the authoritative source for exact fluid types, intervals, and torque specs on your specific machine.</div>
 
@@ -84,6 +85,8 @@ module.exports = function maintenance(ctx) {
     <li><a href="${url('/reviews/')}">All Reviews</a></li>
     <li><a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">Gas vs. Electric Log Splitter</a></li>
   </ul>
+
+  ${authorBox(url)}
 </div>`;
 
   const articleJsonLd = {
@@ -92,6 +95,7 @@ module.exports = function maintenance(ctx) {
     headline: 'Log Splitter Maintenance',
     datePublished: publishedDate,
     dateModified: updatedDate,
+    author: { '@type': 'Person', name: 'Etay Asher', url: layout.canonical('/author/etay-asher/') },
     publisher: { '@type': 'Organization', name: 'LogSplitterLab' },
     mainEntityOfPage: layout.canonical('/maintenance/'),
   };
@@ -112,7 +116,7 @@ module.exports = function maintenance(ctx) {
     activeNav: 'maintenance',
     breadcrumbs: [{ label: 'Home', path: '/' }, { label: 'Maintenance', path: '/maintenance/' }],
     ogType: 'article',
-    jsonLd: [articleJsonLd, breadcrumbJsonLd],
+    jsonLd: [articleJsonLd, breadcrumbJsonLd, personJsonLd(layout.canonical)],
     publishedDate, updatedDate,
     bodyHtml,
     sitemap: { priority: '0.8', changefreq: 'monthly' },

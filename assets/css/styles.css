@@ -289,6 +289,29 @@ table.compare tbody tr:hover{background:#faf7f0;}
 .article-wrap{max-width:760px;margin:0 auto;padding:48px 20px 80px;}
 .review-hero-img{background:#f0ebe0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:0 0 24px;max-width:320px;}
 .review-hero-img img{width:100%;height:auto;display:block;}
+
+/* ---------- AUTHOR ---------- */
+.author-box{
+  display:flex;gap:18px;align-items:flex-start;
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:22px;margin:40px 0 0;
+}
+.author-box-avatar{border-radius:50%;flex-shrink:0;}
+.author-box-name{font-family:'Merriweather',serif;font-weight:700;color:var(--dark);margin:0 0 2px;font-size:1.02rem;}
+.author-box-name a{color:inherit;}
+.author-box-name a:hover{text-decoration:underline;}
+.author-box-role{color:var(--accent);font-size:.82rem;font-weight:600;margin:0 0 8px;}
+.author-box-bio{color:var(--muted);font-size:.9rem;margin:0;}
+@media (max-width:520px){.author-box{flex-direction:column;align-items:center;text-align:center;}}
+
+.author-hero{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.author-hero img{border-radius:50%;flex-shrink:0;}
+.author-hero h1{margin-bottom:.2em;}
+.author-hero .eyebrow{margin-bottom:0;}
+.author-articles-list{list-style:none;margin-top:12px;}
+.author-articles-list li{padding:8px 0;border-bottom:1px solid var(--border);}
+.author-articles-list li:last-child{border-bottom:none;}
+.author-articles-list a{color:var(--accent);font-weight:600;}
 .article-meta{color:var(--muted);font-size:.85rem;margin-bottom:26px;}
 .guide-wrap{max-width:820px;margin:0 auto;padding:48px 20px 80px;}
 .guide-toc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px 26px;margin-bottom:40px;}

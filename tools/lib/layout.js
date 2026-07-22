@@ -68,6 +68,7 @@ function renderFooter() {
     <nav aria-label="Footer">
       <ul class="footer-links">
         <li><a href="${url('/about/')}">About</a></li>
+        <li><a href="${url('/author/etay-asher/')}">Author</a></li>
         <li><a href="${url('/how-we-review/')}">How We Review</a></li>
         <li><a href="${contactHref}">Contact</a></li>
         <li><a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a></li>

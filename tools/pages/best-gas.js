@@ -3,7 +3,23 @@
 module.exports = function bestGas(ctx) {
   const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
-  const { specTable, affiliateButton, productImage } = components;
+  const { specTable, affiliateButton, productImage, byline, authorBox, personJsonLd, articleToc } = components;
+
+  const toc = articleToc([
+    { id: 'quick-picks', label: 'Quick picks' },
+    { id: 'intended-workload', label: 'Intended workload' },
+    { id: 'engine-differences', label: 'Engine differences' },
+    { id: 'cycle-times', label: 'Cycle times' },
+    { id: 'maximum-log-length', label: 'Maximum log length' },
+    { id: 'horizontal-vertical-operation', label: 'Horizontal/vertical operation' },
+    { id: 'towing-considerations', label: 'Towing considerations' },
+    { id: 'homeowner-vs-heavier-rural-use', label: 'Homeowner vs. heavier rural use' },
+    { id: 'maintenance', label: 'Maintenance' },
+    { id: 'fuel-and-storage', label: 'Fuel and storage' },
+    { id: 'product-summaries', label: 'Product summaries' },
+    { id: 'buying-advice', label: 'Buying advice' },
+    { id: 'faq', label: 'FAQ' },
+  ]);
   const publishedDate = '2026-07-20';
   const updatedDate = '2026-07-20';
 
@@ -32,14 +48,16 @@ module.exports = function bestGas(ctx) {
   const bodyHtml = `
 <article class="article-wrap">
   <h1>Best Gas Log Splitters for Homeowners and Rural Properties</h1>
-  <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; Published by LogSplitterLab</p>
+  <p class="article-meta">Published ${esc(publishedDate)} &middot; Updated ${esc(updatedDate)} &middot; ${byline(url)}</p>
   <p class="article-meta">${esc(config.amazonDisclosureShort)} See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
 
   <div class="note-box">This roundup is based on specification research and suitability analysis, not physical testing. It currently covers the gas models in our verified catalog — see <a href="${url('/how-we-review/')}">How We Review</a> for our methodology.</div>
 
   <p>Gas log splitters trade quiet operation for more power and full portability. This roundup compares the two verified gas models in our catalog: the Champion 100424 and the YARDMAX YU2566.</p>
 
-  <h2>Quick picks</h2>
+  ${toc}
+
+  <h2 id="quick-picks">Quick picks</h2>
   <div class="table-scroll-wrap">
     <div class="table-wrap">
       <table class="compare">
@@ -50,51 +68,53 @@ module.exports = function bestGas(ctx) {
     </div>
   </div>
 
-  <h2>Intended workload</h2>
+  <h2 id="intended-workload">Intended workload</h2>
   <p>Both models suit homeowners and rural property owners processing multiple cords a year — meaningfully more volume than the electric models in our catalog are built for. Neither is a light-duty, occasional-use machine.</p>
 
-  <h2>Engine differences</h2>
+  <h2 id="engine-differences">Engine differences</h2>
   <p>${champion ? `The Champion 100424 uses a ${esc(champion.engine)}.` : ''} ${yardmax ? `The YARDMAX YU2566 uses a ${esc(yardmax.engine)}.` : ''} Both are small single-cylinder engines typical of this class — routine maintenance (oil changes, air filter checks) applies to either.</p>
 
-  <h2>Cycle times</h2>
+  <h2 id="cycle-times">Cycle times</h2>
   <p>${champion && yardmax ? `The YARDMAX YU2566 has a faster cycle time (${yardmax.cycleTimeSeconds}s) than the Champion 100424 (${champion.cycleTimeSeconds}s), per each manufacturer's specifications — meaningful if you're processing a full cord in one session.` : ''}</p>
 
-  <h2>Maximum log length</h2>
+  <h2 id="maximum-log-length">Maximum log length</h2>
   <p>${champion && yardmax ? `The YARDMAX YU2566 is rated for logs up to ${yardmax.maxLogLengthIn} in., slightly longer than the Champion 100424's ${champion.maxLogLengthIn} in. rating.` : ''} The Champion also lists a maximum log weight of ${champion ? champion.maxLogWeightLb : ''} lb, which YARDMAX's sourcing didn't confirm for the YU2566 — check both manuals for your specific rounds.</p>
 
-  <h2>Horizontal/vertical operation</h2>
+  <h2 id="horizontal-vertical-operation">Horizontal/vertical operation</h2>
   <p>Both models support horizontal and vertical operation, per their manufacturers — vertical operation is useful for large rounds you don't want to lift onto a beam.</p>
 
-  <h2>Towing considerations</h2>
+  <h2 id="towing-considerations">Towing considerations</h2>
   <p>${champion ? `Champion explicitly rates the 100424's wheels for towing up to 45 mph.` : ''} ${yardmax ? `YARDMAX specifies DOT-approved tires on the YU2566, but our sourcing did not turn up an explicit maximum tow speed for this model — do not assume it matches the Champion's rating. Confirm with YARDMAX's manual and your local towing regulations before road use.` : ''}</p>
 
-  <h2>Homeowner vs. heavier rural use</h2>
+  <h2 id="homeowner-vs-heavier-rural-use">Homeowner vs. heavier rural use</h2>
   <p>For a homeowner splitting a few cords near the house, either machine is more capacity than strictly necessary. For a rural property with multiple work sites, the towing capability on both (with the caveat above on exact tow speed) is the more relevant differentiator than the roughly 2-ton difference in tonnage.</p>
 
-  <h2>Maintenance</h2>
+  <h2 id="maintenance">Maintenance</h2>
   <p>Both need routine small-engine maintenance (oil, air filter, spark plug) in addition to periodic hydraulic fluid and hose checks. See our <a href="${url('/maintenance/')}">maintenance guide</a> for the general concepts — always follow the specific manufacturer's manual for intervals and fluid types.</p>
 
-  <h2>Fuel and storage</h2>
+  <h2 id="fuel-and-storage">Fuel and storage</h2>
   <p>Both require fuel stabilization or draining before extended off-season storage, per standard small-engine practice. Retract the ram before storing either machine.</p>
 
-  <h2>Product summaries</h2>
+  <h2 id="product-summaries">Product summaries</h2>
   ${productSections}
 
-  <h2>Buying advice</h2>
+  <h2 id="buying-advice">Buying advice</h2>
   <p>If cycle time and log length matter most, the YARDMAX YU2566 has an edge. If confirmed highway towing speed matters most, the Champion 100424 is the one with that rating explicitly confirmed in our sourcing. Both are more machine than an occasional, light-duty user needs — see our <a href="${url('/best-electric-log-splitters/')}">electric splitter roundup</a> if that describes you instead.</p>
 
-  <h2>FAQ</h2>
+  <h2 id="faq">FAQ</h2>
   <div class="faq-item"><h3>Can these gas splitters be towed on the highway?</h3><p>The Champion 100424 is explicitly rated to 45 mph by the manufacturer. The YARDMAX YU2566 has DOT-approved tires but no confirmed maximum tow speed in our sourcing — check YARDMAX's manual before highway towing.</p></div>
   <div class="faq-item"><h3>How much maintenance does a gas log splitter need?</h3><p>Routine small-engine maintenance (oil changes, air filter, spark plug) plus periodic hydraulic fluid and hose checks — see our <a href="${url('/maintenance/')}">maintenance guide</a>.</p></div>
   <div class="faq-item"><h3>Is 25 tons enough, or do I need 27?</h3><p>For most seasoned hardwood, either is more than sufficient. The 2-ton difference matters most for very large, dense, or knotty rounds — see our <a href="${url('/what-size-log-splitter-do-i-need/')}">tonnage guide</a>.</p></div>
 
-  <h2>Related guides</h2>
+  <h2 id="related-guides">Related guides</h2>
   <ul>
     <li><a href="${url('/best-electric-log-splitters/')}">Best Electric Log Splitters</a></li>
     <li><a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">Gas vs. Electric Log Splitter</a></li>
     <li><a href="${url('/what-size-log-splitter-do-i-need/')}">What Size Log Splitter Do I Need?</a></li>
     <li><a href="${url('/buying-guide/')}">Log Splitter Buying Guide</a></li>
   </ul>
+
+  ${authorBox(url)}
 </article>`;
 
   const articleJsonLd = {
@@ -103,6 +123,7 @@ module.exports = function bestGas(ctx) {
     headline: 'Best Gas Log Splitters for Homeowners and Rural Properties',
     datePublished: publishedDate,
     dateModified: updatedDate,
+    author: { '@type': 'Person', name: 'Etay Asher', url: layout.canonical('/author/etay-asher/') },
     publisher: { '@type': 'Organization', name: 'LogSplitterLab' },
     mainEntityOfPage: layout.canonical('/best-gas-log-splitters/'),
   };
@@ -133,7 +154,7 @@ module.exports = function bestGas(ctx) {
     activeNav: 'comparisons',
     breadcrumbs: [{ label: 'Home', path: '/' }, { label: 'Best Gas Log Splitters', path: '/best-gas-log-splitters/' }],
     ogType: 'article',
-    jsonLd: [articleJsonLd, breadcrumbJsonLd, faqJsonLd],
+    jsonLd: [articleJsonLd, breadcrumbJsonLd, faqJsonLd, personJsonLd(layout.canonical)],
     publishedDate, updatedDate,
     bodyHtml,
     sitemap: { priority: '0.85', changefreq: 'monthly' },
