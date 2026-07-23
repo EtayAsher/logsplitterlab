@@ -19,9 +19,9 @@ Go to [affiliate-program.amazon.com](https://affiliate-program.amazon.com/) and 
 ### 1.2 Add the LogSplitterLab URL to your account
 In your Associates account under **Account Settings → Websites and Mobile Apps**, add:
 ```
-https://etayasher.github.io/logsplitterlab/
+https://logsplitterlab.com/
 ```
-If you later connect a custom domain, add that URL too once it's live.
+(The site previously lived at `etayasher.github.io/logsplitterlab` — that URL now redirects to the domain above, but register the real domain with Amazon, not the old one.)
 
 ### 1.3 Find your tracking ID
 Your tracking ID (also called your "Associate ID" or "Store ID") is shown in your Associates account under **Account Settings**. It looks like `yourname-20`.
@@ -81,25 +81,45 @@ Amazon's Associates Operating Agreement restricts how their product images and d
 
 ## 2. Google Search Console
 
+Two ways to add the property — pick one. **Domain property** (option A) is
+the more robust choice since you now control DNS at Namecheap: it covers
+`http://`, `https://`, `www`, and non-`www` under one property
+automatically. **URL-prefix** (option B) is simpler and is what this
+project's `searchConsoleVerification` config field is already wired for.
+
+### Option A — Domain property (recommended, covers www + non-www automatically)
 1. Go to [search.google.com/search-console](https://search.google.com/search-console).
-2. Add a property using the **URL-prefix** method with:
+2. Add a property using the **Domain** method with just `logsplitterlab.com` (no `https://`, no path).
+3. Google gives you a TXT record to add. In Namecheap, go to **Advanced DNS** (see the DNS section below) and add:
    ```
-   https://etayasher.github.io/logsplitterlab/
+   Type: TXT Record
+   Host: @
+   Value: (the exact string Google gives you)
    ```
-3. Choose the **HTML tag** verification method. Google gives you a `<meta name="google-site-verification" content="...">` tag — copy just the `content` value (the token).
-4. Paste it into `tools/data/site-config.js`:
+4. Back in Search Console, click **Verify** (DNS TXT records can take a few minutes to propagate).
+5. Skip to step 7 below (sitemap submission) — no code change needed for this option, since verification lives in DNS, not in the site itself.
+
+### Option B — URL-prefix with HTML tag (what this project's config supports directly)
+1. Add a property using the **URL-prefix** method with:
+   ```
+   https://logsplitterlab.com/
+   ```
+2. Choose the **HTML tag** verification method. Google gives you a `<meta name="google-site-verification" content="...">` tag — copy just the `content` value (the token).
+3. Paste it into `tools/data/site-config.js`:
    ```js
    searchConsoleVerification: 'the-token-google-gave-you',
    ```
-5. Rebuild (`node tools/build.js`) and deploy (see §5). The token now appears in every page's `<head>`.
-6. Back in Search Console, click **Verify**.
-7. Submit the sitemap: in Search Console, go to **Sitemaps** and submit:
+4. Rebuild (`node tools/build.js`) and deploy (see §7 below). The token now appears in every page's `<head>`.
+5. Back in Search Console, click **Verify**.
+
+### Then, either way
+6. Submit the sitemap: in Search Console, go to **Sitemaps** and submit:
    ```
-   https://etayasher.github.io/logsplitterlab/sitemap.xml
+   https://logsplitterlab.com/sitemap.xml
    ```
-8. To check a specific article got indexed, use **URL Inspection** in Search Console and paste the full article URL.
-9. The site may keep changing after indexing (new articles, corrected specs) — that's normal and expected.
-10. Once a URL is published, avoid changing its path — moving `/reviews/wen-56207/` to a different URL later would need a redirect Search Console can't set up for you on GitHub Pages, so treat published URLs as stable.
+7. To check a specific article got indexed, use **URL Inspection** in Search Console and paste the full article URL.
+8. The site may keep changing after indexing (new articles, corrected specs) — that's normal and expected.
+9. Once a URL is published, avoid changing its path — moving `/reviews/wen-56207/` to a different URL later would need a redirect Search Console can't set up for you on GitHub Pages, so treat published URLs as stable.
 
 ---
 
@@ -179,4 +199,4 @@ git add -A
 git commit -m "Describe what changed"
 git push origin main
 ```
-GitHub Pages rebuilds automatically after the push (usually within 1–2 minutes). Verify at https://etayasher.github.io/logsplitterlab/.
+GitHub Pages rebuilds automatically after the push (usually within 1–2 minutes). Verify at https://logsplitterlab.com/.
