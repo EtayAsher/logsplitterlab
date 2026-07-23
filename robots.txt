@@ -16,4 +16,4 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
-Sitemap: https://etayasher.github.io/logsplitterlab/sitemap.xml
+Sitemap: https://logsplitterlab.com/sitemap.xml

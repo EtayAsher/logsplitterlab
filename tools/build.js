@@ -144,6 +144,16 @@ for (const [group, groupPages] of llmsGroups) {
 }
 writeFile(path.join(REPO_ROOT, 'llms.txt'), llmsTxt);
 
+// --- CNAME ---------------------------------------------------------------
+// GitHub Pages custom domain. Derived from canonicalBaseUrl in
+// site-config.js — that's the only place to change it. Only written when
+// canonicalBaseUrl points at a non-github.io domain, so this file doesn't
+// reappear if the site ever moves back to the default github.io URL.
+const canonicalHost = new URL(config.canonicalBaseUrl).hostname;
+if (!canonicalHost.endsWith('.github.io')) {
+  writeFile(path.join(REPO_ROOT, 'CNAME'), canonicalHost + '\n');
+}
+
 // --- .nojekyll -----------------------------------------------------------
 // Tells GitHub Pages not to run this through Jekyll, since it's already
 // plain static HTML and Jekyll would ignore/mangle underscore-prefixed

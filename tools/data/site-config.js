@@ -5,13 +5,11 @@
 module.exports = {
   siteName: 'LogSplitterLab',
 
-  // GitHub Pages project-site base path and canonical domain.
-  // When a custom domain is connected later, change canonicalBaseUrl to the
-  // new domain (e.g. "https://www.logsplitterlab.com") and set basePath to ''.
-  // Everything else in the build (links, sitemap, canonical tags, OG urls)
-  // reads from these two values, so this is the only place to change it.
-  canonicalBaseUrl: 'https://etayasher.github.io',
-  basePath: '/logsplitterlab',
+  // Canonical domain and base path. Custom domain connected 2026-07-22 —
+  // build.js derives the CNAME file content from canonicalBaseUrl, so this
+  // is the only place a future domain change needs to happen.
+  canonicalBaseUrl: 'https://logsplitterlab.com',
+  basePath: '',
 
   // Shown in the footer, Contact page, and Affiliate Disclosure page.
   contactEmail: 'contact@logsplitterlab.com',
