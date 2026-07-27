@@ -8,6 +8,8 @@
       .wood{fill:#efe8da;stroke:#8B4513;stroke-width:3;}
       .wheel{fill:#1a3a2a;}
       .wheel-hub{fill:#f5f0e8;}
+      .badge{fill:#c17f24;}
+      .badge-text{fill:#fdfaf4;font-family:Georgia,serif;font-size:15px;font-weight:700;}
     </style>
   </defs>
   <rect class="bg" width="320" height="220" rx="12"/>
@@ -38,4 +40,8 @@
   <circle class="wheel-hub" cx="90" cy="170" r="3"/>
   <circle class="wheel" cx="230" cy="170" r="9"/>
   <circle class="wheel-hub" cx="230" cy="170" r="3"/>
+
+  <!-- brand badge (decorative, generic icon — not a photo of the real product) -->
+  <rect class="badge" x="20" y="20" width="64" height="26" rx="13"/>
+  <text class="badge-text" x="52" y="39" text-anchor="middle">WEN</text>
 </svg>

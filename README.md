@@ -232,10 +232,13 @@ to follow).
 ## Product images
 
 Every product in `tools/data/products.js` ships with `imageMode:
-'generic-placeholder'`, pointing at `assets/img/splitter-gas-placeholder.svg`
-or `assets/img/splitter-electric-placeholder.svg` — original illustrations
-in the site's own brand colors, not photos or renders of any specific
-product, and not hotlinked from Amazon or any manufacturer.
+'generic-placeholder'`, pointing at one of the per-product SVGs in
+`assets/img/` (e.g. `splitter-electric-wen.svg`,
+`splitter-gas-champion.svg`) — original illustrations in the site's own
+brand colors with a small text badge so same-type products (two electric,
+two gas) stay visually distinct in a grid. These are not photos or renders
+of any specific product, and are not hotlinked from Amazon or any
+manufacturer.
 `assets/img/social-preview.svg` is a similar placeholder for the Open Graph
 image.
 
