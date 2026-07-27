@@ -121,15 +121,15 @@ module.exports = function home(ctx) {
       <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}" class="btn btn-dark-outline btn-sm">Read Comparison</a>
     </div>
     <div class="comp-card">
-      <span class="eyebrow">Best Of &middot; Updated 2026-07-20</span>
+      <span class="eyebrow">Best Of &middot; Updated 2026-07-26</span>
       <h3>Best Electric Log Splitters</h3>
-      <p>WEN vs. Boss Industrial, compared by controls, cycle time, and electrical requirements.</p>
+      <p>WEN vs. BILT HARD, compared by cycle time, warranty, and electrical requirements.</p>
       <a href="${url('/best-electric-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
     </div>
     <div class="comp-card">
-      <span class="eyebrow">Best Of &middot; Updated 2026-07-20</span>
+      <span class="eyebrow">Best Of &middot; Updated 2026-07-26</span>
       <h3>Best Gas Log Splitters</h3>
-      <p>Champion vs. YARDMAX, compared by engine, cycle time, and towing.</p>
+      <p>Landworks vs. Champion, compared by engine, cycle time, and towing.</p>
       <a href="${url('/best-gas-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
     </div>
     <div class="comp-card">

@@ -4,93 +4,52 @@
 // EVERY spec field must be traceable to sourceUrls on that record. If a
 // value can't be confirmed, set it to `null` and leave it out of public
 // display rather than guessing or showing "Unknown". Never merge specs
-// across different model numbers in the same product family (e.g. Champion
-// sells several 27-ton models with different cycle times — they are not
-// interchangeable). See README.md "Verification rules" before editing.
+// across different model numbers in the same product family. See
+// README.md "Verification rules" before editing.
+//
+// This file intentionally does NOT store Amazon ratings, review counts,
+// "Best Seller" badges, prices, or stock/availability status — those
+// change constantly and are not published as permanent site content (see
+// tools/pages/review.js and components.js, which never render them).
+// `asin`/`amazonUrl` are stored only as internal reference for the future
+// affiliate-link integration step — they are not displayed as live
+// purchase/availability claims by themselves.
 //
 // Affiliate URLs live separately in tools/data/affiliate-links.js, keyed
 // by `id` below — that's the only place a commercial link is configured.
 //
-// Field reference:
-//   status              'active' | 'discontinued' | 'unavailable' | 'uncertain'
-//   asin                Amazon ASIN, ONLY when confirmed by directly opening
-//                        the product page and matching model number+tonnage.
-//                        null if unconfirmed — do not guess from a search
-//                        snippet or a differently-numbered sibling model.
-//   imageMode           'authorized-amazon' | 'licensed-manufacturer' |
-//                        'owner-uploaded' | 'generic-placeholder'
-//   imageSrc            Path (relative to basePath) to the image asset.
-//   imageAlt            Accessible alt text. For generic-placeholder this
-//                        must NOT claim to depict the exact product.
-//   imageSourceNote     One line explaining where the image came from —
-//                        shown in code comments/README, not necessarily
-//                        on-page, but must always be accurate.
-//   suitableUseSummary  One sentence, for card-level display.
-//   limitationsSummary  One sentence, for card-level display.
-//   (Longer strengths/limitations/verdict copy lives in tools/pages/review.js.)
+// Catalog history: the original 4-product catalog (Champion 100424,
+// WEN 56207, YARDMAX YU2566, Boss Industrial ES7T20) was replaced
+// 2026-07-26 after all four were confirmed unavailable or discontinued on
+// Amazon.com. See the `removedProducts` export below for that record.
 'use strict';
 
 module.exports = [
   {
-    id: 'champion-100424',
-    brand: 'Champion Power Equipment',
-    name: 'Champion 27-Ton Log Splitter',
-    model: '100424',
-    asin: null, // Champion sells several 27-ton model numbers on Amazon; a
-                // direct page fetch could not confirm which ASIN maps to
-                // 100424 specifically, so this is left unconfirmed rather
-                // than guessed. See README "Verification rules."
-    status: 'active',
-    type: 'gas',
-    typeLabel: 'Gas',
-    tonnage: 27,
-    engine: '224cc Champion single-cylinder OHV engine',
-    cycleTimeSeconds: 11,
-    maxLogLengthIn: 24,
-    maxLogWeightLb: 100,
-    orientation: 'Horizontal / Vertical',
-    towable: true,
-    warranty: null, // not confirmed from the sources below; left unpublished
-    verifiedDate: '2026-07-20',
-    sourceUrls: [
-      'https://www.championpowerequipment.com/product/100424-27-ton-log-splitter/',
-      'https://www.homedepot.com/p/Champion-Power-Equipment-27-Ton-224-cc-Gas-Powered-Hydraulic-Wood-Log-Splitter-w-Vertical-Horizontal-Operation-and-Auto-Return-with-Hydraulic-Oil-100424/302367049',
-    ],
-    notes: 'Champion sells several 27-ton model numbers (100424, 201312, 201518) with different cycle times. This entry covers model 100424 specifically — do not merge specs across model numbers.',
-    suitableUseSummary: 'Rural properties that need to tow the splitter between sites and process several cords a year.',
-    limitationsSummary: 'Gas engine needs routine maintenance, and it is louder than an electric alternative.',
-    imageMode: 'generic-placeholder',
-    imageSrc: '/assets/img/splitter-gas-placeholder.svg',
-    imageAlt: 'Illustration of a generic towable gas-powered log splitter',
-    imageWidth: 320,
-    imageHeight: 220,
-    imageSourceNote: 'Original illustration created for this site; does not depict the actual Champion 100424.',
-  },
-  {
-    id: 'wen-56207',
+    id: 'wen-56208',
     brand: 'WEN',
-    name: 'WEN 6.5-Ton Electric Log Splitter',
-    model: '56207',
-    asin: 'B074H739NS', // Confirmed 2026-07-20 by opening the Amazon listing
-                        // directly: title and spec text both read "WEN 56207
-                        // 6.5-Ton Electric Log Splitter".
+    name: 'WEN 56208 Electric Log Splitter',
+    model: '56208',
+    asin: 'B0B4KNQFTC',
+    amazonUrl: 'https://www.amazon.com/dp/B0B4KNQFTC',
     status: 'active',
     type: 'electric',
     typeLabel: 'Electric',
     tonnage: 6.5,
-    engine: '120V, 15A, 2.55HP electric motor',
+    engine: '120V, 60Hz, 15A electric motor, up to 3,574 RPM',
     cycleTimeSeconds: 20,
     maxLogLengthIn: 20.5,
     maxLogDiameterIn: 10,
     orientation: 'Horizontal',
     towable: false,
     warranty: null,
-    verifiedDate: '2026-07-20',
+    verifiedDate: '2026-07-26',
     sourceUrls: [
-      'https://d3gqasl9vmjfd8.cloudfront.net/79ce7645-dde4-4717-b5c5-5d352eecbfae.pdf',
-      'https://www.amazon.com/WEN-56207-6-5-Ton-Electric-Splitter/dp/B074H739NS',
+      'https://www.amazon.com/dp/B0B4KNQFTC',
+      'https://images.thdstatic.com/catalog/pdfImages/ee/ee4e5f5a-8e0a-46d9-a2ae-97b9874cd1fb.pdf',
+      'https://wenproducts.com/products/wen-56208-6-5-ton-electric-log-splitter-with-stand',
     ],
-    notes: 'Corrected from an earlier draft of this site that listed this model at 7 tons. WEN’s own manual and retailer listings confirm 6.5 tons.',
+    notes: 'Successor to the WEN 56207, which is confirmed discontinued/unavailable on Amazon as of 2026-07-26 ("Currently unavailable — we don\'t know when or if this item will be back in stock"). The 56208 is the model WEN and its retailers currently sell in this tonnage class; do not confuse it with 56207 specs from any older source.',
     suitableUseSummary: 'Light-to-moderate splitting of softer wood within reach of a garage or shed outlet.',
     limitationsSummary: 'Not rated for very dense hardwood or logs longer than 20.5 in. / thicker than 10 in.',
     imageMode: 'generic-placeholder',
@@ -98,89 +57,152 @@ module.exports = [
     imageAlt: 'Illustration of a generic compact electric log splitter',
     imageWidth: 320,
     imageHeight: 220,
-    imageSourceNote: 'Original illustration created for this site; does not depict the actual WEN 56207.',
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual WEN 56208.',
   },
   {
-    id: 'yardmax-yu2566',
-    brand: 'YARDMAX',
-    name: 'YARDMAX 25-Ton Full Beam Gas Log Splitter',
-    model: 'YU2566',
-    asin: null, // A candidate ASIN was found via search, but the product
-                // page could not be loaded to confirm the model number
-                // directly, so it is left unconfirmed. See README.
-    status: 'active',
-    type: 'gas',
-    typeLabel: 'Gas',
-    tonnage: 25,
-    engine: 'Briggs & Stratton CR950, 208cc, 6.5HP',
-    cycleTimeSeconds: 9.7,
-    maxLogLengthIn: 26,
-    orientation: 'Horizontal / Vertical',
-    towable: true,
-    warranty: null,
-    verifiedDate: '2026-07-20',
-    sourceUrls: [
-      'https://yardmax.com/product/gas-powered-log-splitter-full-beam-25-ton/',
-      'https://www.lowes.com/pd/YARDMAX-25-Ton-Full-Beam-Log-Splitter/1003002912',
-    ],
-    notes: null,
-    suitableUseSummary: 'Higher-volume splitting where a faster cycle time meaningfully saves time.',
-    limitationsSummary: 'Same routine gas-engine maintenance as any small engine.',
-    imageMode: 'generic-placeholder',
-    imageSrc: '/assets/img/splitter-gas-placeholder.svg',
-    imageAlt: 'Illustration of a generic towable gas-powered log splitter',
-    imageWidth: 320,
-    imageHeight: 220,
-    imageSourceNote: 'Original illustration created for this site; does not depict the actual YARDMAX YU2566.',
-  },
-  {
-    id: 'boss-es7t20',
-    brand: 'Boss Industrial',
-    name: 'Boss Industrial 7-Ton Electric Log Splitter',
-    model: 'ES7T20',
-    asin: 'B00GNSCGIW', // Confirmed 2026-07-20 by opening the Amazon listing
-                        // directly: canonical URL and meta description both
-                        // read "ES7T20" and "7 Ton".
+    id: 'bilt-hard-65ton',
+    brand: 'BILT HARD',
+    name: 'BILT HARD 6.5-Ton Electric Log Splitter',
+    model: '6.5-Ton Electric Log Splitter', // BILT HARD does not publish a separate alphanumeric SKU distinct from this descriptive name, per the manufacturer's own site and every retailer listing checked.
+    asin: 'B09B75R66Q',
+    amazonUrl: 'https://www.amazon.com/dp/B09B75R66Q',
     status: 'active',
     type: 'electric',
     typeLabel: 'Electric',
-    tonnage: 7,
-    engine: '115V, 13.5A, 2HP electric motor',
-    cycleTimeSeconds: 14,
+    tonnage: 6.5,
+    engine: '120V, 60Hz, 15A electric motor, 1-3/4 HP, up to 3,400 RPM',
+    cycleTimeSeconds: 18,
     maxLogLengthIn: 20.5,
-    maxLogDiameterIn: 10,
+    maxLogDiameterIn: 9.8,
+    maxLogWeightLb: null,
     orientation: 'Horizontal',
     towable: false,
-    warranty: '2 years, including hydraulics',
-    verifiedDate: '2026-07-20',
+    warranty: '90 days, limited (materials and workmanship)',
+    verifiedDate: '2026-07-26',
     sourceUrls: [
-      'https://www.boss-industrial.com/products/7-ton-electric-log-splitter',
-      'https://www.homedepot.com/p/Boss-Industrial-7-Ton-13-5-Amp-Horizontal-Electric-Log-Splitter-ES7T20/314455563',
+      'https://www.amazon.com/dp/B09B75R66Q',
+      'https://bilthardusa.com/products/bilt-hard-log-splitter-6-5-ton-wood-splitter-electric-powered-15amp-with-hydraulic-ram-electric-firewood-splitting-machine',
+      'https://www.lowes.com/pd/BILT-HARD-6-5-Ton-15-Amp-Horizontal-Electric-Log-Splitter-Wood-Splitter-with-Hydraulic-Ram/7142313',
     ],
-    notes: null,
-    suitableUseSummary: 'A single operator splitting moderate volumes at home, thanks to single-handed operation.',
-    limitationsSummary: 'Its 13.5A draw is close to a standard 15A circuit\'s limit; not rated for large or very dense rounds.',
+    notes: 'A distinct product from the WEN 56208 — different brand, different manufacturer, separate Amazon listing/ASIN. Sold in two configurations ("6.5 Ton" and "6.5 Ton with Stand"); specs here apply to the base unit.',
+    suitableUseSummary: 'Homeowners who want two-handed control and don\'t need a stand included by default.',
+    limitationsSummary: 'Same tonnage ceiling as other 6.5-ton electric splitters — not for dense hardwood or oversized rounds.',
     imageMode: 'generic-placeholder',
     imageSrc: '/assets/img/splitter-electric-placeholder.svg',
     imageAlt: 'Illustration of a generic compact electric log splitter',
     imageWidth: 320,
     imageHeight: 220,
-    imageSourceNote: 'Original illustration created for this site; does not depict the actual Boss Industrial ES7T20.',
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual BILT HARD 6.5-Ton Electric Log Splitter.',
+  },
+  {
+    id: 'landworks-guo079',
+    brand: 'Landworks',
+    name: 'Landworks 20-Ton Portable Gas Log Splitter',
+    model: 'GUO079',
+    asin: 'B099BCVFP9',
+    amazonUrl: 'https://www.amazon.com/dp/B099BCVFP9',
+    status: 'active',
+    type: 'gas',
+    typeLabel: 'Gas',
+    tonnage: 20,
+    engine: 'AlphaWorks 7HP, 209cc gas engine',
+    cycleTimeSeconds: 7.5,
+    maxLogLengthIn: 20,
+    maxLogDiameterIn: 16,
+    maxLogWeightLb: 130, // unit weight, not a rated max log weight — see notes
+    orientation: 'Horizontal',
+    towable: false, // portable via integrated wheels; no tow hitch confirmed
+    warranty: '1 year, manufacturer',
+    verifiedDate: '2026-07-26',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B099BCVFP9',
+      'https://www.lowes.com/pd/Landworks-Landworks-Gas-Powered-Hydraulic-Log-Splitter/5014220571',
+      'https://www.tractorsupply.com/tsc/product/landworks-gas-powered-hydraulic-log-splitter-tri-guo079',
+    ],
+    notes: 'Also listed under the SKU prefix "TRI-GUO079" at some retailers (Tractor Supply, Lowe\'s); "GUO079" is the core model code used consistently across manufacturer and retailer listings. The 130 lb figure is the unit\'s own shipping/assembled weight, not a maximum log weight rating — no maximum log weight is officially published, so that field is left unset. Portable via 10 in. transport wheels; no vehicle tow hitch is specified, unlike the Champion 100250.',
+    suitableUseSummary: 'Mid-volume gas splitting where portability around a property matters more than towing on public roads.',
+    limitationsSummary: 'No confirmed tow-hitch rating for road use, and hydraulic fluid is not included in the box.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-gas-placeholder.svg',
+    imageAlt: 'Illustration of a generic towable gas-powered log splitter',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual Landworks GUO079.',
+  },
+  {
+    id: 'champion-100250',
+    brand: 'Champion Power Equipment',
+    name: 'Champion 37-Ton Full Beam Log Splitter',
+    model: '100250',
+    asin: 'B0CVNQB6LN',
+    amazonUrl: 'https://www.amazon.com/dp/B0CVNQB6LN',
+    status: 'active',
+    type: 'gas',
+    typeLabel: 'Gas',
+    tonnage: 37,
+    engine: '338cc Champion single-cylinder OHV engine',
+    cycleTimeSeconds: 16,
+    maxLogLengthIn: 24,
+    maxLogWeightLb: 100,
+    orientation: 'Horizontal / Vertical',
+    towable: true,
+    warranty: '2 years, limited, with free lifetime technical support',
+    verifiedDate: '2026-07-26',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B0CVNQB6LN',
+      'https://www.championpowerequipment.com/wp-content/uploads/2017/08/100250-om-english.pdf',
+      'https://www.lowes.com/pd/Champion-Power-Equipment-37-Ton-Gas-Log-Splitter/1000126585',
+    ],
+    notes: 'Replaces the earlier Champion 100424 (27-ton) entry, which is no longer confirmed available — the 27-ton variant of that Amazon listing shows no purchasable price while the 37-ton and 40-ton variants of the current listing do. Do not merge specs with 100424, 201312, 201518, or any other Champion model number; this entry is specific to model 100250. Towable to 45 mph per Champion\'s own operator manual — that manual states mph explicitly; a regional (Israel-facing) Amazon listing showed a "45 km/h" conversion that appears to be a localization error, so the manufacturer\'s own mph figure is used here.',
+    suitableUseSummary: 'Higher-volume gas splitting for rural properties, with confirmed road-towing capability.',
+    limitationsSummary: 'Large, heavy machine with routine small-engine maintenance — more than most occasional users need.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-gas-placeholder.svg',
+    imageAlt: 'Illustration of a generic towable gas-powered log splitter',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual Champion 100250.',
   },
 ];
 
-// Products that were referenced in an earlier draft of this site and were
-// REMOVED because they could not be verified. Kept here only as an editorial
-// record — do not republish without genuine sourcing.
+// Products that were part of a previous catalog and were REMOVED because
+// they were confirmed unavailable/discontinued on Amazon.com as of the
+// verification date below. Kept here only as an editorial record — do not
+// republish without re-verifying current availability from scratch.
 module.exports.removedProducts = [
+  {
+    name: 'Champion 27-Ton Log Splitter (Model 100424)',
+    status: 'unavailable',
+    reason: 'The 27-ton variant of the associated Amazon listing shows no purchasable price while sibling 37-ton/40-ton variants of the same listing do — effectively unavailable. Replaced by Champion 100250 (37-ton), confirmed active.',
+    removedDate: '2026-07-26',
+  },
+  {
+    name: 'WEN 56207 6.5-Ton Electric Log Splitter',
+    status: 'discontinued',
+    reason: 'Amazon listing explicitly states "Currently unavailable — we don\'t know when or if this item will be back in stock." Replaced by its direct successor, WEN 56208.',
+    removedDate: '2026-07-26',
+  },
+  {
+    name: 'YARDMAX 25-Ton Full Beam Gas Log Splitter (YU2566)',
+    status: 'discontinued',
+    reason: 'The ASIN previously associated with this model now belongs to a different YARDMAX product entirely (YU3566, 35-ton), which is itself shown as unavailable. Replaced by Landworks GUO079 (20-ton).',
+    removedDate: '2026-07-26',
+  },
+  {
+    name: 'Boss Industrial 7-Ton Electric Log Splitter (ES7T20)',
+    status: 'discontinued',
+    reason: 'Amazon listing explicitly shows "Currently unavailable" for the 7-ton electric style option. Replaced by BILT HARD 6.5-Ton Electric Log Splitter.',
+    removedDate: '2026-07-26',
+  },
+  // Retained from the prior catalog rebuild for continuity of record:
   {
     name: 'Husqvarna S461',
     status: 'uncertain',
-    reason: 'No model named "S461" could be found from Husqvarna. Husqvarna’s actual log splitter line is the gas-powered S427 (27-ton, Kohler engine). The earlier draft described a 4-ton "manual" Husqvarna splitter, which does not match any findable Husqvarna product. Removed rather than guessed.',
+    reason: 'No model named "S461" could be found from Husqvarna. Husqvarna\'s actual log splitter line is the gas-powered S427 (27-ton, Kohler engine). Removed rather than guessed.',
   },
   {
     name: 'Iron & Oak TR22',
     status: 'uncertain',
-    reason: 'No model named "TR22" could be found from Iron & Oak. Their commercial splitters use "BHVH"-prefixed model codes (e.g. BHVH2213GX). Removed rather than guessed.',
+    reason: 'No model named "TR22" could be found from Iron & Oak. Their commercial splitters use "BHVH"-prefixed model codes. Removed rather than guessed.',
   },
 ];

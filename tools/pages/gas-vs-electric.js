@@ -24,8 +24,8 @@ module.exports = function gasVsElectric(ctx) {
   const publishedDate = '2026-07-20';
   const updatedDate = '2026-07-21';
 
-  const gasExample = products.find((p) => p.id === 'champion-100424');
-  const electricExample = products.find((p) => p.id === 'wen-56207');
+  const gasExample = products.find((p) => p.id === 'champion-100250');
+  const electricExample = products.find((p) => p.id === 'wen-56208');
 
   const bodyHtml = `
 <article class="article-wrap">

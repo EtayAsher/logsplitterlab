@@ -17,14 +17,14 @@ site. Update the checkboxes as articles ship.
 
 **Week 2**
 - [x] What Size Log Splitter Do I Need? (`/what-size-log-splitter-do-i-need/`) — published in the Version 1.0 build
-- [ ] Champion 100424 Review update — re-check specs against `tools/data/products.js` sourceUrls; only touch if something has actually changed
+- [ ] Champion 100250 Review update — re-check specs against `tools/data/products.js` sourceUrls; only touch if something has actually changed
 
 **Week 3**
-- [ ] Boss ES7T20 vs WEN 56207 — direct model-vs-model comparison; both already verified, no blocker
+- [ ] BILT HARD 6.5-Ton vs WEN 56208 — direct model-vs-model comparison; both already verified, no blocker
 - [ ] How to Split Green Wood Safely — informational, no product dependency
 
 **Week 4**
-- [ ] Champion 100424 vs YARDMAX YU2566 — direct model-vs-model comparison; both already verified, no blocker
+- [ ] Champion 100250 vs Landworks GUO079 — direct model-vs-model comparison; both already verified, no blocker
 - [ ] Log Splitter Cycle Time Explained — informational, no product dependency
 
 **Week 5**
@@ -36,12 +36,12 @@ site. Update the checkboxes as articles ship.
 - [ ] How to Store a Log Splitter — informational, no product dependency
 
 **Week 7**
-- [ ] 7-Ton vs 25-Ton Log Splitter — Boss ES7T20 (7T) vs. YARDMAX YU2566 (25T), both already verified
+- [ ] 6.5-Ton vs 20-Ton Log Splitter — WEN 56208 (6.5T) vs. Landworks GUO079 (20T), both already verified
 - [ ] How Often to Change Hydraulic Fluid — informational; do not give a single universal interval, per README verification rules — always "check your model's manual"
 
 **Week 8**
 - [ ] Best Log Splitter for Small Properties — can publish using the existing catalog
-- [ ] Towable Log Splitter Safety — covers Champion 100424 and YARDMAX YU2566, both already verified as towable
+- [ ] Towable Log Splitter Safety — covers the Champion 100250 (confirmed towable); note that the Landworks GUO079 has no confirmed tow rating and should not be described as towable
 
 **Week 9**
 - [ ] How to Read a Log Splitter Specification Sheet — informational, no product dependency

@@ -39,14 +39,14 @@ amazonAssociatesTag: 'yourname-20',
 ### 1.5 Identify an ASIN
 The ASIN is in the product URL, right after `/dp/`, e.g. `amazon.com/dp/B0XXXXXXXX` → ASIN is `B0XXXXXXXX`. It's also listed under "Product information" on most listings.
 
-Two ASINs are already confirmed in `tools/data/products.js` (WEN 56207, Boss Industrial ES7T20) — verified by directly opening the listing and matching the model number. The Champion 100424 and YARDMAX YU2566 entries are left as `null` because that direct confirmation wasn't possible during this build; please verify and fill them in yourself before adding affiliate links for those two, since Champion in particular sells multiple 27-ton model numbers and it's easy to grab the wrong one.
+All four ASINs currently in `tools/data/products.js` (WEN 56208, BILT HARD 6.5-Ton, Landworks GUO079, Champion 100250) were confirmed by directly opening each Amazon listing and matching the model number/name shown on the page, as of the `verifiedDate` on each record. Re-verify before adding a link if it's been a while, since Amazon listings can be discontinued or repurposed.
 
 ### 1.6 Where to paste each link
 Open `tools/data/affiliate-links.js`. For each product you have a link for, replace `null` with an object:
 
 ```js
-'wen-56207': {
-  directUrl: 'https://www.amazon.com/dp/B074H739NS',
+'wen-56208': {
+  directUrl: 'https://www.amazon.com/dp/B0B4KNQFTC',
   taggedUrl: 'https://amzn.to/xxxxxxx',   // your SiteStripe Special Link — preferred if you have it
   ctaLabel: 'Check Price on Amazon',
   enabled: true,
@@ -119,7 +119,7 @@ project's `searchConsoleVerification` config field is already wired for.
    ```
 7. To check a specific article got indexed, use **URL Inspection** in Search Console and paste the full article URL.
 8. The site may keep changing after indexing (new articles, corrected specs) — that's normal and expected.
-9. Once a URL is published, avoid changing its path — moving `/reviews/wen-56207/` to a different URL later would need a redirect Search Console can't set up for you on GitHub Pages, so treat published URLs as stable.
+9. Once a URL is published, avoid changing its path — moving `/reviews/wen-56208/` to a different URL later would need a redirect Search Console can't set up for you on GitHub Pages, so treat published URLs as stable.
 
 ---
 
@@ -133,12 +133,12 @@ To replace a placeholder:
    - **`owner-uploaded`**: a photo you took yourself, or one you have explicit written permission to use.
    - **`licensed-manufacturer`**: an image the manufacturer has explicitly agreed you may use (check their press/media kit page, or email and ask).
    - **`authorized-amazon`**: an image obtained through an Amazon-approved tool (e.g. the Amazon Associates SiteStripe image embed, or the Product Advertising API) rather than right-clicking and saving from a product page.
-2. Save the file under `assets/img/products/` with a descriptive filename, e.g. `assets/img/products/wen-56207-front.webp`. Prefer WebP for photos; keep the file reasonably sized (under ~150KB).
+2. Save the file under `assets/img/products/` with a descriptive filename, e.g. `assets/img/products/wen-56208-front.webp`. Prefer WebP for photos; keep the file reasonably sized (under ~150KB).
 3. Update the product's record in `tools/data/products.js`:
    ```js
    imageMode: 'owner-uploaded',
-   imageSrc: '/assets/img/products/wen-56207-front.webp',
-   imageAlt: 'WEN 56207 electric log splitter on its stand',
+   imageSrc: '/assets/img/products/wen-56208-front.webp',
+   imageAlt: 'WEN 56208 electric log splitter on its stand',
    imageWidth: 320,   // match the actual file's aspect ratio
    imageHeight: 240,
    imageSourceNote: 'Photographed by [you], 2026-08-01.',

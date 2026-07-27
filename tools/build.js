@@ -71,6 +71,23 @@ pages.forEach((page) => {
 writeFile(path.join(REPO_ROOT, '404.html'), layout.renderPage(notFoundPage));
 written++;
 
+// --- prune stale review pages -----------------------------------------
+// Every past catalog swap has left old /reviews/<old-id>/ directories
+// physically in place, since writeFile only ever adds files. Delete any
+// reviews/ subdirectory that isn't a current product id, so removing a
+// product from products.js is enough to make its old page 404 on the next
+// build instead of lingering as a duplicate/stale URL.
+const reviewsDir = path.join(REPO_ROOT, 'reviews');
+const currentProductIds = new Set(products.map((p) => p.id));
+let pruned = 0;
+if (fs.existsSync(reviewsDir)) {
+  fs.readdirSync(reviewsDir, { withFileTypes: true }).forEach((entry) => {
+    if (!entry.isDirectory() || currentProductIds.has(entry.name)) return;
+    fs.rmSync(path.join(reviewsDir, entry.name), { recursive: true, force: true });
+    pruned++;
+  });
+}
+
 // --- sitemap.xml -----------------------------------------------------
 // Lists only real, indexable pages that contain real content. Excludes
 // 404.html and anything marked noindex.
@@ -161,6 +178,7 @@ if (!canonicalHost.endsWith('.github.io')) {
 writeFile(path.join(REPO_ROOT, '.nojekyll'), '');
 
 console.log(`Built ${written} HTML pages, sitemap.xml, robots.txt, .nojekyll`);
+if (pruned > 0) console.log(`Pruned ${pruned} stale reviews/ directory(ies) with no matching product.`);
 console.log('Pages:');
 pages.forEach((p) => console.log('  ' + p.path));
 console.log('  /404.html (noindex)');

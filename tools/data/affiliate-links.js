@@ -26,8 +26,14 @@
 'use strict';
 
 module.exports = {
-  'champion-100424': null,
-  'wen-56207': null,
-  'yardmax-yu2566': null,
-  'boss-es7t20': null,
+  // Catalog updated 2026-07-26: previous 4 products (champion-100424,
+  // wen-56207, yardmax-yu2566, boss-es7t20) were removed after being
+  // confirmed unavailable/discontinued — see removedProducts in
+  // tools/data/products.js. Do not reuse any old affiliate links for the
+  // new product ids below even if one happens to still resolve; verify
+  // fresh for each.
+  'wen-56208': null,
+  'bilt-hard-65ton': null,
+  'landworks-guo079': null,
+  'champion-100250': null,
 };
