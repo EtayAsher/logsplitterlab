@@ -28,12 +28,13 @@
 module.exports = {
   // Catalog updated 2026-07-26: previous 4 products (champion-100424,
   // wen-56207, yardmax-yu2566, boss-es7t20) were removed after being
-  // confirmed unavailable/discontinued — see removedProducts in
-  // tools/data/products.js. Do not reuse any old affiliate links for the
-  // new product ids below even if one happens to still resolve; verify
-  // fresh for each.
+  // confirmed unavailable/discontinued. Catalog updated again 2026-07-27:
+  // bilt-hard-65ton and champion-100250 were replaced by superhandy-guo084
+  // and superhandy-guo096 — see removedProducts in tools/data/products.js
+  // for why. Do not reuse any old affiliate links for the product ids
+  // below even if one happens to still resolve; verify fresh for each.
   'wen-56208': null,
-  'bilt-hard-65ton': null,
+  'superhandy-guo084': null,
   'landworks-guo079': null,
-  'champion-100250': null,
+  'superhandy-guo096': null,
 };
