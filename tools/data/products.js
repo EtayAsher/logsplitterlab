@@ -63,7 +63,7 @@ module.exports = [
     id: 'bilt-hard-65ton',
     brand: 'BILT HARD',
     name: 'BILT HARD 6.5-Ton Electric Log Splitter',
-    model: '6.5-Ton Electric Log Splitter', // BILT HARD does not publish a separate alphanumeric SKU distinct from this descriptive name, per the manufacturer's own site and every retailer listing checked.
+    model: 'TLA-0101', // Descriptive name "6.5-Ton Electric Log Splitter" is what BILT HARD's own site and most retailers show; TLA-0101 is the SKU used by BILT HARD's own storefront reviews widget (Judge.me) and by a hosted copy of its owner's manual — corrected 2026-07-27 after direct verification.
     asin: 'B09B75R66Q',
     amazonUrl: 'https://www.amazon.com/dp/B09B75R66Q',
     status: 'active',
@@ -83,6 +83,7 @@ module.exports = [
       'https://www.amazon.com/dp/B09B75R66Q',
       'https://bilthardusa.com/products/bilt-hard-log-splitter-6-5-ton-wood-splitter-electric-powered-15amp-with-hydraulic-ram-electric-firewood-splitting-machine',
       'https://www.lowes.com/pd/BILT-HARD-6-5-Ton-15-Amp-Horizontal-Electric-Log-Splitter-Wood-Splitter-with-Hydraulic-Ram/7142313',
+      'https://judge.me/reviews/stores/bilthard/products/bilt-hard-log-splitter-6-5-ton-wood-splitter-electric-powered-15amp-with-hydraulic-ram-electric-firewood-splitting-machine',
     ],
     notes: 'A distinct product from the WEN 56208 — different brand, different manufacturer, separate Amazon listing/ASIN. Sold in two configurations ("6.5 Ton" and "6.5 Ton with Stand"); specs here apply to the base unit.',
     suitableUseSummary: 'Homeowners who want two-handed control and don\'t need a stand included by default.',
