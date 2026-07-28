@@ -26,15 +26,41 @@
 'use strict';
 
 module.exports = {
-  // Catalog updated 2026-07-26: previous 4 products (champion-100424,
-  // wen-56207, yardmax-yu2566, boss-es7t20) were removed after being
-  // confirmed unavailable/discontinued. Catalog updated again 2026-07-27:
-  // bilt-hard-65ton and champion-100250 were replaced by superhandy-guo084
-  // and superhandy-guo096 — see removedProducts in tools/data/products.js
-  // for why. Do not reuse any old affiliate links for the product ids
-  // below even if one happens to still resolve; verify fresh for each.
-  'wen-56208': null,
-  'superhandy-guo084': null,
-  'landworks-guo079': null,
-  'superhandy-guo096': null,
+  // Catalog history: see tools/data/products.js header comment.
+  //
+  // 2026-07-27: Amazon Associates approved. Owner supplied one verified
+  // SiteStripe link per product (tag=logsplitterla-20, confirmed present
+  // in each resolved URL). Each taggedUrl below is stored and used
+  // exactly as supplied — do not edit, re-shorten, or add/remove any
+  // query parameters. Every link was resolved via its full redirect
+  // chain and the destination ASIN/title/model was independently
+  // confirmed on Amazon's own product page before enabling.
+  'yardmax-ys0650': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/4pJ0GtX',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-07-27',
+  },
+  'superhandy-20-ton': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/3TkzsxW',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-07-27',
+  },
+  'landworks-guo079': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/4fYDbKd',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-07-27',
+  },
+  'yardmax-32-ton-cr950': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/3TkCbra',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-07-27',
+  },
 };

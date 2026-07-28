@@ -123,13 +123,13 @@ module.exports = function home(ctx) {
     <div class="comp-card">
       <span class="eyebrow">Best Of &middot; Updated 2026-07-27</span>
       <h3>Best Electric Log Splitters</h3>
-      <p>WEN vs. SuperHandy, compared by tonnage, cycle time, and electrical requirements.</p>
+      <p>Our currently verified electric model, by tonnage, cycle time, and electrical requirements.</p>
       <a href="${url('/best-electric-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
     </div>
     <div class="comp-card">
       <span class="eyebrow">Best Of &middot; Updated 2026-07-27</span>
       <h3>Best Gas Log Splitters</h3>
-      <p>Landworks vs. SuperHandy, compared by engine, cycle time, and horizontal/vertical operation.</p>
+      <p>Three verified gas models, compared by engine, cycle time, and horizontal/vertical operation.</p>
       <a href="${url('/best-gas-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
     </div>
     <div class="comp-card">

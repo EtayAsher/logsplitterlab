@@ -16,7 +16,7 @@ module.exports = {
 
   // Amazon Associates tracking ID (the "?tag=" value). Leave null until the
   // owner has an approved Associates account for this site. See OWNER_SETUP.md.
-  amazonAssociatesTag: null, // e.g. 'logsplitterlab-20'
+  amazonAssociatesTag: 'logsplitterla-20', // Confirmed active 2026-07-27. Only used as a fallback when a product's affiliate-links.js entry has directUrl but no taggedUrl — all 4 current products use taggedUrl (a full SiteStripe link), which is used as-is and ignores this value.
 
   // Destination marketplace for affiliate links. Change if the owner's
   // Associates account is registered on a different Amazon marketplace.

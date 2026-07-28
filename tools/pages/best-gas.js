@@ -7,10 +7,11 @@ module.exports = function bestGas(ctx) {
 
   const toc = articleToc([
     { id: 'quick-picks', label: 'Quick picks' },
+    { id: 'a-note-on-two-similar-listings', label: 'A note on two similar listings' },
     { id: 'intended-workload', label: 'Intended workload' },
     { id: 'engine-differences', label: 'Engine differences' },
     { id: 'cycle-times', label: 'Cycle times' },
-    { id: 'maximum-log-length', label: 'Maximum log length' },
+    { id: 'maximum-log-length', label: 'Maximum log capacity' },
     { id: 'horizontal-vertical-operation', label: 'Horizontal/vertical operation' },
     { id: 'towing-considerations', label: 'Portability and towing' },
     { id: 'homeowner-vs-heavier-rural-use', label: 'Homeowner vs. heavier rural use' },
@@ -25,7 +26,8 @@ module.exports = function bestGas(ctx) {
 
   const gases = products.filter((p) => p.type === 'gas');
   const landworks = gases.find((p) => p.id === 'landworks-guo079');
-  const superhandy = gases.find((p) => p.id === 'superhandy-guo096');
+  const superhandy = gases.find((p) => p.id === 'superhandy-20-ton');
+  const yardmax32 = gases.find((p) => p.id === 'yardmax-32-ton-cr950');
 
   const quickPicksRows = gases.map((p) => `
     <tr>
@@ -53,7 +55,7 @@ module.exports = function bestGas(ctx) {
 
   <div class="note-box">This roundup is a Research-Based Review: specifications verified against manufacturer and current retailer information, not physical testing. It currently covers the gas models in our verified catalog — see <a href="${url('/how-we-review/')}">How We Review</a> for our methodology.</div>
 
-  <p>Gas log splitters trade quiet operation for more power and portability. This roundup compares the two verified gas models in our catalog: the Landworks GUO079 (20 tons, horizontal-only) and the SuperHandy GUO096 (25 tons, horizontal/vertical) — a genuinely different pair, not just two similar machines at slightly different tonnage, so which one fits depends on how much tonnage you need and whether splitting large rounds vertically matters to you.</p>
+  <p>Gas log splitters trade quiet operation for more power and portability. Our catalog currently includes three verified gas models: the Landworks GUO079 and SuperHandy GUO077 (both 20 tons), and the YARDMAX YU3266 (32 tons, horizontal/vertical, towable). We\'re upfront that the first two are nearly identical in every published specification — see the note below — so the real decision in this roundup is between a 20-ton machine and the meaningfully larger, towable YARDMAX.</p>
 
   ${toc}
 
@@ -68,43 +70,47 @@ module.exports = function bestGas(ctx) {
     </div>
   </div>
 
+  <h2 id="a-note-on-two-similar-listings">A note on two similar listings</h2>
+  <p>The Landworks GUO079 and SuperHandy GUO077 share the same 20-ton rating, the same weight class, the same 7.5-second cycle time, and the same log capacity — and both are manufactured by GCM (Great Circle Machinery), confirmed on each product\'s own Amazon listing. We verified this directly rather than glossing over it: on paper, these are the same machine sold under two brand names. We\'re keeping both in the catalog as a disclosed decision — each has its own distinct Amazon listing and price — but we don\'t want you to read this roundup expecting a meaningful capability difference between them. If you\'re choosing between the three products here, treat it as a two-way decision: a 20-ton machine (either brand) versus the YARDMAX YU3266.</p>
+
   <h2 id="intended-workload">Intended workload</h2>
-  <p>The Landworks GUO079 fits mid-volume gas splitting for a homeowner or small rural property. The SuperHandy GUO096 is built for meaningfully heavier use — more tonnage, larger max log diameter, and horizontal/vertical operation for large rounds. Neither is a light-duty, occasional-use machine, but the gap between them is real, not just a marketing distinction.</p>
+  <p>The Landworks GUO079 and SuperHandy GUO077 both fit mid-volume gas splitting for a homeowner or small rural property. The YARDMAX YU3266 is built for meaningfully heavier use — more tonnage, longer log capacity, horizontal/vertical operation, and a confirmed tow rating. None of the three is a light-duty, occasional-use machine, but the gap between the 20-ton pair and the YARDMAX is real, not just a marketing distinction.</p>
 
   <h2 id="engine-differences">Engine differences</h2>
-  <p>${landworks ? `The Landworks GUO079 uses a ${esc(landworks.engine)}.` : ''} ${superhandy ? `The SuperHandy GUO096 uses a ${esc(superhandy.engine)}.` : ''} Both use a similar 7HP-class engine typical of this segment — routine maintenance (oil changes, air filter checks) applies to either.</p>
+  <p>${landworks ? `The Landworks GUO079 uses a ${esc(landworks.engine)}.` : ''} ${superhandy ? `The SuperHandy GUO077 uses a ${esc(superhandy.engine)}.` : ''} ${yardmax32 ? `The YARDMAX YU3266 uses a ${esc(yardmax32.engine)}.` : ''} The two 20-ton models share essentially the same engine class; the YARDMAX's engine reflects its higher 32-ton rating. Routine maintenance (oil changes, air filter checks) applies to all three.</p>
 
   <h2 id="cycle-times">Cycle times</h2>
-  <p>${landworks && superhandy ? `The Landworks GUO079 has a substantially faster cycle time (${landworks.cycleTimeSeconds}s) than the SuperHandy GUO096 (${superhandy.cycleTimeSeconds}s), per each manufacturer's specifications — meaningful if you're processing a full cord in one session and don't need the SuperHandy's extra tonnage or vertical operation.` : ''}</p>
+  <p>${landworks && superhandy && yardmax32 ? `The Landworks GUO079 and SuperHandy GUO077 tie at ${landworks.cycleTimeSeconds} seconds — again, effectively the same machine. The YARDMAX YU3266 is slower at ${yardmax32.cycleTimeSeconds} seconds, per manufacturer specifications, which is the tradeoff for its extra tonnage, vertical operation, and towing capability.` : ''}</p>
 
-  <h2 id="maximum-log-length">Maximum log length</h2>
-  <p>${landworks && superhandy ? `The SuperHandy GUO096 is rated for logs up to ${superhandy.maxLogDiameterIn} in. in diameter, larger than the Landworks GUO079's ${landworks.maxLogDiameterIn} in. rating — both share the same ${landworks.maxLogLengthIn} in. maximum log length. Neither model has a manufacturer-confirmed maximum log weight in our sourcing.` : ''}</p>
+  <h2 id="maximum-log-length">Maximum log capacity</h2>
+  <p>${landworks && yardmax32 ? `The Landworks GUO079 and SuperHandy GUO077 both handle logs up to ${landworks.maxLogDiameterIn} in. diameter and ${landworks.maxLogLengthIn} in. length. The YARDMAX YU3266 handles longer logs — up to ${yardmax32.maxLogLengthIn} in. — though a specific maximum diameter isn\'t published for it, so we\'re not guessing at one. None of the three has a manufacturer-confirmed maximum log weight in our sourcing.` : ''}</p>
 
   <h2 id="horizontal-vertical-operation">Horizontal/vertical operation</h2>
-  <p>The SuperHandy GUO096 supports both horizontal and vertical operation, per the manufacturer — useful for large rounds you don't want to lift onto a beam. The Landworks GUO079 is horizontal-only, per our sourcing.</p>
+  <p>The YARDMAX YU3266 supports both horizontal and vertical operation, per the manufacturer — useful for large rounds you don\'t want to lift onto a beam. Both 20-ton models in this roundup are horizontal-only, per our sourcing.</p>
 
   <h2 id="towing-considerations">Portability and towing</h2>
-  <p>Neither model in this roundup has a confirmed road-tow hitch rating in our sourcing — both move via their own transport wheels, which is fine around a property but isn't the same as a vehicle-towable trailer hitch. If you specifically need to tow a splitter behind a vehicle on public roads, confirm a hitch rating directly with the manufacturer before buying either model, or see our <a href="${url('/buying-guide/')}">buying guide</a> for what to look for.</p>
+  <p>${yardmax32 ? `The YARDMAX YU3266 is the only model in this roundup with a confirmed road-tow rating — a 2-inch ball hitch coupler rated to 45 mph, per manufacturer sourcing. Neither the Landworks GUO079 nor the SuperHandy GUO077 has a confirmed road-tow hitch rating in our sourcing — both move via their own transport wheels, which is fine around a property but isn\'t the same as a vehicle-towable trailer hitch.` : ''}</p>
 
   <h2 id="homeowner-vs-heavier-rural-use">Homeowner vs. heavier rural use</h2>
-  <p>For a homeowner splitting a few cords near the house, the Landworks GUO079's lower tonnage and faster cycle time are arguably the better fit — it's quicker per log and simpler (horizontal-only). For a property that regularly deals with large, hard-to-lift rounds, the SuperHandy GUO096's higher tonnage and vertical operation matter more than shaving seconds off each cycle.</p>
+  <p>For a homeowner splitting a few cords near the house, either 20-ton model is a reasonable, faster-cycling fit — the choice between Landworks and SuperHandy is really about price and brand, not capability. For a property that regularly deals with large, hard-to-lift rounds or needs to move the splitter between sites on public roads, the YARDMAX YU3266\'s higher tonnage, vertical operation, and confirmed towing matter more than shaving seconds off each cycle.</p>
 
   <h2 id="maintenance">Maintenance</h2>
-  <p>Both need routine small-engine maintenance (oil, air filter, spark plug) in addition to periodic hydraulic fluid and hose checks. See our <a href="${url('/maintenance/')}">maintenance guide</a> for the general concepts — always follow the specific manufacturer's manual for intervals and fluid types.</p>
+  <p>All three need routine small-engine maintenance (oil, air filter, spark plug) in addition to periodic hydraulic fluid and hose checks. See our <a href="${url('/maintenance/')}">maintenance guide</a> for the general concepts — always follow the specific manufacturer's manual for intervals and fluid types.</p>
 
   <h2 id="fuel-and-storage">Fuel and storage</h2>
-  <p>Both require fuel stabilization or draining before extended off-season storage, per standard small-engine practice. Retract the ram before storing either machine. Neither the Landworks GUO079 nor the SuperHandy GUO096 ships with hydraulic fluid included — budget for AW32 hydraulic oil separately before first use.</p>
+  <p>All three require fuel stabilization or draining before extended off-season storage, per standard small-engine practice. Retract the ram before storing any of them. Neither 20-ton model ships with hydraulic fluid included — budget for AW32 hydraulic oil separately before first use.</p>
 
   <h2 id="product-summaries">Product summaries</h2>
   ${productSections}
 
   <h2 id="buying-advice">Buying advice</h2>
-  <p>If cycle time and simplicity matter most, the Landworks GUO079 has a real edge. If you need more tonnage or the ability to split large rounds vertically, the SuperHandy GUO096 is the one built for that, at a slower cycle time. Neither model has a confirmed road-tow hitch rating — if that matters to you, confirm directly with the manufacturer before buying. If you don't need this much gas-powered force at all, see our <a href="${url('/best-electric-log-splitters/')}">electric splitter roundup</a> instead.</p>
+  <p>If cycle time and a simpler, lighter machine matter most, either the Landworks GUO079 or SuperHandy GUO077 will do — pick whichever is priced better or in stock, since the specs are effectively the same. If you need more tonnage, vertical operation for large rounds, or a confirmed road-tow rating, the YARDMAX YU3266 is the one built for that, at a slower cycle time and a much heavier unit. If you don't need this much gas-powered force at all, see our <a href="${url('/best-electric-log-splitters/')}">electric splitter roundup</a> instead.</p>
 
   <h2 id="faq">FAQ</h2>
-  <div class="faq-item"><h3>Can these gas splitters be towed on the highway?</h3><p>No confirmed road-tow hitch rating was found in our sourcing for either model. Both move via their own transport wheels — treat them as property-portable rather than road-towable unless you confirm otherwise with the manufacturer.</p></div>
+  <div class="faq-item"><h3>Are the Landworks GUO079 and SuperHandy GUO077 really the same machine?</h3><p>Based on every specification we could verify — tonnage, weight, cycle time, log capacity, and manufacturer (GCM for both) — yes, effectively. We kept both in the catalog as a disclosed decision rather than a genuine two-way comparison; treat the real choice in this roundup as 20-ton vs. the YARDMAX YU3266.</p></div>
+  <div class="faq-item"><h3>Can these gas splitters be towed on the highway?</h3><p>The YARDMAX YU3266 has a confirmed tow rating (45 mph, 2-inch ball hitch) per manufacturer sourcing. Neither 20-ton model has a confirmed road-tow hitch rating in our sourcing — treat them as property-portable rather than road-towable.</p></div>
   <div class="faq-item"><h3>How much maintenance does a gas log splitter need?</h3><p>Routine small-engine maintenance (oil changes, air filter, spark plug) plus periodic hydraulic fluid and hose checks — see our <a href="${url('/maintenance/')}">maintenance guide</a>.</p></div>
-  <div class="faq-item"><h3>Is 20 tons enough, or do I need 25?</h3><p>For most seasoned hardwood, 20 tons is often sufficient. The extra tonnage on the SuperHandy GUO096 matters most for very large, dense, or knotty rounds, and if you need vertical operation for rounds you don't want to lift — see our <a href="${url('/what-size-log-splitter-do-i-need/')}">tonnage guide</a>.</p></div>
+  <div class="faq-item"><h3>Is 20 tons enough, or do I need 32?</h3><p>For most seasoned hardwood, 20 tons is often sufficient. The extra tonnage on the YARDMAX YU3266 matters most for very large, dense, or knotty rounds, and if you need vertical operation or towing — see our <a href="${url('/what-size-log-splitter-do-i-need/')}">tonnage guide</a>.</p></div>
 
   <h2 id="related-guides">Related guides</h2>
   <ul>
@@ -141,9 +147,10 @@ module.exports = function bestGas(ctx) {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: [
-      { '@type': 'Question', name: 'Can these gas splitters be towed on the highway?', acceptedAnswer: { '@type': 'Answer', text: 'No confirmed road-tow hitch rating was found in our sourcing for either model in this roundup.' } },
+      { '@type': 'Question', name: 'Are the Landworks GUO079 and SuperHandy GUO077 really the same machine?', acceptedAnswer: { '@type': 'Answer', text: 'Based on every specification we could verify — tonnage, weight, cycle time, log capacity, and manufacturer — yes, effectively. Both are kept in the catalog as a disclosed decision.' } },
+      { '@type': 'Question', name: 'Can these gas splitters be towed on the highway?', acceptedAnswer: { '@type': 'Answer', text: 'The YARDMAX YU3266 has a confirmed tow rating. Neither 20-ton model has a confirmed road-tow hitch rating in our sourcing.' } },
       { '@type': 'Question', name: 'How much maintenance does a gas log splitter need?', acceptedAnswer: { '@type': 'Answer', text: 'Routine small-engine maintenance plus periodic hydraulic fluid and hose checks.' } },
-      { '@type': 'Question', name: 'Is 20 tons enough, or do I need 25?', acceptedAnswer: { '@type': 'Answer', text: 'For most seasoned hardwood, 20 tons is often sufficient; the extra tonnage matters most for very large, dense, or knotty rounds, and for vertical operation on rounds you don\'t want to lift.' } },
+      { '@type': 'Question', name: 'Is 20 tons enough, or do I need 32?', acceptedAnswer: { '@type': 'Answer', text: 'For most seasoned hardwood, 20 tons is often sufficient; the extra tonnage matters most for very large, dense, or knotty rounds, and for vertical operation or towing.' } },
     ],
   };
 
