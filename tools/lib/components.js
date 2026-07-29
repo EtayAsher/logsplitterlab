@@ -39,8 +39,21 @@ function typePill(typeLabel) {
 // imageMode: 'generic-placeholder' — see tools/data/products.js field
 // reference and README.md "Product images" for how an owner swaps this for
 // an authorized-amazon, licensed-manufacturer, or owner-uploaded image.
+// Renders a product's image. Every product today ships as a single
+// `imageSrc` SVG illustration, so this returns a plain <img> for all of
+// them. Once a product has a real photo, adding `imageSrcAvif` and/or
+// `imageSrcWebp` to its products.js record (alongside the existing
+// `imageSrc`, kept as the universally-supported JPG/PNG fallback) is
+// enough to switch that one product to a <picture> element with modern-
+// format sources — no template or CSS changes needed. See
+// assets/img/products/README.md and OWNER_SETUP.md §3.
 function productImage(p, layoutUrl) {
-  return `<img src="${layoutUrl(p.imageSrc)}" alt="${esc(p.imageAlt)}" width="${p.imageWidth}" height="${p.imageHeight}" loading="lazy">`;
+  const img = `<img src="${layoutUrl(p.imageSrc)}" alt="${esc(p.imageAlt)}" width="${p.imageWidth}" height="${p.imageHeight}" loading="lazy">`;
+  if (!p.imageSrcAvif && !p.imageSrcWebp) return img;
+  const sources =
+    (p.imageSrcAvif ? `<source srcset="${layoutUrl(p.imageSrcAvif)}" type="image/avif">` : '') +
+    (p.imageSrcWebp ? `<source srcset="${layoutUrl(p.imageSrcWebp)}" type="image/webp">` : '');
+  return `<picture>${sources}${img}</picture>`;
 }
 
 // Shared product card used on both the homepage "Compare Verified Models"

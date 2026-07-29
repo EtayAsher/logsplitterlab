@@ -233,10 +233,10 @@ to follow).
 
 Every product in `tools/data/products.js` ships with `imageMode:
 'generic-placeholder'`, pointing at one of the per-product SVGs in
-`assets/img/` (e.g. `splitter-electric-wen.svg`,
-`splitter-gas-champion.svg`) — original illustrations in the site's own
-brand colors with a small text badge so same-type products (two electric,
-two gas) stay visually distinct in a grid. These are not photos or renders
+`assets/img/` (e.g. `splitter-electric-yardmax.svg`,
+`splitter-gas-landworks.svg`) — original illustrations in the site's own
+brand colors with a small text badge so same-type products (electric vs.
+gas) stay visually distinct in a grid. These are not photos or renders
 of any specific product, and are not hotlinked from Amazon or any
 manufacturer.
 `assets/img/social-preview.svg` is a similar placeholder for the Open Graph
@@ -244,11 +244,13 @@ image.
 
 To replace a placeholder with a real photo, see **OWNER_SETUP.md §3** — it
 walks through the three compliant image modes (`owner-uploaded`,
-`licensed-manufacturer`, `authorized-amazon`) and exactly which fields to
-edit. Keep filenames descriptive, set `imageWidth`/`imageHeight` to match
-the real file (avoids layout shift), and images render with
-`loading="lazy"` automatically via `productImage()` in
-`tools/lib/components.js`.
+`licensed-manufacturer`, `authorized-amazon`), the `assets/img/products/<id>/`
+folder convention, and exactly which fields to edit. Keep
+`imageWidth`/`imageHeight` matching the real file (avoids layout shift);
+images render with `loading="lazy"` automatically via `productImage()` in
+`tools/lib/components.js`, which also supports an optional `<picture>`
+element with AVIF/WebP sources ahead of a JPG fallback — see
+`assets/img/products/README.md`.
 
 ## How to validate a build before deploying
 

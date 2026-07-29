@@ -125,27 +125,61 @@ project's `searchConsoleVerification` config field is already wired for.
 
 ## 3. Product images
 
-Every product currently uses a `generic-placeholder` image (a neutral illustrated silhouette, not a photo of the real product) — see `tools/data/products.js`, field `imageMode`.
+Every product currently uses a `generic-placeholder` image (a neutral illustrated silhouette, not a photo of the real product) — see `tools/data/products.js`, field `imageMode`. This section is the full architecture for replacing them; `assets/img/products/README.md` has the same folder-structure reference for a quick look while editing.
 
-To replace a placeholder:
+### 3.1 Where images live
+
+One subdirectory per product under `assets/img/products/`, named after that product's `id` in `products.js` — scales cleanly to a large catalog since the mapping from product to files is unambiguous and each product can hold more than one image later without a new naming scheme:
+
+```
+assets/img/products/
+  wen-56208/
+    hero.jpg     required — universally-supported fallback
+    hero.webp    recommended — smaller, ~95%+ browser support
+    hero.avif    optional — smallest, newer format, still-growing support
+```
+
+The illustrated placeholders in `assets/img/` (flat, e.g. `splitter-electric-wen.svg`) are a separate thing and stay where they are — they're not photos and this convention doesn't apply to them.
+
+### 3.2 Getting a compliant source image
 
 1. Get a properly licensed image. Options, in order of ease:
    - **`owner-uploaded`**: a photo you took yourself, or one you have explicit written permission to use.
    - **`licensed-manufacturer`**: an image the manufacturer has explicitly agreed you may use (check their press/media kit page, or email and ask).
    - **`authorized-amazon`**: an image obtained through an Amazon-approved tool (e.g. the Amazon Associates SiteStripe image embed, or the Product Advertising API) rather than right-clicking and saving from a product page.
-2. Save the file under `assets/img/products/` with a descriptive filename, e.g. `assets/img/products/wen-56208-front.webp`. Prefer WebP for photos; keep the file reasonably sized (under ~150KB).
-3. Update the product's record in `tools/data/products.js`:
-   ```js
-   imageMode: 'owner-uploaded',
-   imageSrc: '/assets/img/products/wen-56208-front.webp',
-   imageAlt: 'WEN 56208 electric log splitter on its stand',
-   imageWidth: 320,   // match the actual file's aspect ratio
-   imageHeight: 240,
-   imageSourceNote: 'Photographed by [you], 2026-08-01.',
-   ```
-4. Rebuild. The new image now appears on the homepage, reviews index, and that product's review page automatically — nowhere else needs editing.
+2. Never download images by scraping Amazon or Google Images, and never present an AI-generated "photorealistic" image as if it depicts the real product.
 
-Never download images by scraping Amazon or Google Images, and never present an AI-generated "photorealistic" image as if it depicts the real product.
+### 3.3 Format and dimensions
+
+- **Master/source image**: aim for roughly a 4:3 landscape frame (e.g. 800×600px) on a plain white or neutral background — this matches how `.review-thumb`/`.review-hero-img` already display images (`object-fit: contain` inside a neutral box), so it handles the catalog's very different product silhouettes (compact electric splitters vs. long towable gas splitters) without looking cropped or awkward in the grid. A perfect 4:3 isn't required — the CSS already tolerates other ratios gracefully — but keeping new products in a similar range keeps the reviews index and homepage grid visually even.
+- **Export three files per hero image**: `hero.jpg` (required fallback, sRGB, ~80% quality), `hero.webp` (recommended, typically 25–35% smaller than JPG at equivalent quality), `hero.avif` (optional, typically smaller still, but skip it if your tooling doesn't produce it easily — WebP alone is a fine outcome).
+- **Target file size**: under ~100KB for the JPG, less for WebP/AVIF. At 800×600 with reasonable compression this is easily achievable for a plain-background product photo.
+- 800×600 is sharp enough for the current display sizes (320px hero, ~300–380px grid thumbnail) at up to 2x pixel density. Don't upload multi-megabyte camera originals directly — resize first.
+
+### 3.4 Wiring a product to its images
+
+Update the product's record in `tools/data/products.js`:
+
+```js
+imageMode: 'owner-uploaded',
+imageSrc: '/assets/img/products/wen-56208/hero.jpg',        // required — fallback <img> src
+imageSrcWebp: '/assets/img/products/wen-56208/hero.webp',   // optional
+imageSrcAvif: '/assets/img/products/wen-56208/hero.avif',   // optional
+imageAlt: 'WEN 56208 electric log splitter on its stand',
+imageWidth: 800,    // must match hero.jpg's real pixel dimensions
+imageHeight: 600,
+imageSourceNote: 'Photographed by [you], 2026-08-01.',
+```
+
+`productImage()` in `tools/lib/components.js` automatically renders a `<picture>` element with AVIF/WebP `<source>`s ahead of the JPG fallback whenever `imageSrcAvif`/`imageSrcWebp` are set — no template or CSS change needed, and the existing `loading="lazy"` and explicit `width`/`height` (which prevent layout shift and are already good for SEO/Core Web Vitals) carry over automatically. If you only have a JPG/WebP with no AVIF, just omit `imageSrcAvif` — the picture element only includes the sources you provide.
+
+Rebuild (`node tools/build.js`) and run `node tools/check-links.js`, which validates every `imageSrc`/`imageSrcWebp`/`imageSrcAvif` path resolves to a real file before you deploy. The new image then appears on the homepage, reviews index, and that product's review page automatically — nowhere else needs editing.
+
+### 3.5 Compatibility notes
+
+- **GitHub Pages**: purely static file serving — `.jpg`/`.webp`/`.avif` all serve with correct `Content-Type` automatically, no server config needed.
+- **Amazon Associates**: the three source paths above (owner-uploaded, licensed-manufacturer, authorized-amazon) are the ones consistent with the Associates Operating Agreement's restrictions on how Amazon's own product images/data may be used. Don't caption or label an image in a way that implies Amazon endorses or sponsors the site — the existing sitewide disclosure (§1.9) already covers the commission relationship; it doesn't need repeating per-image.
+- **SEO**: real, disk-based files with descriptive `imageAlt` text and accurate `imageWidth`/`imageHeight` are already what this pipeline produces — nothing else to configure.
 
 ---
 

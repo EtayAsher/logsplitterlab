@@ -92,6 +92,19 @@ for (const file of files) {
     if (!/\bwidth="/.test(tag) || !/\bheight="/.test(tag)) warn(file, `img missing width/height (layout shift risk): ${src}`);
   }
 
+  // --- <picture><source> missing local assets (AVIF/WebP variants) -------
+  const sourceRe = /<source\b[^>]*>/g;
+  while ((m = sourceRe.exec(html))) {
+    const tag = m[0];
+    const srcsetMatch = tag.match(/srcset="([^"]*)"/);
+    if (!srcsetMatch) continue;
+    const src = srcsetMatch[1];
+    if (src.startsWith(config.basePath) || src.startsWith('/')) {
+      const target = resolveInternalPath(src);
+      if (!fs.existsSync(target)) err(file, `missing image asset (picture source): ${src}`);
+    }
+  }
+
   // --- CSS/JS asset links ---------------------------------------------
   const assetRe = /(?:href|src)="([^"]*\/assets\/[^"]*)"/g;
   while ((m = assetRe.exec(html))) {
