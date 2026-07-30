@@ -27,6 +27,7 @@ const ctx = { products, components, layout, config };
 const pageBuilders = [
   require('./pages/home'),
   require('./pages/reviews'),
+  require('./pages/brands'),
   require('./pages/comparisons'),
   require('./pages/gas-vs-electric'),
   require('./pages/best-electric'),
@@ -137,7 +138,7 @@ writeFile(path.join(REPO_ROOT, 'robots.txt'), robotsTxt);
 // AUDIT.md "AI Search readiness" for the reasoning behind including it.
 function pageGroup(p) {
   if (p.path === '/') return null;
-  if (p.path.startsWith('/reviews/')) return 'Product Reviews';
+  if (p.path.startsWith('/reviews/') || p.path === '/brands/') return 'Product Reviews';
   if (p.path.startsWith('/best-') || p.path.startsWith('/comparisons') || p.path.startsWith('/what-size')) return 'Comparisons & Buying Advice';
   if (p.path === '/buying-guide/' || p.path === '/maintenance/') return 'Guides';
   return 'About & Policies';

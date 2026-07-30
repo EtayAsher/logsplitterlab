@@ -1,11 +1,18 @@
 'use strict';
 
 module.exports = function maintenance(ctx) {
-  const { layout, components } = ctx;
+  const { layout, components, products } = ctx;
   const { url, esc } = layout;
   const { byline, authorBox, personJsonLd } = components;
   const publishedDate = '2026-07-20';
   const updatedDate = '2026-07-20';
+
+  const gasReviewLinks = products.filter((p) => p.type === 'gas').map((p) => (
+    `<li><a href="${url(`/reviews/${p.id}/`)}">${esc(p.name)}</a></li>`
+  )).join('');
+  const electricReviewLinks = products.filter((p) => p.type === 'electric').map((p) => (
+    `<li><a href="${url(`/reviews/${p.id}/`)}">${esc(p.name)}</a></li>`
+  )).join('');
 
   const bodyHtml = `
 <section class="page-hero">
@@ -78,6 +85,10 @@ module.exports = function maintenance(ctx) {
     </ul>
     <p>If you're not confident diagnosing a hydraulic or engine issue yourself, a small-engine or hydraulic equipment service center is the safer option than continuing to operate a machine with a suspected fault.</p>
   </div>
+
+  <h2>Verified models covered by this guide</h2>
+  ${gasReviewLinks ? `<h3>Gas models</h3><ul>${gasReviewLinks}</ul>` : ''}
+  ${electricReviewLinks ? `<h3>Electric models</h3><ul>${electricReviewLinks}</ul>` : ''}
 
   <h2>Related guides</h2>
   <ul>

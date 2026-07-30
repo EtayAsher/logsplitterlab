@@ -53,6 +53,7 @@ module.exports = function comparisonsIndex(ctx) {
   <h1>Log Splitter Comparisons</h1>
   <p>Category- and product-level comparisons to help you choose, not marketing copy dressed up as a shootout.</p>
 </section>
+<h2 class="visually-hidden">All comparisons and guides</h2>
 <div class="comp-grid">${cards}</div>
 <div class="article-wrap" style="padding-top:0;">
   <p style="color:var(--muted);font-size:.9rem;">More comparisons (tonnage tiers, vertical vs. horizontal operation, specific model-vs-model matchups) are planned. We publish a comparison here only once it's written and sourced — we don't list placeholder cards for articles that don't exist yet.</p>

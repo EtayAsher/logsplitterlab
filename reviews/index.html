@@ -37,7 +37,11 @@
       <span>LogSplitterLab</span>
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="/reviews/" aria-current="page" class="active">Reviews</a></li><li><a href="/comparisons/">Comparisons</a></li><li><a href="/buying-guide/">Buying Guides</a></li><li><a href="/maintenance/">Maintenance</a></li>
+      
+      <li class="has-dropdown">
+        <a href="/reviews/" aria-current="page" class="active" aria-haspopup="true">Reviews <span class="dropdown-caret" aria-hidden="true">&#9662;</span></a>
+        <ul class="nav-dropdown"><li><a href="/reviews/" aria-current="page" class="active">All Reviews</a></li><li><a href="/best-electric-log-splitters/">Electric</a></li><li><a href="/best-gas-log-splitters/">Gas</a></li><li><a href="/brands/">Brands</a></li></ul>
+      </li><li><a href="/comparisons/">Comparisons</a></li><li><a href="/buying-guide/">Buying Guides</a></li><li><a href="/maintenance/">Maintenance</a></li>
       <li class="mobile-cta"><a href="/reviews/" class="btn btn-cta btn-block">Find Your Splitter</a></li>
     </ul>
     <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
@@ -59,6 +63,7 @@
   <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">All</button><button type="button" class="filter-btn" data-filter="electric" aria-pressed="false">Electric</button><button type="button" class="filter-btn" data-filter="gas" aria-pressed="false">Gas</button>
 </div>
 <noscript><p class="text-center" style="color:var(--muted);font-size:.85rem;">Filter buttons require JavaScript; every review is listed below regardless.</p></noscript>
+<h2 class="visually-hidden">All reviews</h2>
 <div class="review-grid" id="reviewGrid">
     <div class="review-card" data-type="electric">
       <div class="review-thumb">
@@ -70,6 +75,7 @@
         <p class="review-model">Model YS0650 &middot; 6.5T &middot; Electric</p>
         <p class="review-summary">Light-to-moderate splitting of softer wood within reach of a garage or shed outlet.</p>
         <p class="review-limitation"><b>Key limitation:</b> Not rated for very dense hardwood or logs longer than 20.5 in. / thicker than 10 in.</p>
+        <p class="review-verified">Specs verified 2026-07-27</p>
         <div class="review-actions">
           <a href="/reviews/yardmax-ys0650/" class="btn btn-dark-outline btn-sm">Read Review</a>
           <a class="btn btn-cta btn-sm" href="https://amzn.to/4pJ0GtX" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="yardmax-ys0650" data-cta-position="product-card">Check Price on Amazon<span class="visually-hidden"> for YARDMAX YS0650 6.5-Ton Electric Log Splitter (opens in a new tab)</span></a>
@@ -86,6 +92,7 @@
         <p class="review-model">Model GUO077 &middot; 20T &middot; Gas</p>
         <p class="review-summary">Mid-volume gas splitting where portability around a property matters more than towing on public roads.</p>
         <p class="review-limitation"><b>Key limitation:</b> No confirmed tow-hitch rating for road use, and hydraulic fluid is not included in the box.</p>
+        <p class="review-verified">Specs verified 2026-07-27</p>
         <div class="review-actions">
           <a href="/reviews/superhandy-20-ton/" class="btn btn-dark-outline btn-sm">Read Review</a>
           <a class="btn btn-cta btn-sm" href="https://amzn.to/3TkzsxW" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="superhandy-20-ton" data-cta-position="product-card">Check Price on Amazon<span class="visually-hidden"> for SuperHandy 20-Ton Rapid Auto Return Gas Log Splitter (opens in a new tab)</span></a>
@@ -102,6 +109,7 @@
         <p class="review-model">Model GUO079 &middot; 20T &middot; Gas</p>
         <p class="review-summary">Mid-volume gas splitting where portability around a property matters more than towing on public roads.</p>
         <p class="review-limitation"><b>Key limitation:</b> No confirmed tow-hitch rating for road use, and hydraulic fluid is not included in the box.</p>
+        <p class="review-verified">Specs verified 2026-07-26</p>
         <div class="review-actions">
           <a href="/reviews/landworks-guo079/" class="btn btn-dark-outline btn-sm">Read Review</a>
           <a class="btn btn-cta btn-sm" href="https://amzn.to/4fYDbKd" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="landworks-guo079" data-cta-position="product-card">Check Price on Amazon<span class="visually-hidden"> for Landworks 20-Ton Portable Gas Log Splitter (opens in a new tab)</span></a>
@@ -118,6 +126,7 @@
         <p class="review-model">Model YU3266 &middot; 32T &middot; Gas</p>
         <p class="review-summary">Higher-volume gas splitting for rural properties, with a confirmed road-towing rating.</p>
         <p class="review-limitation"><b>Key limitation:</b> Large, heavy machine (524.7 lb) with routine small-engine maintenance — more than most occasional users need.</p>
+        <p class="review-verified">Specs verified 2026-07-27</p>
         <div class="review-actions">
           <a href="/reviews/yardmax-32-ton-cr950/" class="btn btn-dark-outline btn-sm">Read Review</a>
           <a class="btn btn-cta btn-sm" href="https://amzn.to/3TkCbra" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="yardmax-32-ton-cr950" data-cta-position="product-card">Check Price on Amazon<span class="visually-hidden"> for YARDMAX 32-Ton Gas Log Splitter (opens in a new tab)</span></a>
@@ -139,7 +148,18 @@
       </a>
       <p>Research-based log splitter guides and comparisons for homeowners and rural property owners.</p>
     </div>
-    <nav aria-label="Footer">
+    <nav aria-label="Footer: content">
+      <h2 class="footer-col-heading">Content</h2>
+      <ul class="footer-links">
+        <li><a href="/reviews/">Reviews</a></li>
+        <li><a href="/buying-guide/">Buying Guides</a></li>
+        <li><a href="/comparisons/">Comparisons</a></li>
+        <li><a href="/brands/">Brands</a></li>
+        <li><a href="/maintenance/">Maintenance</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Footer: about and policies">
+      <h2 class="footer-col-heading">About &amp; Policies</h2>
       <ul class="footer-links">
         <li><a href="/about/">About</a></li>
         <li><a href="/author/etay-asher/">Author</a></li>

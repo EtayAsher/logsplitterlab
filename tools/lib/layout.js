@@ -22,7 +22,15 @@ function esc(str) {
 }
 
 const NAV_ITEMS = [
-  { key: 'reviews', label: 'Reviews', path: '/reviews/' },
+  {
+    key: 'reviews', label: 'Reviews', path: '/reviews/',
+    children: [
+      { key: 'reviews', label: 'All Reviews', path: '/reviews/' },
+      { key: 'best-electric', label: 'Electric', path: '/best-electric-log-splitters/' },
+      { key: 'best-gas', label: 'Gas', path: '/best-gas-log-splitters/' },
+      { key: 'brands', label: 'Brands', path: '/brands/' },
+    ],
+  },
   { key: 'comparisons', label: 'Comparisons', path: '/comparisons/' },
   { key: 'buying-guide', label: 'Buying Guides', path: '/buying-guide/' },
   { key: 'maintenance', label: 'Maintenance', path: '/maintenance/' },
@@ -31,7 +39,19 @@ const NAV_ITEMS = [
 function renderHeader(activeNav) {
   const links = NAV_ITEMS.map((item) => {
     const active = item.key === activeNav;
-    return `<li><a href="${url(item.path)}"${active ? ' aria-current="page" class="active"' : ''}>${item.label}</a></li>`;
+    const childActive = item.children && item.children.some((c) => c.key === activeNav);
+    if (!item.children) {
+      return `<li><a href="${url(item.path)}"${active ? ' aria-current="page" class="active"' : ''}>${item.label}</a></li>`;
+    }
+    const subLinks = item.children.map((c) => {
+      const subActive = c.key === activeNav;
+      return `<li><a href="${url(c.path)}"${subActive ? ' aria-current="page" class="active"' : ''}>${c.label}</a></li>`;
+    }).join('');
+    return `
+      <li class="has-dropdown">
+        <a href="${url(item.path)}"${active || childActive ? ' aria-current="page" class="active"' : ''} aria-haspopup="true">${item.label} <span class="dropdown-caret" aria-hidden="true">&#9662;</span></a>
+        <ul class="nav-dropdown">${subLinks}</ul>
+      </li>`;
   }).join('');
 
   return `
@@ -64,7 +84,18 @@ function renderFooter() {
       </a>
       <p>Research-based log splitter guides and comparisons for homeowners and rural property owners.</p>
     </div>
-    <nav aria-label="Footer">
+    <nav aria-label="Footer: content">
+      <h2 class="footer-col-heading">Content</h2>
+      <ul class="footer-links">
+        <li><a href="${url('/reviews/')}">Reviews</a></li>
+        <li><a href="${url('/buying-guide/')}">Buying Guides</a></li>
+        <li><a href="${url('/comparisons/')}">Comparisons</a></li>
+        <li><a href="${url('/brands/')}">Brands</a></li>
+        <li><a href="${url('/maintenance/')}">Maintenance</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Footer: about and policies">
+      <h2 class="footer-col-heading">About &amp; Policies</h2>
       <ul class="footer-links">
         <li><a href="${url('/about/')}">About</a></li>
         <li><a href="${url('/author/etay-asher/')}">Author</a></li>

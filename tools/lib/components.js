@@ -74,6 +74,7 @@ function productCard(p, opts) {
         <p class="review-model">Model ${esc(p.model)} &middot; ${p.tonnage}T &middot; ${esc(p.typeLabel)}</p>
         <p class="review-summary">${esc(p.suitableUseSummary)}</p>
         <p class="review-limitation"><b>Key limitation:</b> ${esc(p.limitationsSummary)}</p>
+        ${p.verifiedDate ? `<p class="review-verified">Specs verified ${esc(p.verifiedDate)}</p>` : ''}
         <div class="review-actions">
           <a href="${reviewHref}" class="btn btn-dark-outline btn-sm">Read Review</a>
           ${affiliateButton(p, { small: true, position: opts.position || 'product-card' })}

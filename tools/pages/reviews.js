@@ -28,6 +28,7 @@ module.exports = function reviewsIndex(ctx) {
   ${filterButtons}
 </div>
 <noscript><p class="text-center" style="color:var(--muted);font-size:.85rem;">Filter buttons require JavaScript; every review is listed below regardless.</p></noscript>
+<h2 class="visually-hidden">All reviews</h2>
 <div class="review-grid" id="reviewGrid">${cards}</div>
 <div class="article-wrap" style="padding-top:0;">
   <p style="color:var(--muted);font-size:.85rem;">Looking for a manual (non-powered) splitter? We don't have a verified manual model reviewed yet — see the "Manual" section of our <a href="${url('/buying-guide/')}#g-power">buying guide</a> for what to look for in the meantime.</p>

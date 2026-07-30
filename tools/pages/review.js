@@ -238,6 +238,7 @@ function buildReviewPage(product, ctx) {
     <li><a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">Gas vs. Electric Log Splitter</a></li>
     <li><a href="${url(bestOfHref)}">${esc(bestOfLabel)}</a></li>
     <li><a href="${url('/reviews/')}">All Reviews</a></li>
+    <li><a href="${url('/brands/')}">Browse by Brand</a></li>
   </ul>
 
   ${authorBox(url)}

@@ -65,7 +65,7 @@ module.exports = function whatSize(ctx) {
   <p>Softwoods (pine, cedar, poplar) generally split with less force than hardwoods (oak, maple, hickory) of comparable diameter and moisture — but a large, green, knotty softwood round can still out-resist a small, dry, straight-grained hardwood one. Species is a starting heuristic, not an override for the other factors here.</p>
 
   <h2 id="electric-vs-gas">Electric vs. gas</h2>
-  <p>Electric splitters in our catalog top out around 6.5–7 tons, which covers softwood-to-medium-hardwood use for most homeowners. Gas splitters in our catalog reach 25–27 tons, better suited to larger volumes or denser wood. See our <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">full gas vs. electric comparison</a>.</p>
+  <p>Our current electric model is rated at 6.5 tons, which covers softwood-to-medium-hardwood use for most homeowners. Gas models in our catalog range from 20 to 32 tons, better suited to larger volumes or denser wood. See our <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">full gas vs. electric comparison</a>.</p>
 
   <h2 id="example-buyer-profiles">Example buyer profiles</h2>
   <table class="decision-table">
@@ -73,8 +73,8 @@ module.exports = function whatSize(ctx) {
     <thead><tr><th scope="col">Profile</th><th scope="col">Reasonable starting point</th></tr></thead>
     <tbody>
       <tr><th scope="row">Suburban homeowner, 1-2 cords/year, mostly softwood</th><td>Electric, 6-7 tons — see our <a href="${url('/best-electric-log-splitters/')}">electric roundup</a></td></tr>
-      <tr><th scope="row">Rural homeowner, 3-5 cords/year, mixed hardwood</th><td>Gas, 20-27 tons — see our <a href="${url('/best-gas-log-splitters/')}">gas roundup</a></td></tr>
-      <tr><th scope="row">Rural property, 6+ cords/year, dense or large-diameter hardwood</th><td>Gas, 25+ tons with attention to max log diameter</td></tr>
+      <tr><th scope="row">Rural homeowner, 3-5 cords/year, mixed hardwood</th><td>Gas, 20-25 tons — see our <a href="${url('/best-gas-log-splitters/')}">gas roundup</a></td></tr>
+      <tr><th scope="row">Rural property, 6+ cords/year, dense or large-diameter hardwood</th><td>Gas, 30+ tons with attention to max log diameter</td></tr>
       <tr><th scope="row">Occasional splitting, small softwood rounds only</th><td>Consider a manual hydraulic splitter — see our <a href="${url('/buying-guide/')}#g-power">power source breakdown</a></td></tr>
     </tbody>
   </table>

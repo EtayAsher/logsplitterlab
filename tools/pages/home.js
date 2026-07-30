@@ -9,6 +9,40 @@ module.exports = function home(ctx) {
 
   const productCards = products.map((p) => productCard(p, { url })).join('');
 
+  // --- Browse-the-catalog data (fully derived from products.js, so this
+  // scales to any catalog size without hardcoding brand/tonnage names). ---
+  const latestReviews = products.slice()
+    .sort((a, b) => (b.verifiedDate || '').localeCompare(a.verifiedDate || ''))
+    .map((p) => `<li><a href="${url(`/reviews/${p.id}/`)}">${esc(p.name)}</a><span class="browse-meta">Verified ${esc(p.verifiedDate)}</span></li>`)
+    .join('');
+
+  const byBrand = new Map();
+  products.forEach((p) => { if (!byBrand.has(p.brand)) byBrand.set(p.brand, []); byBrand.get(p.brand).push(p); });
+  const brandLinks = Array.from(byBrand.keys()).sort((a, b) => a.localeCompare(b))
+    .map((brand) => `<li><a href="${url('/brands/')}#brand-${esc(brand.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}">${esc(brand)}</a><span class="browse-meta">${byBrand.get(brand).length}</span></li>`)
+    .join('');
+
+  const byType = new Map();
+  products.forEach((p) => { if (!byType.has(p.type)) byType.set(p.type, []); byType.get(p.type).push(p); });
+  const powerSourceHref = { electric: '/best-electric-log-splitters/', gas: '/best-gas-log-splitters/', manual: '/buying-guide/#g-power' };
+  const powerSourceLinks = Array.from(byType.keys()).sort((a, b) => a.localeCompare(b))
+    .map((type) => `<li><a href="${url(powerSourceHref[type] || '/reviews/')}">${esc(byType.get(type)[0].typeLabel)}</a><span class="browse-meta">${byType.get(type).length}</span></li>`)
+    .join('');
+
+  const TONNAGE_BANDS = [
+    { label: 'Under 10 tons', test: (t) => t < 10 },
+    { label: '10–25 tons', test: (t) => t >= 10 && t <= 25 },
+    { label: 'Over 25 tons', test: (t) => t > 25 },
+  ];
+  const tonnageLinks = TONNAGE_BANDS.map((band) => {
+    const matches = products.filter((p) => band.test(p.tonnage));
+    if (!matches.length) return '';
+    // A single match links straight to that review; several link to the
+    // reviews index, since there's no dedicated tonnage-filtered page yet.
+    const href = matches.length === 1 ? url(`/reviews/${matches[0].id}/`) : url('/reviews/');
+    return `<li><a href="${href}">${band.label}</a><span class="browse-meta">${matches.length}</span></li>`;
+  }).join('');
+
   const bodyHtml = `
 <section class="hero">
   <div class="hero-inner">
@@ -97,6 +131,34 @@ module.exports = function home(ctx) {
     <p>The same models above, with images, main use case, and key limitation.</p>
   </div>
   <div class="review-grid">${productCards}</div>
+</section>
+
+<section class="block" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">Browse</span>
+    <h2>Browse the Full Catalog</h2>
+    <p>Every way to slice the current catalog — more categories appear here automatically as new brands, power sources, and tonnage ranges are added.</p>
+  </div>
+  <div class="browse-grid">
+    <div class="browse-block">
+      <h3>Latest Reviews</h3>
+      <ul class="browse-list">${latestReviews}</ul>
+    </div>
+    <div class="browse-block">
+      <h3>Browse by Brand</h3>
+      <ul class="browse-list">${brandLinks}</ul>
+      <a href="${url('/brands/')}" class="browse-more">All brands &rarr;</a>
+    </div>
+    <div class="browse-block">
+      <h3>Browse by Power Source</h3>
+      <ul class="browse-list">${powerSourceLinks}</ul>
+    </div>
+    <div class="browse-block">
+      <h3>Browse by Tonnage</h3>
+      <ul class="browse-list">${tonnageLinks}</ul>
+      <a href="${url('/what-size-log-splitter-do-i-need/')}" class="browse-more">Which tonnage do I need? &rarr;</a>
+    </div>
+  </div>
 </section>
 
 <section class="block" style="padding-top:0;">

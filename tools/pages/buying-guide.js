@@ -1,11 +1,15 @@
 'use strict';
 
 module.exports = function buyingGuide(ctx) {
-  const { layout, components } = ctx;
+  const { layout, components, products } = ctx;
   const { url, esc } = layout;
   const { byline, authorBox, personJsonLd } = components;
   const publishedDate = '2026-07-20';
   const updatedDate = '2026-07-20';
+
+  const reviewLinks = products.map((p) => (
+    `<li><a href="${url(`/reviews/${p.id}/`)}">${esc(p.name)}</a> &mdash; ${p.tonnage}T ${esc(p.typeLabel)}</li>`
+  )).join('');
 
   const bodyHtml = `
 <section class="page-hero">
@@ -154,10 +158,14 @@ module.exports = function buyingGuide(ctx) {
     <div class="faq-item"><h3>How do I maintain a log splitter?</h3><p>Check hydraulic fluid levels, inspect hoses for wear, and for gas models follow the engine manufacturer's oil and service schedule. See our <a href="${url('/maintenance/')}">maintenance guide</a> — always defer to your specific model's manual for exact intervals.</p></div>
   </div>
 
+  <h2>Verified models from this guide</h2>
+  <ul>${reviewLinks}</ul>
+
   <h2>Related guides</h2>
   <ul>
     <li><a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">Gas vs. Electric Log Splitter</a></li>
     <li><a href="${url('/reviews/')}">All Reviews</a></li>
+    <li><a href="${url('/brands/')}">Browse by Brand</a></li>
     <li><a href="${url('/maintenance/')}">Maintenance Basics</a></li>
   </ul>
 
