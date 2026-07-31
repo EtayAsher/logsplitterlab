@@ -12,7 +12,13 @@ const author = require('../data/author');
 // live-looking button pointing nowhere real.
 function affiliateButton(product, opts) {
   opts = opts || {};
-  const cls = 'btn btn-cta' + (opts.small ? ' btn-sm' : '');
+  // Dense grid/table contexts (opts.small — product cards, comparison
+  // tables, best-of quick picks) use a calmer amber-outline treatment so a
+  // page full of cards doesn't read as a wall of solid buy buttons. The
+  // single-focus contexts (a review page's hero CTA, a best-of roundup's
+  // per-product section) keep the solid, higher-emphasis button, since
+  // that's the one place per page a strong purchase CTA is appropriate.
+  const cls = 'btn ' + (opts.small ? 'btn-cta-outline btn-sm' : 'btn-cta');
   const entry = affiliateLinks[product.id];
 
   if (!entry || !entry.enabled || (!entry.taggedUrl && !entry.directUrl)) {
@@ -49,11 +55,20 @@ function typePill(typeLabel) {
 // assets/img/products/README.md and OWNER_SETUP.md §3.
 function productImage(p, layoutUrl) {
   const img = `<img src="${layoutUrl(p.imageSrc)}" alt="${esc(p.imageAlt)}" width="${p.imageWidth}" height="${p.imageHeight}" loading="lazy">`;
-  if (!p.imageSrcAvif && !p.imageSrcWebp) return img;
-  const sources =
-    (p.imageSrcAvif ? `<source srcset="${layoutUrl(p.imageSrcAvif)}" type="image/avif">` : '') +
-    (p.imageSrcWebp ? `<source srcset="${layoutUrl(p.imageSrcWebp)}" type="image/webp">` : '');
-  return `<picture>${sources}${img}</picture>`;
+  const picture = (!p.imageSrcAvif && !p.imageSrcWebp) ? img : (() => {
+    const sources =
+      (p.imageSrcAvif ? `<source srcset="${layoutUrl(p.imageSrcAvif)}" type="image/avif">` : '') +
+      (p.imageSrcWebp ? `<source srcset="${layoutUrl(p.imageSrcWebp)}" type="image/webp">` : '');
+    return `<picture>${sources}${img}</picture>`;
+  })();
+  // Placeholder images say so, visibly and to assistive tech — the goal is
+  // to read as "we know this is a stand-in" rather than as a real product
+  // photo. Disappears automatically once a product switches to a real
+  // photo (imageMode other than 'generic-placeholder').
+  const badge = p.imageMode === 'generic-placeholder'
+    ? '<span class="illustration-badge">Illustration</span>'
+    : '';
+  return picture + badge;
 }
 
 // Shared product card used on both the homepage "Compare Verified Models"
@@ -70,6 +85,7 @@ function productCard(p, opts) {
         ${productImage(p, layoutUrl)}
       </div>
       <div class="review-body">
+        <p class="review-brand">${esc(p.brand)}</p>
         <h3>${esc(p.name)}</h3>
         <p class="review-model">Model ${esc(p.model)} &middot; ${p.tonnage}T &middot; ${esc(p.typeLabel)}</p>
         <p class="review-summary">${esc(p.suitableUseSummary)}</p>

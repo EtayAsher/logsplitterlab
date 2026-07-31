@@ -109,6 +109,7 @@ function renderFooter() {
   <div class="footer-bottom">
     <span>&copy; 2026 LogSplitterLab</span>
     <span>Research-based log splitter guides and comparisons.</span>
+    <a href="${url('/sitemap.xml')}">Sitemap</a>
   </div>
   <p class="disclaimer">${esc(config.amazonDisclosureFull)} See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
 </footer>`;

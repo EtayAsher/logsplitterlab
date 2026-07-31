@@ -2,6 +2,20 @@
 
 const author = require('../data/author');
 
+// Research guides/comparisons shown in "Start Researching" — also the
+// single source of truth for the "Site at a Glance" counts below, so
+// those numbers can never drift out of sync with what's actually listed.
+const GUIDES = [
+  { category: 'comparison', label: 'Comparison', title: 'Gas vs. Electric Log Splitter', summary: 'A category-by-category breakdown of power, portability, noise, and maintenance.', href: '/comparisons/gas-vs-electric-log-splitter/', updated: '2026-07-21', cta: 'Read Comparison' },
+  { category: 'comparison', label: 'Best Of', title: 'Best Electric Log Splitters', summary: 'Our currently verified electric model, by tonnage, cycle time, and electrical requirements.', href: '/best-electric-log-splitters/', updated: '2026-07-27', cta: 'Read Roundup' },
+  { category: 'comparison', label: 'Best Of', title: 'Best Gas Log Splitters', summary: 'Three verified gas models, compared by engine, cycle time, and horizontal/vertical operation.', href: '/best-gas-log-splitters/', updated: '2026-07-27', cta: 'Read Roundup' },
+  { category: 'guide', label: 'Guide', title: 'What Size Log Splitter Do I Need?', summary: 'Why tonnage alone doesn\'t determine the right machine for your wood.', href: '/what-size-log-splitter-do-i-need/', updated: '2026-07-20', cta: 'Read Guide' },
+  { category: 'guide', label: 'Buying Guide', title: 'The Complete Log Splitter Buying Guide', summary: 'Tonnage, log diameter, cycle time, safety, and a buying checklist in one place.', href: '/buying-guide/', updated: '2026-07-20', cta: 'Read the Guide' },
+  { category: 'guide', label: 'Maintenance', title: 'Log Splitter Maintenance Basics', summary: 'Pre-use inspection, hydraulic checks, and seasonal storage guidance.', href: '/maintenance/', updated: '2026-07-20', cta: 'Read the Guide' },
+];
+
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
 module.exports = function home(ctx) {
   const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
@@ -43,6 +57,25 @@ module.exports = function home(ctx) {
     return `<li><a href="${href}">${band.label}</a><span class="browse-meta">${matches.length}</span></li>`;
   }).join('');
 
+  const guideCards = GUIDES.map((g) => `
+    <div class="comp-card">
+      <span class="eyebrow">${esc(g.label)} &middot; Updated ${esc(g.updated)}</span>
+      <h3>${esc(g.title)}</h3>
+      <p>${esc(g.summary)}</p>
+      <a href="${url(g.href)}" class="btn btn-dark-outline btn-sm">${esc(g.cta)}</a>
+    </div>`).join('');
+
+  // --- Site at a Glance: every number here is computed from products.js
+  // and the GUIDES array above, never hardcoded — see each variable's
+  // source. No claims about traffic, ratings, or reader counts, since we
+  // have no real data to back those. ---
+  const reviewCount = products.length;
+  const comparisonCount = GUIDES.filter((g) => g.category === 'comparison').length;
+  const guideCount = GUIDES.filter((g) => g.category === 'guide').length;
+  const mostRecentVerified = products.reduce((max, p) => (p.verifiedDate && p.verifiedDate > max ? p.verifiedDate : max), '');
+  const [vYear, vMonth] = mostRecentVerified.split('-');
+  const mostRecentVerifiedLabel = vMonth ? `${MONTH_NAMES[parseInt(vMonth, 10) - 1]} ${vYear}` : null;
+
   const bodyHtml = `
 <section class="hero">
   <div class="hero-inner">
@@ -83,6 +116,12 @@ module.exports = function home(ctx) {
       <p>We may earn a commission from qualifying purchases, at no additional cost to the buyer.</p>
     </div>
   </div>
+  <div class="glance-strip">
+    <div class="glance-stat"><span class="glance-num">${reviewCount}</span><span class="glance-label">Verified Product Review${reviewCount === 1 ? '' : 's'}</span></div>
+    <div class="glance-stat"><span class="glance-num">${comparisonCount}</span><span class="glance-label">Comparison &amp; Roundup Pages</span></div>
+    <div class="glance-stat"><span class="glance-num">${guideCount}</span><span class="glance-label">Buying &amp; Maintenance Guides</span></div>
+    ${mostRecentVerifiedLabel ? `<div class="glance-stat"><span class="glance-num glance-num-sm">${esc(mostRecentVerifiedLabel)}</span><span class="glance-label">Specifications Last Updated</span></div>` : ''}
+  </div>
 </section>
 
 <section class="block">
@@ -115,6 +154,31 @@ module.exports = function home(ctx) {
   </div>
 </section>
 
+<section class="block section-alt" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">What Actually Matters</span>
+    <h2>Factors That Should Drive Your Decision</h2>
+    <p>Tonnage gets all the attention, but it's one of several factors that determine whether a splitter fits your situation.</p>
+  </div>
+  <div class="factor-grid">
+    <div class="factor-card"><h3>Wood species and condition</h3><p>Green (unseasoned) wood and knotty or twisted grain both resist splitting more than dry, straight-grained wood of the same species.</p></div>
+    <div class="factor-card"><h3>Log diameter</h3><p>A machine rated for a given tonnage may still struggle with an oversized round regardless of species — check the manufacturer's max diameter rating.</p></div>
+    <div class="factor-card"><h3>Splitting volume</h3><p>Occasional splitting favors simplicity and low cost; a full cord or more per year favors speed and durability.</p></div>
+    <div class="factor-card"><h3>Cycle time</h3><p>Directly affects how many logs you process per hour — compare it the same way you'd compare tonnage.</p></div>
+    <div class="factor-card"><h3>Vertical vs. horizontal operation</h3><p>Vertical operation avoids lifting heavy rounds onto a beam; horizontal is often faster to load for small-to-medium logs.</p></div>
+    <div class="factor-card"><h3>Portability</h3><p>Towable frames matter if you're splitting at multiple sites or a property without a flat work area near storage.</p></div>
+    <div class="factor-card"><h3>Electrical access</h3><p>Electric splitters need a grounded outlet and an appropriately rated extension cord within reach of where you'll work.</p></div>
+    <div class="factor-card"><h3>Maintenance requirements</h3><p>Gas units need engine service; all hydraulic splitters need periodic fluid and hose checks regardless of power source.</p></div>
+  </div>
+</section>
+
+<section class="quiz-banner">
+  <h2>Still not sure? Take the 60-second match quiz.</h2>
+  <p>Answer 5 questions about your wood and workload — we'll recommend the power source that fits your situation and explain why.</p>
+  <button type="button" class="btn btn-cta" data-open-quiz>Start the Quiz</button>
+  <noscript><p style="margin-top:16px;">The interactive quiz requires JavaScript. In the meantime, see our <a href="${url('/buying-guide/')}" style="color:#f0c27f;text-decoration:underline;">Buying Guide</a>.</p></noscript>
+</section>
+
 <section class="block" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">Verified Models</span>
@@ -131,6 +195,15 @@ module.exports = function home(ctx) {
     <p>The same models above, with images, main use case, and key limitation.</p>
   </div>
   <div class="review-grid">${productCards}</div>
+</section>
+
+<section class="block section-alt" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">Top Research Guides</span>
+    <h2>Start Researching</h2>
+    <p>Our core guides and latest articles, all sourced and dated.</p>
+  </div>
+  <div class="comp-grid latest-guides-grid">${guideCards}</div>
 </section>
 
 <section class="block" style="padding-top:0;">
@@ -161,78 +234,7 @@ module.exports = function home(ctx) {
   </div>
 </section>
 
-<section class="block" style="padding-top:0;">
-  <div class="section-head">
-    <span class="eyebrow">What Actually Matters</span>
-    <h2>Factors That Should Drive Your Decision</h2>
-    <p>Tonnage gets all the attention, but it's one of several factors that determine whether a splitter fits your situation.</p>
-  </div>
-  <div class="factor-grid">
-    <div class="factor-card"><h3>Wood species and condition</h3><p>Green (unseasoned) wood and knotty or twisted grain both resist splitting more than dry, straight-grained wood of the same species.</p></div>
-    <div class="factor-card"><h3>Log diameter</h3><p>A machine rated for a given tonnage may still struggle with an oversized round regardless of species — check the manufacturer's max diameter rating.</p></div>
-    <div class="factor-card"><h3>Splitting volume</h3><p>Occasional splitting favors simplicity and low cost; a full cord or more per year favors speed and durability.</p></div>
-    <div class="factor-card"><h3>Cycle time</h3><p>Directly affects how many logs you process per hour — compare it the same way you'd compare tonnage.</p></div>
-    <div class="factor-card"><h3>Vertical vs. horizontal operation</h3><p>Vertical operation avoids lifting heavy rounds onto a beam; horizontal is often faster to load for small-to-medium logs.</p></div>
-    <div class="factor-card"><h3>Portability</h3><p>Towable frames matter if you're splitting at multiple sites or a property without a flat work area near storage.</p></div>
-    <div class="factor-card"><h3>Electrical access</h3><p>Electric splitters need a grounded outlet and an appropriately rated extension cord within reach of where you'll work.</p></div>
-    <div class="factor-card"><h3>Maintenance requirements</h3><p>Gas units need engine service; all hydraulic splitters need periodic fluid and hose checks regardless of power source.</p></div>
-  </div>
-</section>
-
-<section class="quiz-banner">
-  <h2>Still not sure? Take the 60-second match quiz.</h2>
-  <p>Answer 5 questions about your wood and workload — we'll recommend the power source that fits your situation and explain why.</p>
-  <button type="button" class="btn btn-cta" data-open-quiz>Start the Quiz</button>
-  <noscript><p style="margin-top:16px;">The interactive quiz requires JavaScript. In the meantime, see our <a href="${url('/buying-guide/')}" style="color:#f0c27f;text-decoration:underline;">Buying Guide</a>.</p></noscript>
-</section>
-
-<section class="block">
-  <div class="section-head">
-    <span class="eyebrow">Top Research Guides</span>
-    <h2>Start Researching</h2>
-    <p>Our core guides and latest articles, all sourced and dated.</p>
-  </div>
-  <div class="comp-grid latest-guides-grid">
-    <div class="comp-card">
-      <span class="eyebrow">Comparison &middot; Updated 2026-07-21</span>
-      <h3>Gas vs. Electric Log Splitter</h3>
-      <p>A category-by-category breakdown of power, portability, noise, and maintenance.</p>
-      <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}" class="btn btn-dark-outline btn-sm">Read Comparison</a>
-    </div>
-    <div class="comp-card">
-      <span class="eyebrow">Best Of &middot; Updated 2026-07-27</span>
-      <h3>Best Electric Log Splitters</h3>
-      <p>Our currently verified electric model, by tonnage, cycle time, and electrical requirements.</p>
-      <a href="${url('/best-electric-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
-    </div>
-    <div class="comp-card">
-      <span class="eyebrow">Best Of &middot; Updated 2026-07-27</span>
-      <h3>Best Gas Log Splitters</h3>
-      <p>Three verified gas models, compared by engine, cycle time, and horizontal/vertical operation.</p>
-      <a href="${url('/best-gas-log-splitters/')}" class="btn btn-dark-outline btn-sm">Read Roundup</a>
-    </div>
-    <div class="comp-card">
-      <span class="eyebrow">Guide &middot; Updated 2026-07-20</span>
-      <h3>What Size Log Splitter Do I Need?</h3>
-      <p>Why tonnage alone doesn't determine the right machine for your wood.</p>
-      <a href="${url('/what-size-log-splitter-do-i-need/')}" class="btn btn-dark-outline btn-sm">Read Guide</a>
-    </div>
-    <div class="comp-card">
-      <span class="eyebrow">Buying Guide &middot; Updated 2026-07-20</span>
-      <h3>The Complete Log Splitter Buying Guide</h3>
-      <p>Tonnage, log diameter, cycle time, safety, and a buying checklist in one place.</p>
-      <a href="${url('/buying-guide/')}" class="btn btn-dark-outline btn-sm">Read the Guide</a>
-    </div>
-    <div class="comp-card">
-      <span class="eyebrow">Maintenance &middot; Updated 2026-07-20</span>
-      <h3>Log Splitter Maintenance Basics</h3>
-      <p>Pre-use inspection, hydraulic checks, and seasonal storage guidance.</p>
-      <a href="${url('/maintenance/')}" class="btn btn-dark-outline btn-sm">Read the Guide</a>
-    </div>
-  </div>
-</section>
-
-<section class="block" style="padding-top:0;">
+<section class="block section-alt section-divider" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">Transparency</span>
     <h2>How We Review</h2>
@@ -241,7 +243,7 @@ module.exports = function home(ctx) {
   </div>
 </section>
 
-<section class="block" style="padding-top:0;">
+<section class="block section-alt" style="padding-top:0;">
   <div class="section-head">
     <h2>Frequently Asked Questions</h2>
   </div>
@@ -258,6 +260,15 @@ module.exports = function home(ctx) {
       <h3>Do affiliate links cost me anything extra?</h3>
       <p>No. If you buy through a link on this site, we may earn a commission at no additional cost to you. See our <a href="${url('/affiliate-disclosure/')}">Affiliate Disclosure</a>.</p>
     </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <h2>Not sure where to start?</h2>
+  <p>Two ways in, depending on how you like to decide.</p>
+  <div class="final-cta-actions">
+    <a href="${url('/buying-guide/')}" class="btn btn-cta">Read the Complete Buying Guide</a>
+    <button type="button" class="btn btn-outline" data-open-quiz>Take the Match Quiz</button>
   </div>
 </section>
 `;
