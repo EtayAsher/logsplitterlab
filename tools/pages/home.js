@@ -7,7 +7,7 @@ const author = require('../data/author');
 // those numbers can never drift out of sync with what's actually listed.
 const GUIDES = [
   { category: 'comparison', label: 'Comparison', title: 'Gas vs. Electric Log Splitter', summary: 'A category-by-category breakdown of power, portability, noise, and maintenance.', href: '/comparisons/gas-vs-electric-log-splitter/', updated: '2026-07-21', cta: 'Read Comparison' },
-  { category: 'comparison', label: 'Best Of', title: 'Best Electric Log Splitters', summary: 'Our currently verified electric model, by tonnage, cycle time, and electrical requirements.', href: '/best-electric-log-splitters/', updated: '2026-07-27', cta: 'Read Roundup' },
+  { category: 'comparison', label: 'Best Of', title: 'Best Electric Log Splitters', summary: 'Our two verified electric models, by tonnage, cycle time, and electrical requirements.', href: '/best-electric-log-splitters/', updated: '2026-09-04', cta: 'Read Roundup' },
   { category: 'comparison', label: 'Best Of', title: 'Best Gas Log Splitters', summary: 'Three verified gas models, compared by engine, cycle time, and horizontal/vertical operation.', href: '/best-gas-log-splitters/', updated: '2026-07-27', cta: 'Read Roundup' },
   { category: 'guide', label: 'Guide', title: 'What Size Log Splitter Do I Need?', summary: 'Why tonnage alone doesn\'t determine the right machine for your wood.', href: '/what-size-log-splitter-do-i-need/', updated: '2026-07-20', cta: 'Read Guide' },
   { category: 'guide', label: 'Buying Guide', title: 'The Complete Log Splitter Buying Guide', summary: 'Tonnage, log diameter, cycle time, safety, and a buying checklist in one place.', href: '/buying-guide/', updated: '2026-07-20', cta: 'Read the Guide' },

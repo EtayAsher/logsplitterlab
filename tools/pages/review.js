@@ -27,13 +27,15 @@ const ANALYSIS = {
     usability: 'Motor draws up to 15A on a standard 120V circuit, per the manufacturer; confirm your circuit can handle that draw before running it continuously.',
     maintenance: 'Check the hydraulic fluid level and inspect the power cord and plug before each use, per the manufacturer\'s manual.',
     whoShouldBuy: 'Choose this if you split occasional batches of softer wood within reach of an outlet and want a straightforward, no-fuel electric splitter.',
-    whoShouldChooseOther: 'If your wood regularly exceeds 6.5 tons of resistance — dense hardwood or large-diameter rounds — every other product in our catalog is gas-powered, which trades quiet operation for more force and maintenance.',
+    whoShouldChooseOther: 'If your wood regularly exceeds 6.5 tons of resistance — dense hardwood or large-diameter rounds — every gas model in our catalog offers more force, at the cost of quiet operation and maintenance. If you\'re deciding between electric options specifically, the BILT HARD TLA-0101 is closely matched to this model in rated capacity, though it carries a shorter 90-day warranty and doesn\'t include a stand — see our Best Electric Log Splitters roundup for a direct look at both.',
     faq: [
       { q: 'Does the YS0650 come with a stand?', a: 'Yes — per the manufacturer, it ships with a removable stand and log trays that catch split pieces as they fall.' },
       { q: 'Will the YS0650 split oak or other hardwood?', a: 'It can split smaller-diameter hardwood within its 10 in. diameter rating, but at 6.5 tons it will struggle more with large, dense, or knotty rounds than a higher-tonnage gas splitter would.' },
     ],
     alternativeId: 'landworks-guo079',
     alternativeNote: 'If 6.5 tons isn\'t enough for your wood, the Landworks GUO079 (20 tons, gas) is a reasonable starting point for more splitting force, at the cost of engine noise, fuel, and maintenance.',
+    publishedDate: '2026-07-26',
+    updatedDate: '2026-09-04',
   },
   'superhandy-20-ton': {
     verdict: 'A 20-ton gas splitter nearly identical in specification to the Landworks GUO079 elsewhere in our catalog — same tonnage, weight class, cycle time, and log capacity, from the same manufacturer under a different brand.',
@@ -65,6 +67,8 @@ const ANALYSIS = {
     ],
     alternativeId: 'yardmax-32-ton-cr950',
     alternativeNote: 'The YARDMAX YU3266 offers substantially more tonnage (32T vs. 20T), horizontal/vertical operation, and a confirmed road-tow rating this model doesn\'t have — a genuinely different machine, not just a different brand at the same spec.',
+    publishedDate: '2026-07-26',
+    updatedDate: '2026-07-26',
   },
   'landworks-guo079': {
     verdict: 'A 20-ton gas splitter built for portability around a property rather than highway towing, with the fastest cycle time in our current data.',
@@ -97,6 +101,8 @@ const ANALYSIS = {
     ],
     alternativeId: 'yardmax-32-ton-cr950',
     alternativeNote: 'The YARDMAX YU3266 offers substantially more tonnage (32T vs. 20T), horizontal/vertical operation, and a confirmed road-tow rating this model doesn\'t have — a genuinely different machine and a more meaningful comparison than the SuperHandy GUO077, which shares nearly identical specs with this product.',
+    publishedDate: '2026-07-26',
+    updatedDate: '2026-07-26',
   },
   'yardmax-32-ton-cr950': {
     verdict: 'A 32-ton gas splitter built for higher-volume rural use, with horizontal/vertical operation and a confirmed road-towing rating.',
@@ -128,6 +134,42 @@ const ANALYSIS = {
     ],
     alternativeId: 'landworks-guo079',
     alternativeNote: 'Compared to the Landworks GUO079, this YARDMAX model offers far more tonnage (32T vs. 20T), vertical operation, and a confirmed tow rating, but at a slower cycle time (15.3s vs. 7.5s) and a much heavier unit — worth weighing against how much you split and whether you need to tow it.',
+    publishedDate: '2026-07-26',
+    updatedDate: '2026-07-26',
+  },
+  'bilthard-tla-0101': {
+    verdict: 'A 6.5-ton electric splitter for light, frequent use near a garage or shed outlet — closely matched to the YARDMAX YS0650 already in our catalog on core splitting capability, but with a meaningfully shorter warranty and no included stand.',
+    bestFor: 'Homeowners doing light, frequent splitting of softer-to-medium wood within reach of a standard outlet who want a compact, ground-level unit and don\'t need the elevated stand the YARDMAX YS0650 ships with.',
+    notIdealFor: 'Very dense hardwood, logs longer than 20.5 in. or thicker than 9.8 in., or anyone who wants more than a 90-day warranty without separately confirming extended coverage — noticeably shorter than the 2-year warranty on the other electric model in our catalog.',
+    strengths: [
+      'No fuel, exhaust, or engine maintenance — plug in and go',
+      '18-second cycle time and 9.8 in./20.5 in. log capacity, comparable to the other electric model in our catalog',
+      'Compact 98 lb unit with 5.7 in. transport wheels for repositioning around a garage or yard',
+    ],
+    limitations: [
+      '90-day limited warranty — substantially shorter than the 2-year warranty on the YARDMAX YS0650 already in our catalog',
+      'Ships without a stand; a separate BILT HARD variant with a stand exists as a different product, not included with this listing',
+      '6.5-ton rating is on the low end for splitting dense or large-diameter hardwood',
+      'Tied to a power outlet and an appropriately rated extension cord',
+    ],
+    workload: 'Best suited to light, frequent splitting sessions rather than processing a large volume in one sitting — functionally the same fit as the other electric model in our catalog.',
+    cycleTimeNote: 'An 18-second cycle time, per the manufacturer, is on the slower end compared to the gas models in our catalog (7.5–15.3 seconds), and about a second faster than the YARDMAX YS0650\'s 19 seconds — not a meaningful practical difference on its own.',
+    logSizeNote: 'Rated for logs up to 9.8 in. diameter and 20.5 in. length, per the manufacturer — within a fraction of an inch of the YARDMAX YS0650\'s 10 in. diameter rating, not a meaningful difference.',
+    portabilityNote: '5.7 in. transport wheels make it reasonably easy to reposition around a garage or yard; it is not designed for towing behind a vehicle.',
+    setupStorageNote: 'Ships without a stand — it sits and operates at ground level unless you separately source BILT HARD\'s stand-equipped variant, a different product from this listing. Requires assembly on first setup, per the manufacturer. Store indoors or under cover; there\'s no fuel to manage before storage, but check hydraulic fluid periodically.',
+    noiseElectricalNote: 'Runs on a standard 120V/15A circuit, per the manufacturer — confirm your outlet\'s circuit isn\'t already loaded with other tools, and use an appropriately rated extension cord if needed. Quieter than a gas engine, with no exhaust.',
+    usability: 'Motor draws up to 15A on a standard 120V circuit at 1-3/4HP and up to 3,400 RPM, per the manufacturer, producing a stated 6.5 tons of force at 24 MPa hydraulic pressure through a steel wedge; confirm your circuit can handle the draw before running it continuously.',
+    maintenance: 'Check the hydraulic fluid level (3.5L capacity, per the manufacturer) and inspect the power cord and plug before each use.',
+    whoShouldBuy: 'Choose this if you split occasional batches of softer-to-medium wood within reach of an outlet, prefer a compact ground-level unit over a stand-elevated one, and don\'t need more than a 90-day warranty.',
+    whoShouldChooseOther: 'If warranty coverage matters more to you than a small price difference, the YARDMAX YS0650 in our catalog carries a 2-year warranty and ships with a stand included — a real practical difference even though the two are otherwise closely matched in splitting capability. If your wood regularly exceeds 6.5 tons of resistance, every gas model in our catalog offers more force at the cost of noise, fuel, and maintenance — see our Best Gas Log Splitters roundup.',
+    faq: [
+      { q: 'Does the BILT HARD TLA-0101 come with a stand?', a: 'No — per the manufacturer, this listing ships without a stand; a separate stand-equipped BILT HARD variant exists as a different product. The YARDMAX YS0650 in our catalog ships with a stand and log trays included, if that matters to your setup.' },
+      { q: 'How is the BILT HARD TLA-0101 different from the YARDMAX YS0650 in your catalog?', a: 'Core splitting capability is closely matched — same 6.5-ton rating, nearly identical log capacity, and cycle times within a second of each other. The two verifiable differences that actually matter: the YS0650 carries a 2-year warranty and ships with a stand included, while the TLA-0101 carries a 90-day warranty and ships without one.' },
+    ],
+    alternativeId: 'landworks-guo079',
+    alternativeNote: 'If 6.5 tons isn\'t enough for your wood, the Landworks GUO079 (20 tons, gas) is a reasonable starting point for more splitting force, at the cost of engine noise, fuel, and maintenance — the same next step we\'d point to from our other 6.5-ton electric review.',
+    publishedDate: '2026-09-04',
+    updatedDate: '2026-09-04',
   },
 };
 
@@ -138,8 +180,11 @@ function buildReviewPage(product, ctx) {
   const a = ANALYSIS[product.id];
   const alt = products.find((p) => p.id === a.alternativeId);
   const slug = `/reviews/${product.id}/`;
-  const publishedDate = '2026-07-26';
-  const updatedDate = '2026-07-26';
+  // Per-product, not a single sitewide constant — see REVIEW_STANDARD.md
+  // Section 14: a review's published/updated date must reflect that
+  // specific product's real history, not be copied from another review.
+  const publishedDate = a.publishedDate;
+  const updatedDate = a.updatedDate;
 
   const bestOfHref = product.type === 'electric' ? '/best-electric-log-splitters/' : '/best-gas-log-splitters/';
   const bestOfLabel = product.type === 'electric' ? 'Best Electric Log Splitters' : 'Best Gas Log Splitters';

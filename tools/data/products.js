@@ -33,6 +33,12 @@
 // weight, cycle time, and log capacity, both manufactured by GCM — and
 // were kept as separate catalog entries as an explicit, disclosed owner
 // decision rather than a verification pass. See both entries' notes.
+//
+// 2026-09-04: BILT HARD TLA-0101 added as the catalog's 5th product — a
+// manually owner-selected Amazon listing (resolved to ASIN B09B75R66Q),
+// independently re-verified from scratch against the manufacturer's own
+// product page and the live Amazon listing per REVIEW_STANDARD.md before
+// adding. The site's second electric model, alongside YARDMAX YS0650.
 'use strict';
 
 module.exports = [
@@ -175,6 +181,40 @@ module.exports = [
     imageWidth: 320,
     imageHeight: 220,
     imageSourceNote: 'Original illustration created for this site; does not depict the actual YARDMAX YU3266.',
+  },
+  {
+    id: 'bilthard-tla-0101',
+    brand: 'BILT HARD',
+    name: 'BILT HARD TLA-0101 6.5-Ton Electric Log Splitter',
+    model: 'TLA-0101',
+    asin: 'B09B75R66Q',
+    amazonUrl: 'https://www.amazon.com/dp/B09B75R66Q',
+    status: 'active',
+    type: 'electric',
+    typeLabel: 'Electric',
+    tonnage: 6.5,
+    engine: '120V, 15A, 1-3/4HP electric motor (up to 3,400 RPM)',
+    cycleTimeSeconds: 18,
+    maxLogLengthIn: 20.5,
+    maxLogDiameterIn: 9.8,
+    maxLogWeightLb: 98, // unit weight, per the manufacturer, not a rated max log weight
+    orientation: 'Horizontal',
+    towable: false,
+    warranty: '90 days, limited (materials and workmanship), per the manufacturer',
+    verifiedDate: '2026-09-04',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B09B75R66Q',
+      'https://bilthardusa.com/products/bilt-hard-log-splitter-6-5-ton-wood-splitter-electric-powered-15amp-with-hydraulic-ram-electric-firewood-splitting-machine',
+    ],
+    notes: 'Owner-selected listing: resolved from the owner-supplied SiteStripe short link https://amzn.to/46qaksZ, which carries the site\'s own confirmed-active Associates tag (logsplitterla-20) — confirming this is a genuine, owner-generated link, not a guess. ASIN B09B75R66Q confirmed directly on the live Amazon listing (title "BILT HARD Log Splitter 6.5 Ton, Wood Splitter Electric Powered 15Amp, with Hydraulic Ram, Electric Firewood Splitting Machine, Horizontal") and cross-checked against the manufacturer\'s own product page, with no spec conflicts found. IMPORTANT — variant trap avoided: this model (TLA-0101) ships WITHOUT a stand; BILT HARD sells a separate stand-equipped variant (TLA-0102) as a distinct product/SKU — do not conflate the two or assume this listing includes a stand. Warranty (90 days) is meaningfully shorter than the 2-year warranty on the YARDMAX YS0650 elsewhere in this catalog — a real, verified difference, not a marketing distinction. Overall product dimensions (36.4"L x 10.4"W x 18.3"H) and hydraulic oil capacity (3.5L) are manufacturer-stated; Amazon\'s own live product-information table could not be fully rendered by available research tools this pass, so those two figures rely on the manufacturer source alone rather than a second independent confirmation — flagged for a lower-confidence note, not omitted, since the manufacturer source is a genuine Tier 1 source and no conflicting figure was found anywhere else.',
+    suitableUseSummary: 'Light-to-moderate splitting of softer-to-medium wood within reach of a garage or shed outlet, in a compact ground-level unit without an included stand.',
+    limitationsSummary: 'Ships without a stand and carries a 90-day warranty — notably shorter than the other electric model in our catalog; not rated for very dense hardwood or logs longer than 20.5 in. / thicker than 9.8 in.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-electric-bilthard.svg',
+    imageAlt: 'Illustration of a generic compact electric log splitter, labeled BILT HARD',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual BILT HARD TLA-0101.',
   },
 ];
 

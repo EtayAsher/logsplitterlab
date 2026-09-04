@@ -17,8 +17,8 @@ module.exports = function comparisonsIndex(ctx) {
       type: 'Best Of',
       title: 'Best Electric Log Splitters',
       question: 'Which electric model fits a homeowner\'s needs?',
-      summary: 'Our currently verified electric model: the YARDMAX YS0650, by tonnage, cycle time, and electrical requirements.',
-      updated: '2026-07-27',
+      summary: 'Our two verified electric models — the YARDMAX YS0650 and BILT HARD TLA-0101 — by tonnage, cycle time, and electrical requirements.',
+      updated: '2026-09-04',
       href: '/best-electric-log-splitters/',
     },
     {

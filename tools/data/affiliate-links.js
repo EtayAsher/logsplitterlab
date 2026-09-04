@@ -63,4 +63,16 @@ module.exports = {
     enabled: true,
     lastVerified: '2026-07-27',
   },
+
+  // 2026-09-04: owner-selected listing, preserved exactly as supplied.
+  // Resolved to ASIN B09B75R66Q; the redirect chain itself carries
+  // tag=logsplitterla-20 (this site's confirmed-active Associates tag),
+  // confirming it's a genuine owner-generated Special Link.
+  'bilthard-tla-0101': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/46qaksZ',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-09-04',
+  },
 };
