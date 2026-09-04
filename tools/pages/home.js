@@ -89,42 +89,53 @@ module.exports = function home(ctx) {
   </div>
 </section>
 
-<section class="block why-trust-section">
+<section class="block">
   <div class="section-head">
-    <h2>Why Trust LogSplitterLab?</h2>
-    <p>LogSplitterLab helps buyers compare log splitters using manufacturer specifications, product documentation, practical use-case analysis, and clearly disclosed research. We focus on showing who each machine is best for, its important limitations, and the differences that matter before buying.</p>
+    <span class="eyebrow">Verified Models</span>
+    <h2>Compare Verified Models</h2>
+    <p>Specs below are confirmed against manufacturer pages and major retailer listings — not estimated or copied from marketing copy.</p>
   </div>
-  <div class="trust-grid">
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 11.5l2 2 4-4.5M4 4.5h16v15H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <h3>Specifications Checked</h3>
-      <p>Core specifications are reviewed against manufacturer documentation and current product information.</p>
-    </div>
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <h3>Clear Product Differences</h3>
-      <p>We explain which buyers and workloads each log splitter is designed for.</p>
-    </div>
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 16h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-      <h3>Limitations Included</h3>
-      <p>Recommendations include key drawbacks and suitability limits &mdash; not only advantages.</p>
-    </div>
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 14a4 4 0 005.66 0l2-2a4 4 0 00-5.66-5.66l-1 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14 10a4 4 0 00-5.66 0l-2 2a4 4 0 005.66 5.66l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-      <h3>Transparent Affiliate Model</h3>
-      <p>We may earn a commission from qualifying purchases, at no additional cost to the buyer.</p>
-    </div>
+  ${comparisonTable(products, { caption: 'Verified log splitter specifications' })}
+</section>
+
+<section class="block" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">Product Overview</span>
+    <h2>Verified Splitters at a Glance</h2>
+    <p>The same models above, with images, main use case, and key limitation.</p>
   </div>
-  <div class="glance-strip">
-    <div class="glance-stat"><span class="glance-num">${reviewCount}</span><span class="glance-label">Verified Product Review${reviewCount === 1 ? '' : 's'}</span></div>
-    <div class="glance-stat"><span class="glance-num">${comparisonCount}</span><span class="glance-label">Comparison &amp; Roundup Pages</span></div>
-    <div class="glance-stat"><span class="glance-num">${guideCount}</span><span class="glance-label">Buying &amp; Maintenance Guides</span></div>
-    ${mostRecentVerifiedLabel ? `<div class="glance-stat"><span class="glance-num glance-num-sm">${esc(mostRecentVerifiedLabel)}</span><span class="glance-label">Specifications Last Updated</span></div>` : ''}
+  <div class="review-grid">${productCards}</div>
+</section>
+
+<section class="block section-alt" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">Browse</span>
+    <h2>Browse the Full Catalog</h2>
+    <p>Every way to slice the current catalog — more categories appear here automatically as new brands, power sources, and tonnage ranges are added.</p>
+  </div>
+  <div class="browse-grid">
+    <div class="browse-block">
+      <h3>Latest Reviews</h3>
+      <ul class="browse-list">${latestReviews}</ul>
+    </div>
+    <div class="browse-block">
+      <h3>Browse by Brand</h3>
+      <ul class="browse-list">${brandLinks}</ul>
+      <a href="${url('/brands/')}" class="browse-more">All brands &rarr;</a>
+    </div>
+    <div class="browse-block">
+      <h3>Browse by Power Source</h3>
+      <ul class="browse-list">${powerSourceLinks}</ul>
+    </div>
+    <div class="browse-block">
+      <h3>Browse by Tonnage</h3>
+      <ul class="browse-list">${tonnageLinks}</ul>
+      <a href="${url('/what-size-log-splitter-do-i-need/')}" class="browse-more">Which tonnage do I need? &rarr;</a>
+    </div>
   </div>
 </section>
 
-<section class="block">
+<section class="block" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">Start Here</span>
     <h2>Choose by Power Source</h2>
@@ -179,24 +190,6 @@ module.exports = function home(ctx) {
   <noscript><p style="margin-top:16px;">The interactive quiz requires JavaScript. In the meantime, see our <a href="${url('/buying-guide/')}" style="color:#f0c27f;text-decoration:underline;">Buying Guide</a>.</p></noscript>
 </section>
 
-<section class="block" style="padding-top:0;">
-  <div class="section-head">
-    <span class="eyebrow">Verified Models</span>
-    <h2>Compare Verified Models</h2>
-    <p>Specs below are confirmed against manufacturer pages and major retailer listings — not estimated or copied from marketing copy.</p>
-  </div>
-  ${comparisonTable(products, { caption: 'Verified log splitter specifications' })}
-</section>
-
-<section class="block" style="padding-top:0;">
-  <div class="section-head">
-    <span class="eyebrow">Product Overview</span>
-    <h2>Verified Splitters at a Glance</h2>
-    <p>The same models above, with images, main use case, and key limitation.</p>
-  </div>
-  <div class="review-grid">${productCards}</div>
-</section>
-
 <section class="block section-alt" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">Top Research Guides</span>
@@ -206,31 +199,38 @@ module.exports = function home(ctx) {
   <div class="comp-grid latest-guides-grid">${guideCards}</div>
 </section>
 
-<section class="block" style="padding-top:0;">
+<section class="block why-trust-section" style="padding-top:0;">
   <div class="section-head">
-    <span class="eyebrow">Browse</span>
-    <h2>Browse the Full Catalog</h2>
-    <p>Every way to slice the current catalog — more categories appear here automatically as new brands, power sources, and tonnage ranges are added.</p>
+    <h2>Why Trust LogSplitterLab?</h2>
+    <p>LogSplitterLab helps buyers compare log splitters using manufacturer specifications, product documentation, practical use-case analysis, and clearly disclosed research. We focus on showing who each machine is best for, its important limitations, and the differences that matter before buying.</p>
   </div>
-  <div class="browse-grid">
-    <div class="browse-block">
-      <h3>Latest Reviews</h3>
-      <ul class="browse-list">${latestReviews}</ul>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 11.5l2 2 4-4.5M4 4.5h16v15H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>Specifications Checked</h3>
+      <p>Core specifications are reviewed against manufacturer documentation and current product information.</p>
     </div>
-    <div class="browse-block">
-      <h3>Browse by Brand</h3>
-      <ul class="browse-list">${brandLinks}</ul>
-      <a href="${url('/brands/')}" class="browse-more">All brands &rarr;</a>
+    <div class="trust-card">
+      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h3>Clear Product Differences</h3>
+      <p>We explain which buyers and workloads each log splitter is designed for.</p>
     </div>
-    <div class="browse-block">
-      <h3>Browse by Power Source</h3>
-      <ul class="browse-list">${powerSourceLinks}</ul>
+    <div class="trust-card">
+      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 16h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <h3>Limitations Included</h3>
+      <p>Recommendations include key drawbacks and suitability limits &mdash; not only advantages.</p>
     </div>
-    <div class="browse-block">
-      <h3>Browse by Tonnage</h3>
-      <ul class="browse-list">${tonnageLinks}</ul>
-      <a href="${url('/what-size-log-splitter-do-i-need/')}" class="browse-more">Which tonnage do I need? &rarr;</a>
+    <div class="trust-card">
+      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 14a4 4 0 005.66 0l2-2a4 4 0 00-5.66-5.66l-1 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14 10a4 4 0 00-5.66 0l-2 2a4 4 0 005.66 5.66l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      <h3>Transparent Affiliate Model</h3>
+      <p>We may earn a commission from qualifying purchases, at no additional cost to the buyer.</p>
     </div>
+  </div>
+  <div class="glance-strip">
+    <div class="glance-stat"><span class="glance-num">${reviewCount}</span><span class="glance-label">Verified Product Review${reviewCount === 1 ? '' : 's'}</span></div>
+    <div class="glance-stat"><span class="glance-num">${comparisonCount}</span><span class="glance-label">Comparison &amp; Roundup Pages</span></div>
+    <div class="glance-stat"><span class="glance-num">${guideCount}</span><span class="glance-label">Buying &amp; Maintenance Guides</span></div>
+    ${mostRecentVerifiedLabel ? `<div class="glance-stat"><span class="glance-num glance-num-sm">${esc(mostRecentVerifiedLabel)}</span><span class="glance-label">Specifications Last Updated</span></div>` : ''}
   </div>
 </section>
 
