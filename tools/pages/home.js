@@ -7,7 +7,7 @@ const author = require('../data/author');
 // those numbers can never drift out of sync with what's actually listed.
 const GUIDES = [
   { category: 'comparison', label: 'Comparison', title: 'Gas vs. Electric Log Splitter', summary: 'A category-by-category breakdown of power, portability, noise, and maintenance.', href: '/comparisons/gas-vs-electric-log-splitter/', updated: '2026-07-21', cta: 'Read Comparison' },
-  { category: 'comparison', label: 'Best Of', title: 'Best Electric Log Splitters', summary: 'Our two verified electric models, by tonnage, cycle time, and electrical requirements.', href: '/best-electric-log-splitters/', updated: '2026-09-04', cta: 'Read Roundup' },
+  { category: 'comparison', label: 'Best Of', title: 'Best Electric Log Splitters', summary: 'Five verified electric models — how to choose between them by warranty, capacity, and wedge design.', href: '/best-electric-log-splitters/', updated: '2026-09-06', cta: 'Read Roundup' },
   { category: 'comparison', label: 'Best Of', title: 'Best Gas Log Splitters', summary: 'Three verified gas models, compared by engine, cycle time, and horizontal/vertical operation.', href: '/best-gas-log-splitters/', updated: '2026-07-27', cta: 'Read Roundup' },
   { category: 'guide', label: 'Guide', title: 'What Size Log Splitter Do I Need?', summary: 'Why tonnage alone doesn\'t determine the right machine for your wood.', href: '/what-size-log-splitter-do-i-need/', updated: '2026-07-20', cta: 'Read Guide' },
   { category: 'guide', label: 'Buying Guide', title: 'The Complete Log Splitter Buying Guide', summary: 'Tonnage, log diameter, cycle time, safety, and a buying checklist in one place.', href: '/buying-guide/', updated: '2026-07-20', cta: 'Read the Guide' },
@@ -21,7 +21,23 @@ module.exports = function home(ctx) {
   const { url, esc } = layout;
   const { comparisonTable, productCard, personJsonLd } = components;
 
-  const productCards = products.map((p) => productCard(p, { url })).join('');
+  // --- Homepage catalog section: grouped by power source, not one flat
+  // grid. At 8 products a single undifferentiated grid reads as "cards
+  // dumped on a page" rather than a curated catalog, so the homepage
+  // shows a short, deliberately curated highlight from each group (never
+  // hidden from crawlers — every card is a real server-rendered link,
+  // just fewer of them) with a clear path to the complete, ungrouped
+  // catalog on /reviews/ and the per-type roundups. Curation is an
+  // editorial choice (spanning budget-to-premium within each group), not
+  // something derivable automatically the way specs are. ---
+  const electricProducts = products.filter((p) => p.type === 'electric');
+  const gasProducts = products.filter((p) => p.type === 'gas');
+  const HOMEPAGE_FEATURED_ELECTRIC_IDS = ['yardmax-ys0650', 'superhandy-14-ton'];
+  const HOMEPAGE_FEATURED_GAS_IDS = ['landworks-guo079', 'yardmax-32-ton-cr950'];
+  const featuredElectric = HOMEPAGE_FEATURED_ELECTRIC_IDS.map((id) => electricProducts.find((p) => p.id === id)).filter(Boolean);
+  const featuredGas = HOMEPAGE_FEATURED_GAS_IDS.map((id) => gasProducts.find((p) => p.id === id)).filter(Boolean);
+  const featuredElectricCards = featuredElectric.map((p) => productCard(p, { url })).join('');
+  const featuredGasCards = featuredGas.map((p) => productCard(p, { url })).join('');
 
   // --- Browse-the-catalog data (fully derived from products.js, so this
   // scales to any catalog size without hardcoding brand/tonnage names). ---
@@ -42,6 +58,9 @@ module.exports = function home(ctx) {
   const powerSourceLinks = Array.from(byType.keys()).sort((a, b) => a.localeCompare(b))
     .map((type) => `<li><a href="${url(powerSourceHref[type] || '/reviews/')}">${esc(byType.get(type)[0].typeLabel)}</a><span class="browse-meta">${byType.get(type).length}</span></li>`)
     .join('');
+  // (electricProducts/gasProducts, used by the catalog section above, are
+  // the same grouping as byType — kept separate since they're needed
+  // before this point in the function and byType is keyed generically.)
 
   const TONNAGE_BANDS = [
     { label: 'Under 10 tons', test: (t) => t < 10 },
@@ -91,20 +110,42 @@ module.exports = function home(ctx) {
 
 <section class="block">
   <div class="section-head">
-    <span class="eyebrow">Verified Models</span>
-    <h2>Compare Verified Models</h2>
-    <p>Specs below are confirmed against manufacturer pages and major retailer listings — not estimated or copied from marketing copy.</p>
+    <span class="eyebrow">The Catalog</span>
+    <h2>Explore Verified Log Splitters</h2>
+    <p>${reviewCount} verified models, split by power source. Every spec is confirmed against manufacturer pages and major retailer listings — not estimated or copied from marketing copy.</p>
   </div>
-  ${comparisonTable(products, { caption: 'Verified log splitter specifications' })}
+  <div class="catalog-jump">
+    <a href="#catalog-electric"><span class="catalog-jump-dot is-electric" aria-hidden="true"></span>Electric (${electricProducts.length})</a>
+    <a href="#catalog-gas"><span class="catalog-jump-dot is-gas" aria-hidden="true"></span>Gas (${gasProducts.length})</a>
+    <a href="${url('/reviews/')}">All ${reviewCount} Reviews &rarr;</a>
+  </div>
+
+  <div class="catalog-group" id="catalog-electric">
+    <div class="catalog-group-head is-electric">
+      <h3>Electric</h3><span class="catalog-group-count">${electricProducts.length} models</span>
+    </div>
+    <p class="catalog-group-desc">Quiet, low-maintenance, and tied to an outlet — from compact 6.5-ton units to a 14-ton option for buyers who want more force without moving to gas.</p>
+    <div class="review-grid">${featuredElectricCards}</div>
+    <div class="catalog-more"><a href="${url('/best-electric-log-splitters/')}">Compare all ${electricProducts.length} electric models &rarr;</a></div>
+  </div>
+
+  <div class="catalog-group" id="catalog-gas">
+    <div class="catalog-group-head is-gas">
+      <h3>Gas</h3><span class="catalog-group-count">${gasProducts.length} models</span>
+    </div>
+    <p class="catalog-group-desc">More force and full portability, at the cost of engine noise, fuel, and maintenance — from 20-ton portable units to a 32-ton towable full-beam splitter.</p>
+    <div class="review-grid">${featuredGasCards}</div>
+    <div class="catalog-more"><a href="${url('/best-gas-log-splitters/')}">Compare all ${gasProducts.length} gas models &rarr;</a></div>
+  </div>
 </section>
 
-<section class="block" style="padding-top:0;">
+<section class="block section-sand" style="padding-top:0;">
   <div class="section-head">
-    <span class="eyebrow">Product Overview</span>
-    <h2>Verified Splitters at a Glance</h2>
-    <p>The same models above, with images, main use case, and key limitation.</p>
+    <span class="eyebrow">Full Comparison</span>
+    <h2>Compare Every Verified Model</h2>
+    <p>All ${reviewCount} models in one table, for scanning tonnage and cycle time side by side.</p>
   </div>
-  <div class="review-grid">${productCards}</div>
+  ${comparisonTable(products, { caption: 'Verified log splitter specifications' })}
 </section>
 
 <section class="block section-alt" style="padding-top:0;">

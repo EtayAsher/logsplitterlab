@@ -21,6 +21,17 @@
   --green-btn:#2e7d4f;
   --green-btn-hover:#256a41;
   --focus:#1a6fd1;
+
+  /* Restrained secondary accent (added for the 8-product catalog): muted
+     sage marks Electric content sitewide; Gas reuses the existing
+     amber/rust --accent/--cta tokens above rather than introduce a second
+     new hue. Both pair with very pale tinted section backgrounds so large
+     stretches of plain cream get gentle structure without looking like a
+     redesign. */
+  --sage:#5c8a6a;
+  --sage-dark:#3f6b4d;
+  --sage-tint:#eef4ef;
+  --sand-tint:#f8f1e4;
 }
 *,*::before,*::after{box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -496,3 +507,54 @@ table.compare tbody tr:hover{background:#faf7f0;}
 
 /* ---------- MISC UTILITY ---------- */
 .text-center{text-align:center;}
+
+/* ---------- CATALOG PRESENTATION (8-product catalog) ----------
+   Restrained additions only: pale tinted section surfaces to break up
+   large stretches of plain cream, and a subtle Electric/Gas visual cue
+   (badge + left border) reusing the existing brand palette plus one new
+   muted sage accent for Electric. Nothing here changes layout structure
+   on its own — see .catalog-grid / .catalog-group below for that. */
+section.block.section-sage{background:var(--sage-tint);}
+section.block.section-sand{background:var(--sand-tint);}
+
+.type-pill.type-pill-electric{background:#e3ede5;color:var(--sage-dark);}
+.type-pill.type-pill-gas{background:#f6ece3;color:var(--accent);}
+
+/* Catalog group: one power-source section within the product catalog
+   (used on the homepage catalog section and the Reviews index). Each
+   group gets its own grid, so a short trailing group (e.g. 3 gas models)
+   fills a clean row instead of leaving an awkward gap in one giant grid. */
+.catalog-group{margin-bottom:56px;}
+.catalog-group:last-child{margin-bottom:0;}
+.catalog-group-head{
+  display:flex;align-items:center;gap:12px;margin-bottom:22px;
+  padding-bottom:10px;border-bottom:2px solid var(--border);
+}
+.catalog-group-head.is-electric{border-bottom-color:var(--sage);}
+.catalog-group-head.is-gas{border-bottom-color:var(--cta);}
+.catalog-group-head h3{margin:0;font-size:1.3rem;}
+.catalog-group-count{color:var(--muted);font-size:.85rem;font-weight:600;}
+.catalog-group-desc{color:var(--muted);font-size:.92rem;margin:-14px 0 20px;}
+
+/* Homepage catalog intro + jump nav (Electric / Gas / All reviews) */
+.catalog-jump{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 0 34px;}
+.catalog-jump a{
+  display:inline-flex;align-items:center;gap:7px;background:var(--card);
+  border:1px solid var(--border);border-radius:24px;padding:9px 18px;
+  font-size:.88rem;font-weight:600;color:var(--dark);
+}
+.catalog-jump a:hover{border-color:var(--cta);}
+.catalog-jump-dot{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.catalog-jump-dot.is-electric{background:var(--sage);}
+.catalog-jump-dot.is-gas{background:var(--cta);}
+
+/* Homepage shows a curated subset of each group with a clear path to the
+   full catalog — avoids forcing all 8 products above the fold while
+   keeping every product a real, crawlable link (no JS-gated content). */
+.catalog-more{text-align:center;margin-top:4px;}
+.catalog-more a{font-size:.92rem;font-weight:600;color:var(--cta-btn);}
+.catalog-more a:hover{text-decoration:underline;}
+
+/* Reviews index: same grouped layout, plus a denser meta row so 8 cards
+   scan quickly by tonnage/brand without opening each one. */
+.catalog-filter-note{color:var(--muted);font-size:.85rem;margin:0 0 30px;text-align:center;}

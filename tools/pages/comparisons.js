@@ -17,8 +17,8 @@ module.exports = function comparisonsIndex(ctx) {
       type: 'Best Of',
       title: 'Best Electric Log Splitters',
       question: 'Which electric model fits a homeowner\'s needs?',
-      summary: 'Our two verified electric models — the YARDMAX YS0650 and BILT HARD TLA-0101 — by tonnage, cycle time, and electrical requirements.',
-      updated: '2026-09-04',
+      summary: 'Five verified electric models, from the closely-matched YARDMAX/BILT HARD/VEVOR trio to the Cross Wedge PROYAMA and the 14-ton SuperHandy GUO084.',
+      updated: '2026-09-06',
       href: '/best-electric-log-splitters/',
     },
     {

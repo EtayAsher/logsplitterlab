@@ -75,4 +75,28 @@ module.exports = {
     enabled: true,
     lastVerified: '2026-09-04',
   },
+
+  // 2026-09-06: three more owner-selected listings, preserved exactly as
+  // supplied. Each redirect chain carries tag=logsplitterla-20.
+  'proyama-7-ton': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/4A2Y3bu',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-09-06',
+  },
+  'vevor-els106s': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/4cwKV47',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-09-06',
+  },
+  'superhandy-14-ton': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/4qZeAci',
+    ctaLabel: 'Check Price on Amazon',
+    enabled: true,
+    lastVerified: '2026-09-06',
+  },
 };

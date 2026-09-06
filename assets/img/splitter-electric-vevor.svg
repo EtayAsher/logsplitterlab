@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" width="320" height="220" role="img" aria-hidden="true">
+  <defs>
+    <style>
+      .bg{fill:#f5f0e8;}
+      .frame{fill:none;stroke:#1a3a2a;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;}
+      .accent{fill:#c1622f;}
+      .accent-line{fill:none;stroke:#c1622f;stroke-width:5;stroke-linecap:round;}
+      .wood{fill:#efe8da;stroke:#8B4513;stroke-width:3;}
+      .wheel{fill:#1a3a2a;}
+      .wheel-hub{fill:#f5f0e8;}
+      .badge{fill:#c1622f;}
+      .badge-text{fill:#fdfaf4;font-family:Georgia,serif;font-size:12px;font-weight:700;}
+    </style>
+  </defs>
+  <rect class="bg" width="320" height="220" rx="12"/>
+  <line x1="24" y1="176" x2="296" y2="176" stroke="#e0d8c8" stroke-width="3"/>
+
+  <!-- compact flush base, slightly shorter frame — compact/portable form factor -->
+  <rect class="frame" x="74" y="150" width="164" height="20" rx="4"/>
+
+  <!-- motor housing (electric) -->
+  <path class="frame" d="M60 164 V138 a18 18 0 0 1 18 -18 h0 a18 18 0 0 1 18 18 v26 Z"/>
+  <path class="accent-line" d="M60 148 q-15 6 -15 23" fill="none"/>
+  <rect class="accent" x="34" y="168" width="14" height="9" rx="2"/>
+
+  <!-- wedge -->
+  <path class="frame" d="M214 138 L240 160 L214 182 Z"/>
+
+  <!-- log -->
+  <circle class="wood" cx="166" cy="160" r="20"/>
+  <circle class="wood" cx="166" cy="160" r="8" fill="none" stroke="#8B4513" stroke-width="2"/>
+
+  <!-- 6in wheels, slightly larger relative to frame — a documented spec (6in
+       transport wheels) worth reflecting visually -->
+  <circle class="wheel" cx="98" cy="178" r="11"/>
+  <circle class="wheel-hub" cx="98" cy="178" r="4"/>
+  <circle class="wheel" cx="212" cy="178" r="11"/>
+  <circle class="wheel-hub" cx="212" cy="178" r="4"/>
+
+  <rect class="badge" x="20" y="20" width="90" height="26" rx="13"/>
+  <text class="badge-text" x="65" y="38" text-anchor="middle">VEVOR</text>
+</svg>

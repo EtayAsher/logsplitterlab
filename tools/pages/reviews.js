@@ -2,10 +2,34 @@
 
 module.exports = function reviewsIndex(ctx) {
   const { products, components, layout } = ctx;
-  const { url } = layout;
+  const { url, esc } = layout;
   const { productCard } = components;
 
-  const cards = products.map((p) => productCard(p, { url })).join('');
+  // Grouped by power source rather than one flat grid — at 8 products a
+  // single undifferentiated grid reads as a dumped list rather than a
+  // browsable catalog. Grouping also means a shorter trailing group (3 gas
+  // models) fills a clean row instead of leaving an awkward gap.
+  const electrics = products.filter((p) => p.type === 'electric');
+  const gases = products.filter((p) => p.type === 'gas');
+  const others = products.filter((p) => p.type !== 'electric' && p.type !== 'gas');
+
+  const GROUPS = [
+    { key: 'electric', label: 'Electric', products: electrics, cueClass: 'is-electric', desc: 'Quiet, low-maintenance, and tied to an outlet — from compact 6.5-ton units to a 14-ton option for buyers who want more force without moving to gas.' },
+    { key: 'gas', label: 'Gas', products: gases, cueClass: 'is-gas', desc: 'More force and full portability, at the cost of engine noise, fuel, and maintenance — from 20-ton portable units to a 32-ton towable full-beam splitter.' },
+  ].filter((g) => g.products.length);
+  // Any product of a type not yet given its own group (e.g. a future
+  // manual splitter) still appears, ungrouped, rather than silently
+  // disappearing from the catalog.
+  if (others.length) GROUPS.push({ key: 'other', label: 'Other', products: others, cueClass: '', desc: '' });
+
+  const groupSections = GROUPS.map((g) => `
+    <div class="catalog-group" id="group-${g.key}">
+      <div class="catalog-group-head${g.cueClass ? ' ' + g.cueClass : ''}">
+        <h2>${esc(g.label)}</h2><span class="catalog-group-count">${g.products.length} model${g.products.length === 1 ? '' : 's'}</span>
+      </div>
+      ${g.desc ? `<p class="catalog-group-desc">${esc(g.desc)}</p>` : ''}
+      <div class="review-grid">${g.products.map((p) => productCard(p, { url })).join('')}</div>
+    </div>`).join('');
 
   // Only show a filter button for a power source that actually has at
   // least one published product — an empty "Manual" filter with zero
@@ -19,7 +43,7 @@ module.exports = function reviewsIndex(ctx) {
   const bodyHtml = `
 <section class="page-hero">
   <h1>Log Splitter Reviews</h1>
-  <p>Specification-based research summaries — not paid placements or hands-on tests unless clearly labeled otherwise.</p>
+  <p>${products.length} verified models — specification-based research summaries, not paid placements or hands-on tests unless clearly labeled otherwise.</p>
 </section>
 <div class="article-wrap" style="padding-bottom:0;">
   <p>Every model below has been checked against its manufacturer's own specification pages and at least one major retailer listing before publishing. We link every source at the bottom of each review, note where a product line has multiple sub-models to avoid mixing up specs, and remove anything we can't confidently verify — see our <a href="${url('/how-we-review/')}">full methodology</a>. We don't display star ratings here because we don't yet have a documented rating methodology to back them, and we don't display prices because they change too often to keep accurate on this page — check the current price through the linked retailer.</p>
@@ -27,9 +51,10 @@ module.exports = function reviewsIndex(ctx) {
 <div class="filter-bar" id="filterBar" role="group" aria-label="Filter reviews by power source">
   ${filterButtons}
 </div>
-<noscript><p class="text-center" style="color:var(--muted);font-size:.85rem;">Filter buttons require JavaScript; every review is listed below regardless.</p></noscript>
-<h2 class="visually-hidden">All reviews</h2>
-<div class="review-grid" id="reviewGrid">${cards}</div>
+<noscript><p class="text-center" style="color:var(--muted);font-size:.85rem;">Filter buttons require JavaScript; every review is listed below regardless, grouped by power source.</p></noscript>
+<div id="catalogWrap" class="article-wrap" style="max-width:1160px;padding-top:10px;">
+  ${groupSections}
+</div>
 <div class="article-wrap" style="padding-top:0;">
   <p style="color:var(--muted);font-size:.85rem;">Looking for a manual (non-powered) splitter? We don't have a verified manual model reviewed yet — see the "Manual" section of our <a href="${url('/buying-guide/')}#g-power">buying guide</a> for what to look for in the meantime.</p>
 </div>
@@ -47,7 +72,7 @@ module.exports = function reviewsIndex(ctx) {
   return {
     path: '/reviews/',
     title: 'Log Splitter Reviews — Verified Specifications',
-    description: 'Specification-based log splitter research summaries for gas and electric models, sourced from manufacturer and retailer listings.',
+    description: 'Specification-based log splitter research summaries for gas and electric models, grouped by power source and sourced from manufacturer and retailer listings.',
     activeNav: 'reviews',
     breadcrumbs: [{ label: 'Home', path: '/' }, { label: 'Reviews', path: '/reviews/' }],
     jsonLd: [breadcrumbJsonLd],

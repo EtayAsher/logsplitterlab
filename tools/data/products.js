@@ -39,6 +39,16 @@
 // independently re-verified from scratch against the manufacturer's own
 // product page and the live Amazon listing per REVIEW_STANDARD.md before
 // adding. The site's second electric model, alongside YARDMAX YS0650.
+//
+// 2026-09-06: three more owner-selected products added (6th-8th):
+// PROYAMA 7-Ton (Cross Wedge), VEVOR ELS106S 6.5-Ton, and SuperHandy
+// GUO084 14-Ton. GUO084 was described by the owner as "SuperHandy 14-Ton"
+// without a stated power source; independent verification confirmed it is
+// ELECTRIC (previously live under the same ASIN — see `removedProducts`),
+// a genuinely distinct product from SuperHandy GUO077 (20-ton GAS)
+// elsewhere in this catalog, not a variant of it. The catalog now spans
+// 5 electric models (YS0650, TLA-0101, PROYAMA, VEVOR, GUO084) and 3 gas
+// models (GUO077, GUO079, YU3266).
 'use strict';
 
 module.exports = [
@@ -215,6 +225,102 @@ module.exports = [
     imageWidth: 320,
     imageHeight: 220,
     imageSourceNote: 'Original illustration created for this site; does not depict the actual BILT HARD TLA-0101.',
+  },
+  {
+    id: 'proyama-7-ton',
+    brand: 'PROYAMA',
+    name: 'PROYAMA 7-Ton Electric Log Splitter with Cross Wedge',
+    model: '7-Ton Cross Wedge', // PROYAMA does not publish a distinct alphanumeric model number for this listing beyond its ASIN — see notes
+    asin: 'B0CGDHY345',
+    amazonUrl: 'https://www.amazon.com/dp/B0CGDHY345',
+    status: 'active',
+    type: 'electric',
+    typeLabel: 'Electric',
+    tonnage: 7,
+    engine: '120V, 15A electric motor',
+    orientation: 'Horizontal',
+    towable: false,
+    verifiedDate: '2026-09-06',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B0CGDHY345',
+      'https://proyamapower.com/',
+    ],
+    notes: 'Owner-selected listing: resolved from https://amzn.to/4A2Y3bu, which carries the site\'s confirmed-active Associates tag (logsplitterla-20). ASIN B0CGDHY345 confirmed directly on the live Amazon listing, whose own title states "PROYAMA 7T Electric Log Splitter, 15A Motor Wood Splitter with Cross Wedge" (fetched independently twice, consistent both times). IMPORTANT — unresolved tonnage-labeling conflict, disclosed rather than silently resolved: multiple third-party sources (aggregators, PROYAMA\'s own indexed product pages, a device-manual index) describe an apparently near-identical PROYAMA electric splitter — same 15A motor class, same "Cross Wedge" branding, same general design — rated at 6.5 tons with 10 in. diameter / 20.5 in. length capacity, under different ASINs (e.g. B0CGDJR66D, B0FW4BPH43). This site treats the live Amazon listing\'s own title (7 tons) as authoritative for THIS specific ASIN per our source-hierarchy rules, since it is the exact, directly-verified destination of the owner-selected link — but per this project\'s "never copy specs from a similar model" rule, the 6.5-ton sibling\'s detailed log-capacity/weight/cycle-time figures are NOT assumed to apply to this 7-ton-labeled listing and are left unconfirmed here rather than carried over. PROYAMA\'s own manufacturer site (proyamapower.com) lists a generic "Woodsplitting Machine Series" without a page specifically matching this ASIN\'s exact tonnage claim. Log diameter, log length, cycle time, weight, and warranty are left unset for this reason — mark as Unknown rather than guessed. The Cross Wedge itself (splits one log into four pieces per stroke, versus the standard two-piece wedge on every other product in this catalog) is a genuine, verifiable structural difference confirmed directly in the product title/listing.',
+    suitableUseSummary: 'Light splitting of softer wood where the four-way Cross Wedge — a genuinely different mechanism from every other splitter in our catalog — is the main draw, within reach of a garage or shed outlet.',
+    limitationsSummary: 'Log diameter, length, cycle time, and weight could not be confirmed for this specific listing due to a tonnage-labeling conflict with a closely related PROYAMA model — see source notes before assuming any capacity figure.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-electric-proyama.svg',
+    imageAlt: 'Illustration of a generic compact electric log splitter with a four-way cross wedge, labeled PROYAMA',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual PROYAMA 7-Ton Cross Wedge splitter.',
+  },
+  {
+    id: 'vevor-els106s',
+    brand: 'VEVOR',
+    name: 'VEVOR ELS106S 6.5-Ton Electric Log Splitter',
+    model: 'ELS106S',
+    asin: 'B0FMPRC1BH',
+    amazonUrl: 'https://www.amazon.com/dp/B0FMPRC1BH',
+    status: 'active',
+    type: 'electric',
+    typeLabel: 'Electric',
+    tonnage: 6.5,
+    engine: '120V, 15A, 1500W electric motor (up to 3,400 RPM)',
+    maxLogLengthIn: 20,
+    maxLogDiameterIn: 9.8,
+    maxLogWeightLb: 99, // unit weight (99.21 lb / 45 kg per the manufacturer), not a rated max log weight
+    orientation: 'Horizontal',
+    towable: false,
+    warranty: '1 year (VEVOR\'s general warranty policy; not confirmed as model-specific)',
+    verifiedDate: '2026-09-06',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B0FMPRC1BH',
+      'https://www.vevor.com/firewood-splitter-c_11887/vevor-electric-log-splitter-1500w-15-amp-motor-6-5-tons-wood-splitting-machine-p_010304222193',
+      'https://www.vevor.com/pages/return-policy',
+    ],
+    notes: 'Owner-selected listing: resolved from https://amzn.to/4cwKV47, which carries the site\'s confirmed-active Associates tag (logsplitterla-20). ASIN B0FMPRC1BH and model ELS106S confirmed directly on VEVOR\'s own manufacturer site, matching the live Amazon listing\'s title and specs with no conflicts found. VEVOR specifies a maximum extension cord length of 50 ft. with a minimum 3.3 mm² cross-section — a specific, model-published figure worth citing directly rather than the generic cord guidance given for other products. Cycle time is not published by the manufacturer for this model and is left unset rather than estimated. Warranty is VEVOR\'s general sitewide 12-month policy, not confirmed as specific to this model.',
+    suitableUseSummary: 'Light-to-moderate splitting of softer-to-medium wood within reach of a garage or shed outlet, in a compact unit with a manufacturer-specified extension-cord limit worth checking before buying a cord.',
+    limitationsSummary: 'Not rated for very dense hardwood or logs longer than 20 in. / thicker than 9.8 in.; cycle time is not published by the manufacturer.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-electric-vevor.svg',
+    imageAlt: 'Illustration of a generic compact electric log splitter, labeled VEVOR',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual VEVOR ELS106S.',
+  },
+  {
+    id: 'superhandy-14-ton',
+    brand: 'SuperHandy',
+    name: 'SuperHandy GUO084 14-Ton Electric Log Splitter',
+    model: 'GUO084',
+    asin: 'B09GW8FRXX',
+    amazonUrl: 'https://www.amazon.com/dp/B09GW8FRXX',
+    status: 'active',
+    type: 'electric',
+    typeLabel: 'Electric',
+    tonnage: 14,
+    engine: '120V, 15A, 1800W electric motor',
+    cycleTimeSeconds: 16,
+    maxLogLengthIn: 20,
+    maxLogDiameterIn: 16,
+    maxLogWeightLb: 126, // unit weight, per cross-referenced retailer spec data, not a rated max log weight
+    orientation: 'Horizontal',
+    towable: false,
+    verifiedDate: '2026-09-06',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B09GW8FRXX',
+      'https://superhandyus.com/products/superhandy-log-splitter-guo084',
+    ],
+    notes: 'Owner-selected listing: resolved from https://amzn.to/4qZeAci, which carries the site\'s confirmed-active Associates tag (logsplitterla-20). IMPORTANT — power-source finding: this listing was described by the owner as "SuperHandy 14-Ton Log Splitter" without a specified power source; independent verification confirms it is ELECTRIC (120V corded, 1800W motor, per SuperHandy\'s own product page), not gas. This is a genuinely distinct product from SuperHandy GUO077 (20-ton GAS) elsewhere in this catalog — different model number, different power source, different tonnage — not a variant or rebadge of it. Both GUO077 and GUO084 are described as using a Bucher-brand hydraulic pump, an observed shared-component detail worth noting but not evidence the two are the same manufacturing relationship GUO077 has with Landworks GUO079. Cycle time (16s per the manufacturer; a 16.5s figure appears on some retailer cross-checks, treated as the same figure rounded differently, not a conflict). Max log diameter, weight, hydraulic pump GPM (10 GPM, 2-stage), fluid capacity (2.1 gal / 8L, AW32/AW46), and cylinder stroke (16 in.) are cross-referenced from multiple independent retailer listings (Lowe\'s, Tractor Supply) that agree with each other and with the manufacturer\'s confirmed model/tonnage/motor/cycle/length — no conflicts found, though the manufacturer\'s own page did not itself display every one of these figures directly. Warranty term could not be confirmed for this specific model and is left unset rather than copied from another SuperHandy product.',
+    suitableUseSummary: 'The highest-capacity electric splitter in our catalog (14 tons, 16 in. diameter) for homeowners who want more force than a 6.5-ton electric unit without moving to gas.',
+    limitationsSummary: 'Warranty term not confirmed for this specific model; still tied to a power outlet and an appropriately rated extension cord despite the higher tonnage.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-electric-superhandy.svg',
+    imageAlt: 'Illustration of a generic electric log splitter with a longer beam, labeled SuperHandy',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual SuperHandy GUO084.',
   },
 ];
 

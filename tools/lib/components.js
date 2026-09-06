@@ -38,7 +38,12 @@ function affiliateButton(product, opts) {
 }
 
 function typePill(typeLabel) {
-  return `<span class="type-pill">${esc(typeLabel)}</span>`;
+  // Subtle Electric/Gas visual cue (sage vs. amber/rust) layered onto the
+  // existing neutral pill — falls back to the plain style for any other
+  // label (e.g. a future "Manual" type) rather than guessing a color.
+  const key = String(typeLabel || '').toLowerCase();
+  const modifier = key === 'electric' ? ' type-pill-electric' : key === 'gas' ? ' type-pill-gas' : '';
+  return `<span class="type-pill${modifier}">${esc(typeLabel)}</span>`;
 }
 
 // Renders a product's configured image. Every product currently ships with
@@ -108,7 +113,7 @@ function comparisonTable(products, opts) {
       <td><span class="prod-name">${esc(p.name)}</span><div class="review-model">Model ${esc(p.model)}</div></td>
       <td>${esc(p.tonnage)}T</td>
       <td>${typePill(p.typeLabel)}</td>
-      <td>${p.cycleTimeSeconds}s</td>
+      <td>${p.cycleTimeSeconds ? p.cycleTimeSeconds + 's' : 'Not published'}</td>
       <td>${affiliateButton(p, { small: true, position: 'comparison-table' })}</td>
     </tr>`).join('');
 
@@ -133,7 +138,7 @@ function specTable(p) {
     ['Power source', p.typeLabel],
     ['Tonnage', p.tonnage + ' tons'],
     ['Engine / motor', p.engine],
-    ['Cycle time', p.cycleTimeSeconds + ' seconds'],
+    ['Cycle time', p.cycleTimeSeconds ? p.cycleTimeSeconds + ' seconds' : null],
     ['Max log length', p.maxLogLengthIn ? p.maxLogLengthIn + ' in' : null],
     ['Max log diameter', p.maxLogDiameterIn ? p.maxLogDiameterIn + ' in' : null],
     ['Max log weight', p.maxLogWeightLb ? p.maxLogWeightLb + ' lb' : null],
