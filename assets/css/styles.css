@@ -214,7 +214,14 @@ input:focus-visible,
   font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:26px;
 }
 .hero-kicker::after{content:"";flex:1;height:1px;background:rgba(226,177,126,.35);}
-.hero h1{color:#fff;font-size:clamp(2.3rem,4.4vw,3.6rem);line-height:1.08;margin-bottom:.4em;max-width:15ch;}
+/* Deliberate 3-line break (see the <br class="hero-break"> in home.js)
+   rather than relying purely on soft-wrap at a ch-based max-width — the
+   latter wraps unpredictably across browsers/widths (font-metric
+   dependent) and was producing 4 uneven lines at some desktop widths.
+   The manual breaks are dropped below 560px so mobile reflows naturally
+   instead of forcing 3 fixed lines at a much smaller size. */
+.hero h1{color:#fff;font-size:clamp(2.4rem,4.8vw,4rem);line-height:1.1;margin-bottom:.4em;max-width:18ch;}
+@media (max-width:560px){.hero-break{display:none;}}
 .hero p.sub{color:#c3cec6;font-size:1.12rem;max-width:52ch;margin:0 0 34px;}
 .hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
 .hero-panel{
@@ -370,8 +377,18 @@ table.compare tbody tr:hover{background:var(--bg-cool);}
 .page-hero h1{color:#fff;margin:0 auto .3em;font-size:clamp(1.9rem,4vw,2.7rem);max-width:26ch;}
 .page-hero p{color:#c3cec6;max-width:60ch;margin:0 auto;font-size:1.05rem;}
 
-/* ---------- FILTER BAR ---------- */
-.filter-bar{display:flex;gap:10px;flex-wrap:wrap;padding:34px 0 6px;}
+/* ---------- FILTER BAR ----------
+   Unlike every sibling content block in a section (.section-head,
+   .feature-list, .browse-nav, .review-grid...), this and .catalog-jump
+   below had no max-width/margin:auto of their own — they just inherited
+   the section's own 24px padding, which sits flush at the *section*
+   edge rather than centered at the page-max grid the rest of the section
+   uses. Past ~1280+48px viewport width that put them measurably to the
+   left of everything else in the same section (confirmed via
+   getBoundingClientRect: left:24 here vs. left:313 on .section-head at
+   1920px). Giving them the same max-width/margin/padding treatment fixes
+   it structurally instead of nudging pixels. */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;max-width:var(--page-max);margin:0 auto;padding:34px 24px 6px;}
 .filter-btn{
   background:transparent;border:1px solid var(--border-strong);color:var(--text);font-weight:600;font-size:.86rem;
   padding:8px 18px;border-radius:20px;cursor:pointer;transition:background .15s, color .15s, border-color .15s;
@@ -422,15 +439,45 @@ table.compare tbody tr:hover{background:var(--bg-cool);}
 
 /* ---------- PRODUCT CARDS (dense catalog browsing) ----------
    Sharp, compact, spec-sheet register. No radius, no shadow — a hairline
-   border and a color/underline shift on hover is the only feedback. */
+   border and a color/underline shift on hover is the only feedback.
+
+   The grid is 6 columns wide, with each card normally spanning 2 (three
+   per row) — not because there are 6 columns of content, but so a
+   trailing row that isn't a multiple of 3 can widen to fill itself
+   instead of leaving a bare cell. An empty grid cell isn't blank: the
+   container's own background (the 1px hairline-divider color) shows
+   straight through it, so with nothing overriding it, a 5-item group in
+   a 3-column grid left a solid tan tile in the last cell — reading as a
+   missing/placeholder product, not empty space. [data-count] on the
+   wrapper (set in reviews.js) drives which trailing card(s) widen for
+   each possible remainder — explicit per-count rather than nth-child
+   arithmetic, since there are only a few possible remainders and this
+   stays easy to verify by eye. */
 .review-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;
   background:var(--border);border:1px solid var(--border);
   max-width:var(--page-max);margin:0 auto;padding:0 24px;
 }
 .review-grid::before{content:none;}
-@media (max-width:960px){.review-grid{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:640px){.review-grid{grid-template-columns:1fr;}}
+.review-grid .review-card{grid-column:span 2;}
+.review-grid[data-count="1"] .review-card,
+.review-grid[data-count="4"] .review-card:last-child,
+.review-grid[data-count="7"] .review-card:last-child{grid-column:3 / span 2;}
+.review-grid[data-count="2"] .review-card,
+.review-grid[data-count="5"] .review-card:nth-last-child(-n+2),
+.review-grid[data-count="8"] .review-card:nth-last-child(-n+2){grid-column:span 3;}
+@media (max-width:960px){
+  .review-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .review-grid .review-card{grid-column:auto !important;}
+  /* At 2 columns the same "orphan cell" risk exists for any odd count —
+     rather than another set of per-count rules, :last-child:nth-child(odd)
+     detects "the last card has no partner in its row" for any total. */
+  .review-grid .review-card:last-child:nth-child(odd){grid-column:1 / -1 !important;}
+}
+@media (max-width:640px){
+  .review-grid{grid-template-columns:minmax(0,1fr);}
+  .review-grid .review-card:last-child:nth-child(odd){grid-column:auto !important;}
+}
 .review-grid-curated{
   display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);
   max-width:820px;margin:0 auto;padding:0 24px;
@@ -445,10 +492,15 @@ table.compare tbody tr:hover{background:var(--bg-cool);}
 .review-card:hover .pcard-name a{color:var(--cta-btn);}
 .pcard-media{display:block;background:var(--bg-cool);position:relative;}
 .pcard-media img{width:100%;height:118px;object-fit:contain;display:block;}
+/* A quiet in-flow caption under the image rather than an overlay badge —
+   an overlay chip sitting on top of the artwork reads as a label
+   competing with the product, closer to a "placeholder" stamp than a
+   disclosure. As plain small text under the frame it reads the way a
+   photo credit does: present for anyone who looks, not the first thing
+   the eye lands on. */
 .illustration-badge{
-  position:absolute;bottom:8px;right:8px;
-  color:var(--muted);font-size:.62rem;font-weight:600;letter-spacing:.02em;
-  padding:2px 7px;background:rgba(244,238,224,.85);
+  display:block;color:var(--muted);font-size:.66rem;font-weight:500;
+  letter-spacing:.03em;text-transform:uppercase;padding:6px 14px 8px;
 }
 .pcard-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1;}
 .pcard-kicker{
@@ -467,9 +519,13 @@ table.compare tbody tr:hover{background:var(--bg-cool);}
   padding-bottom:13px;border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.02em;
 }
 .pcard-facts .sep{color:var(--border-strong);margin:0 6px;font-weight:400;}
+/* No line-clamp here on purpose — the text itself (cardText() in
+   components.js) is now a hand-sized excerpt that fits without CSS
+   cutting it off mid-word. A generous 3-line clamp stays only as a
+   backstop for any future product added without a curated excerpt. */
 .pcard-line{
   font-size:.86rem;color:var(--muted);margin:0 0 8px;line-height:1.45;
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
 }
 .pcard-label{color:var(--text);font-weight:700;margin-right:4px;}
 .pcard-line.pcard-tradeoff{margin-bottom:0;flex:1;}
@@ -696,7 +752,8 @@ section.block.section-sand{background:var(--sand-tint);}
 
 .catalog-jump{
   display:flex;gap:24px;flex-wrap:wrap;
-  margin:0 0 30px;font-size:.9rem;font-weight:600;
+  max-width:var(--page-max);margin:0 auto 30px;padding:0 24px;
+  font-size:.9rem;font-weight:600;
 }
 .catalog-jump-label{color:var(--muted);font-weight:600;}
 .catalog-jump a{display:inline-flex;align-items:center;gap:7px;color:var(--dark);}

@@ -28,7 +28,7 @@ module.exports = function reviewsIndex(ctx) {
         <h2>${esc(g.label)} Log Splitters</h2><span class="catalog-group-count">${g.products.length} model${g.products.length === 1 ? '' : 's'}</span>
       </div>
       ${g.desc ? `<p class="catalog-group-desc">${esc(g.desc)}</p>` : ''}
-      <div class="review-grid">${g.products.map((p) => productCard(p, { url })).join('')}</div>
+      <div class="review-grid" data-count="${g.products.length}">${g.products.map((p) => productCard(p, { url })).join('')}</div>
     </div>`).join('');
 
   // Only show a filter button for a power source that actually has at

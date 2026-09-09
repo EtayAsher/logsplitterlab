@@ -86,6 +86,61 @@ function productImage(p, layoutUrl) {
 // suitableUseSummary, limitationsSummary) — nothing here is invented or
 // newly derived. Root class stays .review-card (with data-type) since
 // assets/js/reviews-filter.js queries it directly.
+// Card-length excerpts of suitableUseSummary/limitationsSummary — the
+// full sentences (verified, unedited) stay on the review page via
+// specTable()/verdict-box markup; these are shorter, hand-condensed
+// restatements of the *same* claim for the dense catalog card, so a long
+// verified sentence never gets clipped mid-word by CSS overflow (which
+// was producing an ugly mid-sentence "…"). Condensing existing approved
+// copy for length is not the same as inventing a new claim — every
+// excerpt here says only what its full-length source already says, just
+// shorter. Falls back to CARD_EXCERPT_FALLBACK() for any future product
+// added without a curated pair, so nothing ever silently breaks.
+const CARD_EXCERPTS = {
+  'superhandy-20-ton': {
+    suitableUse: 'Mid-volume gas splitting where portability matters more than towing on public roads.',
+  },
+  'landworks-guo079': {
+    suitableUse: 'Mid-volume gas splitting where portability matters more than towing on public roads.',
+  },
+  'yardmax-32-ton-cr950': {
+    limitations: 'Heavy (524.7 lb) with more routine maintenance than most occasional users need.',
+  },
+  'bilthard-tla-0101': {
+    suitableUse: 'Light-to-moderate splitting of softer-to-medium wood in a compact ground-level unit.',
+    limitations: 'Shorter 90-day warranty than our other electric model; not rated for very dense hardwood.',
+  },
+  'proyama-7-ton': {
+    suitableUse: 'Light splitting of softer wood, chosen mainly for its four-way Cross Wedge design.',
+    limitations: 'Diameter, length, cycle time, and weight are unconfirmed for this listing — check source notes.',
+  },
+  'vevor-els106s': {
+    suitableUse: 'Light-to-moderate splitting of softer-to-medium wood in a compact, outlet-ready unit.',
+    limitations: 'Not rated for very dense hardwood or logs over 20 in.; cycle time unpublished.',
+  },
+  'superhandy-14-ton': {
+    suitableUse: 'The highest-capacity electric splitter in our catalog, for more force without moving to gas.',
+    limitations: 'Warranty term unconfirmed for this model; still tied to a power outlet like any electric unit.',
+  },
+};
+
+// Generic fallback for any product not in CARD_EXCERPTS above: cut at the
+// last full word before the budget (never mid-word) and mark it as an
+// excerpt with an ellipsis. Used only as a safety net.
+function cardExcerptFallback(text, maxLen) {
+  maxLen = maxLen || 92;
+  if (text.length <= maxLen) return text;
+  const slice = text.slice(0, maxLen);
+  const wordCut = slice.lastIndexOf(' ');
+  return text.slice(0, wordCut > 0 ? wordCut : maxLen).replace(/[,;.—]\s*$/, '') + '…';
+}
+
+function cardText(p, field) {
+  const full = field === 'suitableUse' ? p.suitableUseSummary : p.limitationsSummary;
+  const curated = CARD_EXCERPTS[p.id] && CARD_EXCERPTS[p.id][field];
+  return curated || cardExcerptFallback(full, 92);
+}
+
 function productCard(p, opts) {
   opts = opts || {};
   const layoutUrl = opts.url;
@@ -107,8 +162,8 @@ function productCard(p, opts) {
         <p class="pcard-kicker"><span class="pcard-brand">${esc(p.brand)}</span><span class="pcard-dot" aria-hidden="true">&middot;</span><span class="pcard-type pcard-type-${esc(p.type)}">${esc(p.typeLabel)}</span></p>
         <h3 class="pcard-name"><a href="${reviewHref}">${esc(p.name)}</a></h3>
         <p class="pcard-facts">${facts.join('<span class="sep">&middot;</span>')}</p>
-        <p class="pcard-line"><span class="pcard-label">Best for</span>${esc(p.suitableUseSummary)}</p>
-        <p class="pcard-line pcard-tradeoff"><span class="pcard-label">Trade-off</span>${esc(p.limitationsSummary)}</p>
+        <p class="pcard-line"><span class="pcard-label">Best for</span>${esc(cardText(p, 'suitableUse'))}</p>
+        <p class="pcard-line pcard-tradeoff"><span class="pcard-label">Trade-off</span>${esc(cardText(p, 'limitations'))}</p>
         <div class="pcard-actions">
           <a href="${reviewHref}" class="btn btn-dark-outline btn-sm">Read Review</a>
           ${affiliateButton(p, { small: true, position: opts.position || 'product-card' })}
