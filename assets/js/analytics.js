@@ -27,8 +27,10 @@
     if (!link) return;
     window.lslTrack('affiliate_click', {
       product_id: link.getAttribute('data-product-id') || 'unknown',
+      asin: link.getAttribute('data-asin') || 'unknown',
       cta_position: link.getAttribute('data-cta-position') || 'unspecified',
       page_type: document.body.getAttribute('data-page-type') || 'unknown',
+      source_page: window.location.pathname || 'unknown',
       destination_marketplace: destinationFromHref(link.getAttribute('href')),
     });
   });

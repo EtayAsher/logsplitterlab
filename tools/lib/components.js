@@ -34,7 +34,7 @@ function affiliateButton(product, opts) {
   }
 
   const label = entry.ctaLabel || 'Check Price on Amazon';
-  return `<a class="${cls}" href="${esc(href)}" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="${esc(product.id)}" data-cta-position="${esc(opts.position || 'unspecified')}">${esc(label)}<span class="visually-hidden"> for ${esc(product.name)} (opens in a new tab)</span></a>`;
+  return `<a class="${cls}" href="${esc(href)}" rel="sponsored nofollow noopener noreferrer" target="_blank" data-affiliate-click data-product-id="${esc(product.id)}" data-asin="${esc(product.asin || '')}" data-cta-position="${esc(opts.position || 'unspecified')}">${esc(label)}<span class="visually-hidden"> for ${esc(product.name)} (opens in a new tab)</span></a>`;
 }
 
 function typePill(typeLabel) {

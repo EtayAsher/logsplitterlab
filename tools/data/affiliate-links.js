@@ -99,4 +99,15 @@ module.exports = {
     enabled: true,
     lastVerified: '2026-09-06',
   },
+
+  // 2026-09-09: strategic addition (see products.js header comment) —
+  // owner-supplied Associates link, preserved exactly as supplied. The
+  // redirect chain carries tag=logsplitterla-20.
+  'bilthard-tla-0131': {
+    directUrl: null,
+    taggedUrl: 'https://amzn.to/4xjOqT0',
+    ctaLabel: 'See the BILT HARD 27-Ton on Amazon',
+    enabled: true,
+    lastVerified: '2026-09-09',
+  },
 };

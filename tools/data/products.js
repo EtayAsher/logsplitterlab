@@ -49,6 +49,20 @@
 // elsewhere in this catalog, not a variant of it. The catalog now spans
 // 5 electric models (YS0650, TLA-0101, PROYAMA, VEVOR, GUO084) and 3 gas
 // models (GUO077, GUO079, YU3266).
+//
+// 2026-09-09: BILT HARD TLA-0131 (27-ton, gas, towable) added as the
+// catalog's 9th product — a strategic, owner-selected addition (not a
+// routine catalog-growth pass) specifically to fill the gap between the
+// two 20-ton portable gas models and the 32-ton YARDMAX in the Best Gas
+// roundup, which Search Console data shows is already generating
+// impressions for "best gas log splitter." Champion's 27-ton listing was
+// checked first and found to have no purchasable current Amazon listing
+// (see `removedProducts`); BILT HARD TLA-0131 was independently verified
+// from scratch per REVIEW_STANDARD.md against the manufacturer's own
+// product page, BILT HARD's warranty page, and the live Amazon listing.
+// IMPORTANT: BILT HARD's warranty explicitly excludes Amazon purchases —
+// see this entry's `notes` and `warranty` fields; do not assume normal
+// manufacturer warranty coverage applies.
 'use strict';
 
 module.exports = [
@@ -321,6 +335,42 @@ module.exports = [
     imageWidth: 320,
     imageHeight: 220,
     imageSourceNote: 'Original illustration created for this site; does not depict the actual SuperHandy GUO084.',
+  },
+  {
+    id: 'bilthard-tla-0131',
+    brand: 'BILT HARD',
+    name: 'BILT HARD TLA-0131 27-Ton Gas Log Splitter',
+    model: 'TLA-0131',
+    asin: 'B0G4W5864N',
+    amazonUrl: 'https://www.amazon.com/dp/B0G4W5864N',
+    status: 'active',
+    type: 'gas',
+    typeLabel: 'Gas',
+    tonnage: 27,
+    engine: '209cc OHV gas engine (horsepower not published by the manufacturer for this specific model)',
+    cycleTimeSeconds: 13,
+    maxLogLengthIn: 24,
+    // Max log diameter and unit weight/dimensions are not published by the
+    // manufacturer for this model and were not found on any Tier 1/2
+    // source — left unset rather than estimated.
+    orientation: 'Horizontal / Vertical',
+    towable: true, // confirmed via 2 in. ball coupler + 16 in. DOT tires (manufacturer) and "Towable" in the Amazon listing's own title — see notes for what is NOT confirmed (a road-speed rating)
+    warranty: 'Not covered by BILT HARD\'s manufacturer warranty when purchased through Amazon or any other third-party marketplace, per the manufacturer\'s own warranty policy — see notes.',
+    verifiedDate: '2026-09-09',
+    sourceUrls: [
+      'https://www.amazon.com/dp/B0G4W5864N',
+      'https://bilthardusa.com/collections/newest-products/products/bilt-hard-27-ton-gas-log-splitter',
+      'https://bilthardusa.com/pages/warranty',
+    ],
+    notes: 'Strategic, owner-directed addition (see header comment) — not a routine catalog-growth pick. Owner-provided Amazon Associates link: https://amzn.to/4xjOqT0. ASIN B0G4W5864N confirmed directly on the live Amazon listing, whose own title reads "BILT HARD 27-Ton Towable Gas Powered Log Splitter, Horizontal & Vertical Wood Splitter Gas Powered with 209cc OHV Engine & 2-Stage Pump, 16\\" DOT Tires & 2\\" Ball Coupler Firewood Splitting Machine" — model number, tonnage, engine, pump, tires, coupler, and horizontal/vertical operation all match the manufacturer\'s own product page with no conflicts found. IMPORTANT — warranty, verified directly on BILT HARD\'s own warranty page: "This warranty applies only to products purchased directly from the official Bilt Hard website (www.bilthardusa.com). Purchases from third-party platforms such as Amazon, Walmart, or eBay are not covered under this warranty." A direct-website purchase of BILT HARD\'s "LOG-X Series (20/25/30/35/40 Ton)" log splitters gets 15 months (consumer use) per that same page — but the 27-ton TLA-0131 is not itself named among that tier\'s listed tonnages, so even the direct-purchase duration for this exact model is unconfirmed; regardless, it does not apply to an Amazon purchase either way. IMPORTANT — unconfirmed figures explicitly rejected rather than silently used: several secondary/aggregator sources (not the manufacturer\'s own page, and not independently re-derivable from a specific quotable page) surfaced a "45 mph" tow rating, an "11 GPM" pump figure, and a "6-gallon" hydraulic reservoir figure for this or a closely related BILT HARD listing. None of these could be confirmed on the manufacturer\'s own product page or a directly quotable Tier 1/2 source, so none are recorded here — this differs from the YARDMAX YU3266 elsewhere in this catalog, whose 45 mph tow rating IS directly manufacturer-sourced. Horsepower is not stated on the manufacturer\'s product page (only "209cc OHV Engine"); left unset rather than assumed from the ~7HP figure typical of this engine class elsewhere in this catalog. Unit weight, product dimensions, and hydraulic fluid type/capacity are not published on the manufacturer\'s product page and could not be confirmed on a second independent source (Lowe\'s carries a listing but blocks automated fetching) — left unset rather than estimated.',
+    suitableUseSummary: 'Midrange homeowner gas splitting that needs more force than a 20-ton portable machine but not the full 32-ton scale of the largest model in our catalog — towable via a 2-inch ball coupler and 16-inch DOT tires.',
+    limitationsSummary: 'Not covered by BILT HARD\'s manufacturer warranty when purchased through Amazon; unit weight, dimensions, hydraulic fluid capacity, and a confirmed road-tow speed rating are not published by the manufacturer.',
+    imageMode: 'generic-placeholder',
+    imageSrc: '/assets/img/splitter-gas-bilthard.svg',
+    imageAlt: 'Illustration of a generic mid-size towable gas-powered log splitter, labeled BILT HARD',
+    imageWidth: 320,
+    imageHeight: 220,
+    imageSourceNote: 'Original illustration created for this site; does not depict the actual BILT HARD TLA-0131.',
   },
 ];
 

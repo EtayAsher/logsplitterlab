@@ -5,17 +5,19 @@ module.exports = function reviewsIndex(ctx) {
   const { url, esc } = layout;
   const { productCard } = components;
 
-  // Grouped by power source rather than one flat grid — at 8 products a
+  // Grouped by power source rather than one flat grid — at 9 products a
   // single undifferentiated grid reads as a dumped list rather than a
-  // browsable catalog. Grouping also means a shorter trailing group (3 gas
-  // models) fills a clean row instead of leaving an awkward gap.
+  // browsable catalog. Grouping also means a grid that isn't a clean
+  // multiple of 3 (electric: 5, gas: 4) still fills its last row
+  // intentionally instead of leaving an awkward gap — see the
+  // [data-count]-driven CSS in styles.css.
   const electrics = products.filter((p) => p.type === 'electric');
   const gases = products.filter((p) => p.type === 'gas');
   const others = products.filter((p) => p.type !== 'electric' && p.type !== 'gas');
 
   const GROUPS = [
     { key: 'electric', label: 'Electric', products: electrics, cueClass: 'is-electric', desc: 'Quiet, low-maintenance, and tied to an outlet — from compact 6.5-ton units to a 14-ton option for buyers who want more force without moving to gas.' },
-    { key: 'gas', label: 'Gas', products: gases, cueClass: 'is-gas', desc: 'More force and full portability, at the cost of engine noise, fuel, and maintenance — from 20-ton portable units to a 32-ton towable full-beam splitter.' },
+    { key: 'gas', label: 'Gas', products: gases, cueClass: 'is-gas', desc: 'More force and full portability, at the cost of engine noise, fuel, and maintenance — from 20-ton portable units through a 27-ton towable midrange model to a 32-ton towable full-beam splitter.' },
   ].filter((g) => g.products.length);
   // Any product of a type not yet given its own group (e.g. a future
   // manual splitter) still appears, ungrouped, rather than silently

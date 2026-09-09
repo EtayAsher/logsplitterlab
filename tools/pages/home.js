@@ -8,7 +8,7 @@ const author = require('../data/author');
 const GUIDES = [
   { category: 'comparison', label: 'Comparison', title: 'Gas vs. Electric Log Splitter', summary: 'A category-by-category breakdown of power, portability, noise, and maintenance.', href: '/comparisons/gas-vs-electric-log-splitter/', updated: '2026-07-21', cta: 'Read Comparison' },
   { category: 'comparison', label: 'Best Of', title: 'Best Electric Log Splitters', summary: 'Five verified electric models — how to choose between them by warranty, capacity, and wedge design.', href: '/best-electric-log-splitters/', updated: '2026-09-06', cta: 'Read Roundup' },
-  { category: 'comparison', label: 'Best Of', title: 'Best Gas Log Splitters', summary: 'Three verified gas models, compared by engine, cycle time, and horizontal/vertical operation.', href: '/best-gas-log-splitters/', updated: '2026-07-27', cta: 'Read Roundup' },
+  { category: 'comparison', label: 'Best Of', title: 'Best Gas Log Splitters', summary: 'Four verified gas models — 20-ton portable, 27-ton midrange, and 32-ton heavy-duty — compared by cycle time, towing, and horizontal/vertical operation.', href: '/best-gas-log-splitters/', updated: '2026-09-09', cta: 'Read Roundup' },
   { category: 'guide', label: 'Guide', title: 'What Size Log Splitter Do I Need?', summary: 'Why tonnage alone doesn\'t determine the right machine for your wood.', href: '/what-size-log-splitter-do-i-need/', updated: '2026-07-20', cta: 'Read Guide' },
   { category: 'guide', label: 'Buying Guide', title: 'The Complete Log Splitter Buying Guide', summary: 'Tonnage, log diameter, cycle time, safety, and a buying checklist in one place.', href: '/buying-guide/', updated: '2026-07-20', cta: 'Read the Guide' },
   { category: 'guide', label: 'Maintenance', title: 'Log Splitter Maintenance Basics', summary: 'Pre-use inspection, hydraulic checks, and seasonal storage guidance.', href: '/maintenance/', updated: '2026-07-20', cta: 'Read the Guide' },
@@ -153,7 +153,7 @@ module.exports = function home(ctx) {
     <div class="split-half is-gas">
       <span class="split-eyebrow">Gas</span>
       <h3>More force, full portability, engine upkeep</h3>
-      <p>Works anywhere and handles the largest rounds, at the cost of engine noise, fuel, and periodic maintenance most electric units don't need.</p>
+      <p>Works anywhere and handles the largest rounds — from a fast-cycling 20-ton portable model, to a 27-ton towable midrange option, up to a 32-ton heavy-duty machine — at the cost of engine noise, fuel, and periodic maintenance most electric units don't need.</p>
       <div class="split-stats">
         <div><span class="split-stat-num">${gasProducts.length}</span><span class="split-stat-label">models reviewed</span></div>
         <div><span class="split-stat-num">${gasRange.min}&ndash;${gasRange.max}T</span><span class="split-stat-label">verified tonnage range</span></div>
