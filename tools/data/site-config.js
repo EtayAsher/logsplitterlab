@@ -31,7 +31,7 @@ module.exports = {
   amazonDisclosureShort: 'Disclosure: This page contains affiliate links. We may earn a commission if you buy through them, at no additional cost to you.',
 
   // Google Analytics 4 measurement ID. Leave null to keep analytics disabled.
-  ga4MeasurementId: null, // e.g. 'G-XXXXXXXXXX'
+  ga4MeasurementId: 'G-8B78H6HJ5J', // Connected 2026-09-09. Loads the GA4 script sitewide (tools/lib/layout.js) and enables the existing affiliate_click event dispatch (assets/js/analytics.js), which was already implemented and inert while this was null.
 
   // Google Search Console HTML tag verification token (the content="" value
   // from the meta verification tag Search Console gives you). Leave null
