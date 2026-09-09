@@ -84,14 +84,22 @@ function renderFooter() {
       </a>
       <p>Research-based log splitter guides and comparisons for homeowners and rural property owners.</p>
     </div>
+    <nav aria-label="Footer: shop by category">
+      <h2 class="footer-col-heading">Shop by Category</h2>
+      <ul class="footer-links">
+        <li><a href="${url('/best-electric-log-splitters/')}">Electric Splitters</a></li>
+        <li><a href="${url('/best-gas-log-splitters/')}">Gas Splitters</a></li>
+        <li><a href="${url('/brands/')}">All Brands</a></li>
+        <li><a href="${url('/comparisons/')}">Comparisons</a></li>
+      </ul>
+    </nav>
     <nav aria-label="Footer: content">
       <h2 class="footer-col-heading">Content</h2>
       <ul class="footer-links">
-        <li><a href="${url('/reviews/')}">Reviews</a></li>
+        <li><a href="${url('/reviews/')}">All Reviews</a></li>
         <li><a href="${url('/buying-guide/')}">Buying Guides</a></li>
-        <li><a href="${url('/comparisons/')}">Comparisons</a></li>
-        <li><a href="${url('/brands/')}">Brands</a></li>
         <li><a href="${url('/maintenance/')}">Maintenance</a></li>
+        <li><a href="${url('/what-size-log-splitter-do-i-need/')}">What Size Do I Need?</a></li>
       </ul>
     </nav>
     <nav aria-label="Footer: about and policies">

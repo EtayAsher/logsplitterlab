@@ -25,7 +25,7 @@ module.exports = function reviewsIndex(ctx) {
   const groupSections = GROUPS.map((g) => `
     <div class="catalog-group" id="group-${g.key}">
       <div class="catalog-group-head${g.cueClass ? ' ' + g.cueClass : ''}">
-        <h2>${esc(g.label)}</h2><span class="catalog-group-count">${g.products.length} model${g.products.length === 1 ? '' : 's'}</span>
+        <h2>${esc(g.label)} Log Splitters</h2><span class="catalog-group-count">${g.products.length} model${g.products.length === 1 ? '' : 's'}</span>
       </div>
       ${g.desc ? `<p class="catalog-group-desc">${esc(g.desc)}</p>` : ''}
       <div class="review-grid">${g.products.map((p) => productCard(p, { url })).join('')}</div>
@@ -43,20 +43,24 @@ module.exports = function reviewsIndex(ctx) {
   const bodyHtml = `
 <section class="page-hero">
   <h1>Log Splitter Reviews</h1>
-  <p>${products.length} verified models — specification-based research summaries, not paid placements or hands-on tests unless clearly labeled otherwise.</p>
+  <p>Independent research and verified specifications for the log splitters we cover.</p>
 </section>
-<div class="article-wrap" style="padding-bottom:0;">
-  <p>Every model below has been checked against its manufacturer's own specification pages and at least one major retailer listing before publishing. We link every source at the bottom of each review, note where a product line has multiple sub-models to avoid mixing up specs, and remove anything we can't confidently verify — see our <a href="${url('/how-we-review/')}">full methodology</a>. We don't display star ratings here because we don't yet have a documented rating methodology to back them, and we don't display prices because they change too often to keep accurate on this page — check the current price through the linked retailer.</p>
-</div>
-<div class="filter-bar" id="filterBar" role="group" aria-label="Filter reviews by power source">
-  ${filterButtons}
-</div>
-<noscript><p class="text-center" style="color:var(--muted);font-size:.85rem;">Filter buttons require JavaScript; every review is listed below regardless, grouped by power source.</p></noscript>
-<div id="catalogWrap" class="article-wrap" style="max-width:1160px;padding-top:10px;">
+<section class="block catalog-section" style="padding-bottom:0;">
+  <div class="catalog-jump">
+    <span class="catalog-jump-label">${products.length} reviewed models</span>
+    <a href="#group-electric"><span class="catalog-jump-dot is-electric" aria-hidden="true"></span>${electrics.length} Electric</a>
+    <a href="#group-gas"><span class="catalog-jump-dot is-gas" aria-hidden="true"></span>${gases.length} Gas</a>
+  </div>
+  <div class="filter-bar" id="filterBar" role="group" aria-label="Filter reviews by power source">
+    ${filterButtons}
+  </div>
+  <noscript><p class="text-center" style="color:var(--muted);font-size:.85rem;">Filter buttons require JavaScript; every review is listed below regardless, grouped by power source.</p></noscript>
+</section>
+<div id="catalogWrap">
   ${groupSections}
 </div>
 <div class="article-wrap" style="padding-top:0;">
-  <p style="color:var(--muted);font-size:.85rem;">Looking for a manual (non-powered) splitter? We don't have a verified manual model reviewed yet — see the "Manual" section of our <a href="${url('/buying-guide/')}#g-power">buying guide</a> for what to look for in the meantime.</p>
+  <p style="color:var(--muted);font-size:.85rem;">Every model above has been checked against its manufacturer's own specification pages and at least one major retailer listing before publishing — see our <a href="${url('/how-we-review/')}">full methodology</a>. We don't display star ratings or prices on this page; check current price through the linked retailer. Looking for a manual (non-powered) splitter? We don't have a verified manual model reviewed yet — see the "Manual" section of our <a href="${url('/buying-guide/')}#g-power">buying guide</a> for what to look for in the meantime.</p>
 </div>
 `;
 

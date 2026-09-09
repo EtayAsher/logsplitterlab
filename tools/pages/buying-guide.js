@@ -56,7 +56,7 @@ module.exports = function buyingGuide(ctx) {
     <h2>Power sources</h2>
     <div class="type-cards">
       <div class="type-card"><h3>Gas</h3><p>Most powerful and fully portable, at the cost of noise, exhaust, and engine maintenance. See our <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">gas vs. electric comparison</a> for detail.</p></div>
-      <div class="type-card"><h3>Electric</h3><p>Quiet and low-maintenance, but tied to an outlet and typically capped around 7–10 tons.</p></div>
+      <div class="type-card"><h3>Electric</h3><p>Quiet and low-maintenance, but tied to an outlet. Most compact models are capped around 6.5–7 tons; higher-capacity electric splitters up to 14 tons exist for more force without switching to gas.</p></div>
       <div class="type-card"><h3>Manual</h3><p>No engine or motor — inexpensive and always ready, but relies entirely on your own hydraulic pump effort and is best suited to light, occasional use.</p></div>
     </div>
   </div>

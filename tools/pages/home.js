@@ -19,38 +19,54 @@ const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'Ju
 module.exports = function home(ctx) {
   const { products, components, layout, config } = ctx;
   const { url, esc } = layout;
-  const { comparisonTable, productCard, personJsonLd } = components;
+  const { comparisonTable, featureRow, personJsonLd } = components;
 
   // --- Homepage catalog section: grouped by power source, not one flat
   // grid. At 8 products a single undifferentiated grid reads as "cards
   // dumped on a page" rather than a curated catalog, so the homepage
   // shows a short, deliberately curated highlight from each group (never
-  // hidden from crawlers — every card is a real server-rendered link,
-  // just fewer of them) with a clear path to the complete, ungrouped
-  // catalog on /reviews/ and the per-type roundups. Curation is an
-  // editorial choice (spanning budget-to-premium within each group), not
-  // something derivable automatically the way specs are. ---
+  // hidden from crawlers — every row is a real server-rendered link, just
+  // fewer of them) with a clear path to the complete, ungrouped catalog on
+  // /reviews/ and the per-type roundups. Curation is an editorial choice
+  // (spanning budget-to-premium within each group), not something
+  // derivable automatically the way specs are. ---
   const electricProducts = products.filter((p) => p.type === 'electric');
   const gasProducts = products.filter((p) => p.type === 'gas');
   const HOMEPAGE_FEATURED_ELECTRIC_IDS = ['yardmax-ys0650', 'superhandy-14-ton'];
   const HOMEPAGE_FEATURED_GAS_IDS = ['landworks-guo079', 'yardmax-32-ton-cr950'];
   const featuredElectric = HOMEPAGE_FEATURED_ELECTRIC_IDS.map((id) => electricProducts.find((p) => p.id === id)).filter(Boolean);
   const featuredGas = HOMEPAGE_FEATURED_GAS_IDS.map((id) => gasProducts.find((p) => p.id === id)).filter(Boolean);
-  const featuredElectricCards = featuredElectric.map((p) => productCard(p, { url })).join('');
-  const featuredGasCards = featuredGas.map((p) => productCard(p, { url })).join('');
+  const featuredRows = featuredElectric.concat(featuredGas)
+    .map((p, i) => featureRow(p, { url, index: i + 1, position: 'homepage-featured' }))
+    .join('');
+
+  // Verified tonnage range per power source, derived directly from
+  // products.js (never hardcoded) — backs the Electric-vs-Gas decision
+  // strip below without asserting anything beyond what's in the catalog.
+  const tonnageRange = (list) => {
+    const tons = list.map((p) => p.tonnage);
+    return { min: Math.min(...tons), max: Math.max(...tons) };
+  };
+  const electricRange = tonnageRange(electricProducts);
+  const gasRange = tonnageRange(gasProducts);
 
   // --- Browse-the-catalog data (fully derived from products.js, so this
   // scales to any catalog size without hardcoding brand/tonnage names). ---
+  // Top 3 only — a "Latest reviews" nav column listing all 8 products
+  // defeats its own purpose and (with full product names) badly overflows
+  // a quarter-width column; this is a recency pointer, not a duplicate
+  // catalog.
   const latestReviews = products.slice()
     .sort((a, b) => (b.verifiedDate || '').localeCompare(a.verifiedDate || ''))
+    .slice(0, 3)
     .map((p) => `<li><a href="${url(`/reviews/${p.id}/`)}">${esc(p.name)}</a><span class="browse-meta">Verified ${esc(p.verifiedDate)}</span></li>`)
     .join('');
 
   const byBrand = new Map();
   products.forEach((p) => { if (!byBrand.has(p.brand)) byBrand.set(p.brand, []); byBrand.get(p.brand).push(p); });
   const brandLinks = Array.from(byBrand.keys()).sort((a, b) => a.localeCompare(b))
-    .map((brand) => `<li><a href="${url('/brands/')}#brand-${esc(brand.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}">${esc(brand)}</a><span class="browse-meta">${byBrand.get(brand).length}</span></li>`)
-    .join('');
+    .map((brand) => `<a href="${url('/brands/')}#brand-${esc(brand.toLowerCase().replace(/[^a-z0-9]+/g, '-'))}">${esc(brand)}</a>`)
+    .join('<span class="sep">&middot;</span>');
 
   const byType = new Map();
   products.forEach((p) => { if (!byType.has(p.type)) byType.set(p.type, []); byType.get(p.type).push(p); });
@@ -58,9 +74,9 @@ module.exports = function home(ctx) {
   const powerSourceLinks = Array.from(byType.keys()).sort((a, b) => a.localeCompare(b))
     .map((type) => `<li><a href="${url(powerSourceHref[type] || '/reviews/')}">${esc(byType.get(type)[0].typeLabel)}</a><span class="browse-meta">${byType.get(type).length}</span></li>`)
     .join('');
-  // (electricProducts/gasProducts, used by the catalog section above, are
-  // the same grouping as byType — kept separate since they're needed
-  // before this point in the function and byType is keyed generically.)
+  // (electricProducts/gasProducts, used above, are the same grouping as
+  // byType — kept separate since they're needed earlier and byType is
+  // keyed generically.)
 
   const TONNAGE_BANDS = [
     { label: 'Under 10 tons', test: (t) => t < 10 },
@@ -78,7 +94,7 @@ module.exports = function home(ctx) {
 
   const guideCards = GUIDES.map((g) => `
     <div class="comp-card">
-      <span class="eyebrow">${esc(g.label)} &middot; Updated ${esc(g.updated)}</span>
+      <span class="eyebrow">${esc(g.label)} &middot; ${esc(g.updated)}</span>
       <h3>${esc(g.title)}</h3>
       <p>${esc(g.summary)}</p>
       <a href="${url(g.href)}" class="btn btn-dark-outline btn-sm">${esc(g.cta)}</a>
@@ -97,49 +113,98 @@ module.exports = function home(ctx) {
 
   const bodyHtml = `
 <section class="hero">
-  <div class="hero-inner">
-    <span class="hero-kicker">Research-based log splitter comparisons for homeowners</span>
-    <h1>Find the Log Splitter That Actually Earns Its Keep</h1>
-    <p class="sub">Google search &rarr; a research-based guide &rarr; a verified product comparison &rarr; the retailer of your choice. We compare specifications from manufacturers and retailers so you can pick a gas, electric, or manual log splitter that matches how much wood you actually split.</p>
-    <div class="hero-actions">
-      <a href="${url('/reviews/')}" class="btn btn-cta">Find the Right Splitter</a>
-      <button type="button" class="btn btn-outline" data-open-quiz>Take the Match Quiz</button>
+  <div class="hero-grid">
+    <div>
+      <p class="hero-kicker">Research-based log splitter comparisons for homeowners</p>
+      <h1>Find the Log Splitter That Actually Earns Its Keep</h1>
+      <p class="sub">Google search &rarr; a research-based guide &rarr; a verified product comparison &rarr; the retailer of your choice. We compare specifications from manufacturers and retailers so you can pick a gas, electric, or manual log splitter that matches how much wood you actually split.</p>
+      <div class="hero-actions">
+        <a href="${url('/reviews/')}" class="btn btn-cta">Find the Right Splitter</a>
+        <button type="button" class="btn btn-outline" data-open-quiz>Take the Match Quiz</button>
+      </div>
+    </div>
+    <div class="hero-panel">
+      <span class="hero-panel-label">Start here</span>
+      <a class="hero-panel-link" href="${url('/reviews/')}"><span class="hero-panel-num">${reviewCount}</span><span class="hero-panel-text">All verified reviews</span></a>
+      <a class="hero-panel-link" href="${url('/best-electric-log-splitters/')}"><span class="hero-panel-num">${electricProducts.length}</span><span class="hero-panel-text">Electric models compared</span></a>
+      <a class="hero-panel-link" href="${url('/best-gas-log-splitters/')}"><span class="hero-panel-num">${gasProducts.length}</span><span class="hero-panel-text">Gas models compared</span></a>
+      <a class="hero-panel-link" href="${url('/what-size-log-splitter-do-i-need/')}"><span class="hero-panel-num">?</span><span class="hero-panel-text">What tonnage do I need</span></a>
     </div>
   </div>
 </section>
 
-<section class="block">
+<section class="block" style="padding-bottom:0;">
   <div class="section-head">
-    <span class="eyebrow">The Catalog</span>
-    <h2>Explore Verified Log Splitters</h2>
-    <p>${reviewCount} verified models, split by power source. Every spec is confirmed against manufacturer pages and major retailer listings — not estimated or copied from marketing copy.</p>
+    <span class="eyebrow">Start Here</span>
+    <h2>Gas or Electric?</h2>
+    <p>The first fork in the road for most buyers — covered in full in our <a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">gas vs. electric comparison</a>.</p>
+  </div>
+  <div class="split-decision">
+    <div class="split-half is-electric">
+      <span class="split-eyebrow">Electric</span>
+      <h3>Quieter, lower-maintenance, tied to an outlet</h3>
+      <p>No fuel and less noise or upkeep than gas — but you need power within reach of where you're splitting. Most compact models top out around 6.5&ndash;7 tons; our catalog also includes a 14-ton electric option for more force without switching to gas.</p>
+      <div class="split-stats">
+        <div><span class="split-stat-num">${electricProducts.length}</span><span class="split-stat-label">models reviewed</span></div>
+        <div><span class="split-stat-num">${electricRange.min}&ndash;${electricRange.max}T</span><span class="split-stat-label">verified tonnage range</span></div>
+      </div>
+      <a class="split-link" href="${url('/best-electric-log-splitters/')}">Compare electric splitters &rarr;</a>
+    </div>
+    <div class="split-half is-gas">
+      <span class="split-eyebrow">Gas</span>
+      <h3>More force, full portability, engine upkeep</h3>
+      <p>Works anywhere and handles the largest rounds, at the cost of engine noise, fuel, and periodic maintenance most electric units don't need.</p>
+      <div class="split-stats">
+        <div><span class="split-stat-num">${gasProducts.length}</span><span class="split-stat-label">models reviewed</span></div>
+        <div><span class="split-stat-num">${gasRange.min}&ndash;${gasRange.max}T</span><span class="split-stat-label">verified tonnage range</span></div>
+      </div>
+      <a class="split-link" href="${url('/best-gas-log-splitters/')}">Compare gas splitters &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<section class="block catalog-section">
+  <div class="section-head">
+    <span class="eyebrow">Featured Models</span>
+    <h2>Where Most Buyers Start</h2>
+    <p>A representative pick from each power source — a mainstream and a higher-capacity electric, a portable and a heavy-duty gas model. All ${reviewCount} reviews are one click away.</p>
   </div>
   <div class="catalog-jump">
-    <a href="#catalog-electric"><span class="catalog-jump-dot is-electric" aria-hidden="true"></span>Electric (${electricProducts.length})</a>
-    <a href="#catalog-gas"><span class="catalog-jump-dot is-gas" aria-hidden="true"></span>Gas (${gasProducts.length})</a>
-    <a href="${url('/reviews/')}">All ${reviewCount} Reviews &rarr;</a>
+    <a href="${url('/best-electric-log-splitters/')}"><span class="catalog-jump-dot is-electric" aria-hidden="true"></span>Electric (${electricProducts.length})</a>
+    <a href="${url('/best-gas-log-splitters/')}"><span class="catalog-jump-dot is-gas" aria-hidden="true"></span>Gas (${gasProducts.length})</a>
+    <a href="${url('/reviews/')}">View all ${reviewCount} reviews &rarr;</a>
   </div>
-
-  <div class="catalog-group" id="catalog-electric">
-    <div class="catalog-group-head is-electric">
-      <h3>Electric</h3><span class="catalog-group-count">${electricProducts.length} models</span>
-    </div>
-    <p class="catalog-group-desc">Quiet, low-maintenance, and tied to an outlet — from compact 6.5-ton units to a 14-ton option for buyers who want more force without moving to gas.</p>
-    <div class="review-grid">${featuredElectricCards}</div>
-    <div class="catalog-more"><a href="${url('/best-electric-log-splitters/')}">Compare all ${electricProducts.length} electric models &rarr;</a></div>
-  </div>
-
-  <div class="catalog-group" id="catalog-gas">
-    <div class="catalog-group-head is-gas">
-      <h3>Gas</h3><span class="catalog-group-count">${gasProducts.length} models</span>
-    </div>
-    <p class="catalog-group-desc">More force and full portability, at the cost of engine noise, fuel, and maintenance — from 20-ton portable units to a 32-ton towable full-beam splitter.</p>
-    <div class="review-grid">${featuredGasCards}</div>
-    <div class="catalog-more"><a href="${url('/best-gas-log-splitters/')}">Compare all ${gasProducts.length} gas models &rarr;</a></div>
-  </div>
+  <div class="feature-list">${featuredRows}</div>
 </section>
 
-<section class="block section-sand" style="padding-top:0;">
+<section class="block section-alt" style="padding-top:0;">
+  <div class="section-head">
+    <span class="eyebrow">Browse</span>
+    <h2>Browse the Full Catalog</h2>
+    <p>Every review, indexed a few different ways.</p>
+  </div>
+  <nav class="browse-nav" aria-label="Browse reviews">
+    <div class="browse-nav-col">
+      <h3>By power source</h3>
+      <ul class="browse-list">${powerSourceLinks}</ul>
+    </div>
+    <div class="browse-nav-col">
+      <h3>By tonnage</h3>
+      <ul class="browse-list">${tonnageLinks}</ul>
+    </div>
+    <div class="browse-nav-col">
+      <h3>By brand</h3>
+      <p class="browse-inline">${brandLinks}</p>
+      <a href="${url('/brands/')}" class="browse-more">All brands &rarr;</a>
+    </div>
+    <div class="browse-nav-col">
+      <h3>Latest reviews</h3>
+      <ul class="browse-list browse-list-recent">${latestReviews}</ul>
+    </div>
+  </nav>
+</section>
+
+<section class="block" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">Full Comparison</span>
     <h2>Compare Every Verified Model</h2>
@@ -149,34 +214,6 @@ module.exports = function home(ctx) {
 </section>
 
 <section class="block section-alt" style="padding-top:0;">
-  <div class="section-head">
-    <span class="eyebrow">Browse</span>
-    <h2>Browse the Full Catalog</h2>
-    <p>Every way to slice the current catalog — more categories appear here automatically as new brands, power sources, and tonnage ranges are added.</p>
-  </div>
-  <div class="browse-grid">
-    <div class="browse-block">
-      <h3>Latest Reviews</h3>
-      <ul class="browse-list">${latestReviews}</ul>
-    </div>
-    <div class="browse-block">
-      <h3>Browse by Brand</h3>
-      <ul class="browse-list">${brandLinks}</ul>
-      <a href="${url('/brands/')}" class="browse-more">All brands &rarr;</a>
-    </div>
-    <div class="browse-block">
-      <h3>Browse by Power Source</h3>
-      <ul class="browse-list">${powerSourceLinks}</ul>
-    </div>
-    <div class="browse-block">
-      <h3>Browse by Tonnage</h3>
-      <ul class="browse-list">${tonnageLinks}</ul>
-      <a href="${url('/what-size-log-splitter-do-i-need/')}" class="browse-more">Which tonnage do I need? &rarr;</a>
-    </div>
-  </div>
-</section>
-
-<section class="block" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">Start Here</span>
     <h2>Choose by Power Source</h2>
@@ -194,9 +231,9 @@ module.exports = function home(ctx) {
       <p style="margin-top:12px;font-size:.88rem;"><a href="${url('/what-size-log-splitter-do-i-need/')}">Why tonnage alone isn't enough &rarr;</a></p>
     </div>
     <div class="choose-card">
-      <h3>Gas, electric, or manual?</h3>
-      <p><b>Gas</b> splitters go anywhere and handle the largest rounds, at the cost of noise and engine upkeep. <b>Electric</b> splitters are quieter and lower-maintenance but need an outlet and top out around 7–10 tons. <b>Manual</b> hydraulic splitters need no fuel or power at all, but rely on your own effort.</p>
-      <p style="margin-top:12px;font-size:.88rem;"><a href="${url('/comparisons/gas-vs-electric-log-splitter/')}">Full gas vs. electric comparison &rarr;</a></p>
+      <h3>Is manual an option?</h3>
+      <p>Manual hydraulic splitters need no fuel or power at all, but rely on your own effort — worth considering for light, occasional splitting where a powered machine is overkill.</p>
+      <p style="margin-top:12px;font-size:.88rem;"><a href="${url('/buying-guide/')}#g-power">More on power source &rarr;</a></p>
     </div>
     <div class="choose-card">
       <h3>How fast do you need to work?</h3>
@@ -206,7 +243,7 @@ module.exports = function home(ctx) {
   </div>
 </section>
 
-<section class="block section-alt" style="padding-top:0;">
+<section class="block" style="padding-top:0;">
   <div class="section-head">
     <span class="eyebrow">What Actually Matters</span>
     <h2>Factors That Should Drive Your Decision</h2>
@@ -240,52 +277,52 @@ module.exports = function home(ctx) {
   <div class="comp-grid latest-guides-grid">${guideCards}</div>
 </section>
 
-<section class="block why-trust-section" style="padding-top:0;">
-  <div class="section-head">
-    <h2>Why Trust LogSplitterLab?</h2>
-    <p>LogSplitterLab helps buyers compare log splitters using manufacturer specifications, product documentation, practical use-case analysis, and clearly disclosed research. We focus on showing who each machine is best for, its important limitations, and the differences that matter before buying.</p>
-  </div>
-  <div class="trust-grid">
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 11.5l2 2 4-4.5M4 4.5h16v15H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <h3>Specifications Checked</h3>
-      <p>Core specifications are reviewed against manufacturer documentation and current product information.</p>
+<section class="trust-band">
+  <div class="trust-band-grid">
+    <div class="section-head">
+      <span class="eyebrow">Why Trust LogSplitterLab</span>
+      <h2>How We Approach Every Review</h2>
+      <p>We compare log splitters using manufacturer specifications, product documentation, and practical use-case analysis. We focus on who each machine is best for, its important limitations, and the differences that matter before buying.</p>
     </div>
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <h3>Clear Product Differences</h3>
-      <p>We explain which buyers and workloads each log splitter is designed for.</p>
+    <ul class="trust-grid">
+      <li class="trust-card">
+        <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 11.5l2 2 4-4.5M4 4.5h16v15H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><h3>Specifications Checked</h3><p>Core specifications are reviewed against manufacturer documentation and current product information.</p></div>
+      </li>
+      <li class="trust-card">
+        <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-4 6 4 6M16 6l4 6-4 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><h3>Clear Product Differences</h3><p>We explain which buyers and workloads each log splitter is designed for.</p></div>
+      </li>
+      <li class="trust-card">
+        <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 16h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <div><h3>Limitations Included</h3><p>Recommendations include key drawbacks and suitability limits &mdash; not only advantages.</p></div>
+      </li>
+      <li class="trust-card">
+        <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 14a4 4 0 005.66 0l2-2a4 4 0 00-5.66-5.66l-1 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14 10a4 4 0 00-5.66 0l-2 2a4 4 0 005.66 5.66l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        <div><h3>Transparent Affiliate Model</h3><p>We may earn a commission from qualifying purchases, at no additional cost to the buyer.</p></div>
+      </li>
+    </ul>
+    <div class="glance-strip">
+      <div class="glance-stat"><span class="glance-num">${reviewCount}</span><span class="glance-label">Verified Product Review${reviewCount === 1 ? '' : 's'}</span></div>
+      <div class="glance-stat"><span class="glance-num">${comparisonCount}</span><span class="glance-label">Comparison &amp; Roundup Pages</span></div>
+      <div class="glance-stat"><span class="glance-num">${guideCount}</span><span class="glance-label">Buying &amp; Maintenance Guides</span></div>
+      ${mostRecentVerifiedLabel ? `<div class="glance-stat"><span class="glance-num glance-num-sm">${esc(mostRecentVerifiedLabel)}</span><span class="glance-label">Specifications Last Updated</span></div>` : ''}
     </div>
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M12 8v5M12 16h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-      <h3>Limitations Included</h3>
-      <p>Recommendations include key drawbacks and suitability limits &mdash; not only advantages.</p>
-    </div>
-    <div class="trust-card">
-      <svg class="trust-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M10 14a4 4 0 005.66 0l2-2a4 4 0 00-5.66-5.66l-1 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14 10a4 4 0 00-5.66 0l-2 2a4 4 0 005.66 5.66l1-1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-      <h3>Transparent Affiliate Model</h3>
-      <p>We may earn a commission from qualifying purchases, at no additional cost to the buyer.</p>
-    </div>
-  </div>
-  <div class="glance-strip">
-    <div class="glance-stat"><span class="glance-num">${reviewCount}</span><span class="glance-label">Verified Product Review${reviewCount === 1 ? '' : 's'}</span></div>
-    <div class="glance-stat"><span class="glance-num">${comparisonCount}</span><span class="glance-label">Comparison &amp; Roundup Pages</span></div>
-    <div class="glance-stat"><span class="glance-num">${guideCount}</span><span class="glance-label">Buying &amp; Maintenance Guides</span></div>
-    ${mostRecentVerifiedLabel ? `<div class="glance-stat"><span class="glance-num glance-num-sm">${esc(mostRecentVerifiedLabel)}</span><span class="glance-label">Specifications Last Updated</span></div>` : ''}
   </div>
 </section>
 
-<section class="block section-alt section-divider" style="padding-top:0;">
+<section class="block section-alt">
   <div class="section-head">
     <span class="eyebrow">Transparency</span>
     <h2>How We Review</h2>
     <p>We check manufacturer manuals and specification sheets, compare models on the factors above, and note where information couldn't be confirmed. We do not publish star ratings or "top pick" badges without a documented methodology, and we do not claim hands-on testing unless it happened. <a href="${url('/how-we-review/')}">Read our full methodology</a>.</p>
-    <p class="article-meta" style="margin-top:10px;">${esc(config.amazonDisclosureFull)}</p>
   </div>
+  <p class="article-meta" style="max-width:var(--page-max);margin:-24px auto 0;padding:0 24px;">${esc(config.amazonDisclosureFull)}</p>
 </section>
 
-<section class="block section-alt" style="padding-top:0;">
+<section class="block">
   <div class="section-head">
+    <span class="eyebrow">Questions</span>
     <h2>Frequently Asked Questions</h2>
   </div>
   <div class="article-wrap" style="padding-top:0;">

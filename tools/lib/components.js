@@ -76,32 +76,86 @@ function productImage(p, layoutUrl) {
   return picture + badge;
 }
 
-// Shared product card used on both the homepage "Compare Verified Models"
-// section and the reviews index, so the two stay visually and structurally
-// consistent as products are added.
+// Shared product card used across the homepage and Reviews index, so both
+// stay visually and structurally consistent as products are added.
+//
+// Built for scanning, not reading: visual -> brand/type -> name -> a
+// couple of verified facts -> one "best for" line -> one trade-off line ->
+// actions. Every field below is an existing verified value from
+// products.js (typeLabel, tonnage, maxLogDiameterIn/maxLogLengthIn,
+// suitableUseSummary, limitationsSummary) — nothing here is invented or
+// newly derived. Root class stays .review-card (with data-type) since
+// assets/js/reviews-filter.js queries it directly.
 function productCard(p, opts) {
   opts = opts || {};
   const layoutUrl = opts.url;
   const reviewHref = layoutUrl(`/reviews/${p.id}/`);
+
+  // A compact fact line: tonnage and power source always exist; the one
+  // capacity figure shown prefers diameter (usually the more decision-
+  // relevant constraint) and falls back to length, or is omitted entirely
+  // when neither is confirmed (see the PROYAMA entry) rather than guessed.
+  const capacityFact = p.maxLogDiameterIn
+    ? `Up to ${p.maxLogDiameterIn} in. dia`
+    : (p.maxLogLengthIn ? `Up to ${p.maxLogLengthIn} in. length` : null);
+  const facts = [`${p.tonnage}T`, esc(p.typeLabel), capacityFact ? esc(capacityFact) : null].filter(Boolean);
+
   return `
-    <div class="review-card" data-type="${esc(p.type)}">
-      <div class="review-thumb">
-        ${typePill(p.typeLabel)}
-        ${productImage(p, layoutUrl)}
-      </div>
-      <div class="review-body">
-        <p class="review-brand">${esc(p.brand)}</p>
-        <h3>${esc(p.name)}</h3>
-        <p class="review-model">Model ${esc(p.model)} &middot; ${p.tonnage}T &middot; ${esc(p.typeLabel)}</p>
-        <p class="review-summary">${esc(p.suitableUseSummary)}</p>
-        <p class="review-limitation"><b>Key limitation:</b> ${esc(p.limitationsSummary)}</p>
-        ${p.verifiedDate ? `<p class="review-verified">Specs verified ${esc(p.verifiedDate)}</p>` : ''}
-        <div class="review-actions">
+    <article class="review-card" data-type="${esc(p.type)}">
+      <a class="pcard-media" href="${reviewHref}" tabindex="-1" aria-hidden="true">${productImage(p, layoutUrl)}</a>
+      <div class="pcard-body">
+        <p class="pcard-kicker"><span class="pcard-brand">${esc(p.brand)}</span><span class="pcard-dot" aria-hidden="true">&middot;</span><span class="pcard-type pcard-type-${esc(p.type)}">${esc(p.typeLabel)}</span></p>
+        <h3 class="pcard-name"><a href="${reviewHref}">${esc(p.name)}</a></h3>
+        <p class="pcard-facts">${facts.join('<span class="sep">&middot;</span>')}</p>
+        <p class="pcard-line"><span class="pcard-label">Best for</span>${esc(p.suitableUseSummary)}</p>
+        <p class="pcard-line pcard-tradeoff"><span class="pcard-label">Trade-off</span>${esc(p.limitationsSummary)}</p>
+        <div class="pcard-actions">
           <a href="${reviewHref}" class="btn btn-dark-outline btn-sm">Read Review</a>
           ${affiliateButton(p, { small: true, position: opts.position || 'product-card' })}
         </div>
+        ${p.verifiedDate ? `<p class="pcard-verified">Verified ${esc(p.verifiedDate)}</p>` : ''}
       </div>
-    </div>`;
+    </article>`;
+}
+
+// Featured product row — the homepage's curated-picks register, distinct
+// from productCard()'s dense catalog-browsing register: larger media, an
+// editorial ordinal, and best-for/trade-off promoted to their own labeled
+// column instead of clamped lines. Same verified fields as productCard —
+// nothing invented — just given more room because there are only ever a
+// handful of these on a page.
+function featureRow(p, opts) {
+  opts = opts || {};
+  const layoutUrl = opts.url;
+  const reviewHref = layoutUrl(`/reviews/${p.id}/`);
+  const capacityFact = p.maxLogDiameterIn
+    ? `Up to ${p.maxLogDiameterIn} in. dia`
+    : (p.maxLogLengthIn ? `Up to ${p.maxLogLengthIn} in. length` : null);
+  const facts = [`${p.tonnage}T`, esc(p.typeLabel), capacityFact ? esc(capacityFact) : null].filter(Boolean);
+  const num = String(opts.index || 1).padStart(2, '0');
+
+  return `
+    <article class="feature-row" data-type="${esc(p.type)}">
+      <span class="feature-num" aria-hidden="true">${num}</span>
+      <a class="feature-media" href="${reviewHref}" tabindex="-1" aria-hidden="true">${productImage(p, layoutUrl)}</a>
+      <div class="feature-body">
+        <div class="feature-main">
+          <p class="feature-kicker"><span class="pcard-brand">${esc(p.brand)}</span><span class="pcard-dot" aria-hidden="true">&middot;</span><span class="pcard-type-${esc(p.type)}">${esc(p.typeLabel)}</span></p>
+          <h3 class="feature-name"><a href="${reviewHref}">${esc(p.name)}</a></h3>
+          <p class="feature-facts">${facts.join('<span class="sep">&middot;</span>')}</p>
+          <div class="feature-actions">
+            <a href="${reviewHref}" class="btn btn-dark-outline btn-sm">Read Review</a>
+            ${affiliateButton(p, { small: true, position: opts.position || 'feature-row' })}
+          </div>
+        </div>
+        <div class="feature-side">
+          <span class="feature-side-label">Best for</span>
+          <p>${esc(p.suitableUseSummary)}</p>
+          <span class="feature-side-label">Trade-off</span>
+          <p>${esc(p.limitationsSummary)}</p>
+        </div>
+      </div>
+    </article>`;
 }
 
 // Homepage / comparisons editorial table — verified specs only, no ratings,
@@ -207,6 +261,6 @@ function personJsonLd(layoutCanonical) {
 }
 
 module.exports = {
-  affiliateButton, typePill, comparisonTable, specTable, sourceNotes, productImage, productCard,
+  affiliateButton, typePill, comparisonTable, specTable, sourceNotes, productImage, productCard, featureRow,
   byline, authorBox, personJsonLd, articleToc,
 };
